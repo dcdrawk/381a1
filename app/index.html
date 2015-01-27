@@ -29,12 +29,12 @@
           <md-button class="md-primary appMenu" ng-click="toggleLeft()" aria-label="Menu">
             <md-icon icon="/img/icons/ic_menu_white_24dp.png" style="width: 24px; height: 24px;"></md-icon>
           </md-button>
-          <span class="md-flex">DnD Character Builder</span>
+          <span class="md-flex">Pocket Scroll</span>
         </div>
 
       </md-toolbar>
       <section layout="row" flex>
-        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-is-open="true" md-component-id="left">
+        <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-is-open="false" md-component-id="left">
           <md-toolbar>
             <h1 class="md-toolbar-tools">Menu</h1>
           </md-toolbar>
@@ -43,31 +43,22 @@
               Home
             </md-button>
 
-            <md-button ng-click="go('/about')" class="md-padding md-primary menu-item">
-              About
+            <md-button ng-click="go('/character-details')" class="md-padding md-primary menu-item">
+              Character Details
             </md-button>
 
-            <md-button ng-click="go('/contact')" class="md-padding md-primary menu-item">
-              Contact
+            <md-button ng-click="go('/ability-scores')" class="md-padding md-primary menu-item">
+              Ability Scores
             </md-button>
 
             <md-button ng-click="go('/example')" class="md-padding md-primary menu-item">
-              Example
+              Material Example
             </md-button>
 
-            <p hide-md show-gt-md>
-              This sidenav is locked open on your device. To go back to the default behavior,
-              narrow your display.
-            </p>
           </md-content>
         </md-sidenav>
         <md-content flex class="md-padding">
           <div layout="column" layout-fill layout-align="center center">
-            <div>
-              <md-button ng-click="toggleLeft()" class="md-primary">
-                Toggle left
-              </md-button>
-            </div>
 
             <!-- Render the selected view -->
             <div ng-view=""></div>

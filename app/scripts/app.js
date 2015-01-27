@@ -43,13 +43,13 @@ angular
         templateUrl: 'views/main.html',
         controller: 'MainCtrl'
       })
-      .when('/about', {
-        templateUrl: 'views/about.html',
-        controller: 'AboutCtrl'
+      .when('/character-details', {
+        templateUrl: 'views/character-details.html',
+        controller: 'DetailsCtrl'
       })
-      .when('/contact', {
-        templateUrl: 'views/contact.html',
-        controller: 'ContactCtrl'
+      .when('/ability-scores', {
+        templateUrl: 'views/ability-scores.html',
+        controller: 'AScoreCtrl'
       })
       .when('/example', {
         templateUrl: 'views/example.html',

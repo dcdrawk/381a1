@@ -46,6 +46,7 @@ body {
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
+  padding:2em;
 }
 .jumbotron .btn {
   font-size: 21px;
@@ -60,11 +61,24 @@ body {
   margin-top: 28px;
 }
 
+.md-button{
+  padding:10px;
+  margin-right:5px;
+  margin-bottom:5px;
+}
+
+/*Stop anchor tags with md-button from overlapping */
+a.md-button{
+  display: inline-block;
+}
+
+/*SideNav Styles */
+md-sidenav .md-button{
+  margin:0;
+}
 
 /* Custom Stuff */
-.md-primary{
 
-}
 
 md-icon{
   margin-top:0px;
