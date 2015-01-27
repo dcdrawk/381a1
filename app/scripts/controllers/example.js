@@ -7,6 +7,7 @@
  * # ExampleCtrl
  * Controller of the myappApp
  */
+
 angular.module('myappApp')
   .controller('ExampleCtrl', function ($scope) {
     $scope.awesomeThings = [

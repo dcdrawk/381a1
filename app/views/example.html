@@ -1,7 +1,7 @@
 <p>This is the example view.</p>
 
-<div ng-controller="AppCtrl" class="buttondemoBasicUsage">
-  <md-content>
+<div ng-controller="TestCtrl" class="buttondemoBasicUsage">
+  <md-content md-theme="default">
     <section layout="row" layout-sm="column" layout-align="center center">
       <md-button>{{title1}}</md-button>
       <md-button md-no-ink class="md-primary">Primary (md-noink)</md-button>
@@ -9,7 +9,7 @@
       <md-button class="md-warn">{{title4}}</md-button>
     </section>
     <section layout="row" layout-sm="column" layout-align="center center">
-      <md-button class="md-raised">Button</md-button>
+      <md-button class="md-raised md-accent">Button</md-button>
       <md-button class="md-raised md-primary">Primary</md-button>
       <md-button ng-disabled="true" class="md-raised md-primary">Disabled</md-button>
       <md-button class="md-raised md-warn">Warn</md-button>
