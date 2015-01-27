@@ -3,3 +3,10 @@ dist
 .tmp
 .sass-cache
 bower_components
+
+test/
+scripts/
+node_modules/
+bower_components/
+app/
+.tmp/
