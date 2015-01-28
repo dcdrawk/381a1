@@ -3,6 +3,7 @@ body {
   padding-bottom: 20px;
   height: 100%;
   display:flex;
+  font-family: 'Roboto', sans-serif;
 }
 
 /* Everything but the jumbotron gets side spacing for mobile first views */
@@ -32,8 +33,16 @@ body {
   border-top: 1px solid #e5e5e5;
 }
 
+#doc-content{
+    margin:auto;
+}
+
+h1{
+  margin:.25em 0;
+}
+
 /* Customize container */
-@media (min-width: 768px) {
+@media (min-width: 600px) {
   .container {
     max-width: 730px;
   }
@@ -75,6 +84,10 @@ a.md-button{
 /*SideNav Styles */
 md-sidenav .md-button{
   margin:0;
+}
+
+md-toolbar{
+  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.5);
 }
 
 /* Custom Stuff */
@@ -121,7 +134,7 @@ md-icon{
   font-size: 14px; }
 
 /* Responsive: Portrait tablets and up */
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 600px) {
   /* Remove the padding we set earlier */
   .header,
   .marketing,
@@ -136,5 +149,23 @@ md-icon{
   /* Remove the bottom border on the jumbotron for visual effect */
   .jumbotron {
     border-bottom: 0;
+  }
+  .jumbotron h1, .jumbotron .h1 {
+    font-size: 63px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  a.md-button{
+    max-width:100%;
+    width:100%;
+    display:block;
+  }
+  #doc-content{
+      width:100%;
+  }
+  #doc-content > .ng-scope{
+    width:100%;
+    padding:1em;
   }
 }

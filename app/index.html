@@ -14,6 +14,9 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
+
+    <!-- Roboto fonts: Normal(400), Medium(500) -->
+    <link href='http://fonts.googleapis.com/css?family=Roboto:400,500' rel='stylesheet' type='text/css'>
     <!-- endbuild -->
 
 
@@ -39,6 +42,7 @@
             <h1 class="md-toolbar-tools">Menu</h1>
           </md-toolbar>
           <md-content ng-controller="LeftCtrl">
+
             <md-button ng-click="go('/')" class="md-padding md-primary menu-item">
               Home
             </md-button>
@@ -58,7 +62,7 @@
           </md-content>
         </md-sidenav>
         <md-content flex class="md-padding">
-          <div layout="column" layout-fill layout-align="center center">
+          <div id="doc-content" layout="column" layout-fill layout-align="center center">
 
             <!-- Render the selected view -->
             <div ng-view=""></div>
@@ -109,8 +113,8 @@
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/about.js"></script>
-        <script src="scripts/controllers/contact.js"></script>
+        <script src="scripts/controllers/details.js"></script>
+        <script src="scripts/controllers/ability-scores.js"></script>
         <script src="scripts/controllers/example.js"></script>
         <!-- endbuild -->
 </body>

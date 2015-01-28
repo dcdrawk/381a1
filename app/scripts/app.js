@@ -75,6 +75,7 @@ angular
     };
     $scope.go = function ( path ) {
       $location.path( path );
+      $mdSidenav('left').close();
     };
   })
   .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {
