@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <link rel="stylesheet" href="styles/vendor.def0bf3e.css">
-    <link rel="stylesheet" href="styles/main.5a666aec.css">
+    <link rel="stylesheet" href="styles/main.5c5b5802.css">
 
 
   </head>
@@ -32,6 +32,7 @@
             <h1 class="md-toolbar-tools">Menu</h1>
           </md-toolbar>
           <md-content ng-controller="LeftCtrl">
+
             <md-button ng-click="go('/')" class="md-padding md-primary menu-item">
               Home
             </md-button>
@@ -51,7 +52,7 @@
           </md-content>
         </md-sidenav>
         <md-content flex class="md-padding">
-          <div layout="column" layout-fill layout-align="center center">
+          <div id="doc-content" layout="column" layout-fill layout-align="center center">
 
             <!-- Render the selected view -->
             <div ng-view=""></div>
@@ -80,6 +81,6 @@
 
     <script src="scripts/vendor.60252328.js"></script>
 
-        <script src="scripts/scripts.f3313237.js"></script>
+        <script src="scripts/scripts.d12f7542.js"></script>
 </body>
 </html>
