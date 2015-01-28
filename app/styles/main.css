@@ -113,6 +113,29 @@ md-icon{
   padding:12px;
 }
 
+.selectBox select{
+  padding:6px 0 4px 0;
+  border:none;
+  border-bottom:1px solid #ddd;
+}
+
+.selectBox{
+  padding-top:25px;
+}
+
+label{
+  padding:0;
+}
+
+.select-label{
+  position:absolute;
+  top:-25px;
+}
+
+md-input-container.md-input-focused label, md-input-container.md-input-has-value label {
+-webkit-transform: translate3d(0, 4px, 0) scale(1);
+transform: translate3d(0px, 4px, 0) scale(1);
+}
 
 .buttondemoBasicUsage {
 /** From vulcanized demo **/ }
