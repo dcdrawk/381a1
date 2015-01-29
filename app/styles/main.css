@@ -220,8 +220,8 @@ md-input-container select.md-input::-ms-expand {
 @media screen and (max-width: 1024px) {
   #view-content{
     width:100%;
+  }
 }
-
 @media screen and (max-width: 600px) {
   a.md-button{
     max-width:100%;
