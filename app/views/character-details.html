@@ -22,13 +22,13 @@
 
         <md-input-container class="selectBox" flex>
           <label class="md-primary select-label">Race</label>
-          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
+          <select class="md-input" ng-model="selectedRace" ng-options="item for item in races track by item" ng-change="updateSubrace()">
           </select>
         </md-input-container>
 
         <md-input-container class="selectBox" flex>
           <label class="md-primary select-label">Subrace</label>
-          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
+          <select id="subrace" class="md-input" ng-model="selectedSubrace" ng-options="item for item in subraces track by item">
           </select>
         </md-input-container>
       </div>
@@ -36,17 +36,17 @@
       <div layout layout-sm="column">
         <md-input-container class="selectBox" flex>
           <label class="md-primary select-label">Class</label>
-          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
+          <select class="md-input" ng-model="selectedClass" ng-options="item for item in characterClasses">
           </select>
         </md-input-container>
         <md-input-container class="selectBox" flex>
           <label class="md-primary select-label">Background</label>
-          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
+          <select class="md-input" ng-model="selectedBackground" ng-options="item for item in backgrounds">
           </select>
         </md-input-container>
         <md-input-container class="selectBox" flex>
           <label class="md-primary select-label">Alignment</label>
-          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
+          <select class="md-input" ng-model="selectedAlignment" ng-options="item for item in alignment">
           </select>
         </md-input-container>
       </div>
@@ -54,11 +54,11 @@
       <div layout layout-sm="column">
         <md-input-container flex>
           <label>Experience Points</label>
-          <input ng-model="details.experience">
+          <input name="exp" ng-model="characterExp" ng-change="calculateLevel()">
         </md-input-container>
         <md-input-container flex>
           <label>Level</label>
-          <input ng-model="details.level">
+          <input ng-model="characterLevel">
         </md-input-container>
       </div>
     </form>
