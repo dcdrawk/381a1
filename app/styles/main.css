@@ -37,6 +37,10 @@ body {
     margin:auto;
 }
 
+#view-content{
+  width:960px;
+}
+
 h1{
   margin:.25em 0;
 }
@@ -132,10 +136,41 @@ label{
   top:-25px;
 }
 
+
+/*Modified the label text tansform so the text doesn't shrink */
 md-input-container.md-input-focused label, md-input-container.md-input-has-value label {
 -webkit-transform: translate3d(0, 4px, 0) scale(1);
 transform: translate3d(0px, 4px, 0) scale(1);
 }
+
+/*Angular Material does not have proper dropdowns yet. Found a link to this code on the github issues page: https://gist.github.com/yarl/b3d4b4114d82c8bb041d */
+
+md-input-container select.md-input {
+    -moz-appearance: none;
+    -webkit-appearance: none;
+    appearance: none;
+    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAMAAAAoLQ9TAAAAD1BMVEUAAAB6enp6enp5eXn///+i9s37AAAAA3RSTlMAgIgilleHAAAAIklEQVR4AWOgG2BihgImmAgjhM+IUMOI4CNEGNHMYaKlKwEp5wBLyMAwGAAAAABJRU5ErkJggg==) 99% center no-repeat;
+    margin: 0;
+    padding: 0;
+    margin-bottom: 1px;
+}
+
+md-input-container select.md-input:focus {
+    border-bottom: 2px solid rgb(0, 188, 212) !important;
+    margin-bottom: 0;
+}
+
+md-input-container select.md-input:focus::-ms-value {
+    background: transparent;
+    color: inherit;
+}
+
+md-input-container select.md-input::-ms-expand {
+    display: none;
+}
+
+/*-End of select container styles-*/
+
 
 .buttondemoBasicUsage {
 /** From vulcanized demo **/ }
@@ -181,6 +216,10 @@ transform: translate3d(0px, 4px, 0) scale(1);
   .jumbotron h1, .jumbotron .h1 {
     font-size: 63px;
   }
+}
+@media screen and (max-width: 1024px) {
+  #view-content{
+    width:100%;
 }
 
 @media screen and (max-width: 600px) {

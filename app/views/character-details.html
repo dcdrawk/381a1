@@ -1,9 +1,9 @@
 <p>Character Details include:</p>
 <ul>
   <li>Character Name</li>
-  <li>Class</li>
   <li>Race</li>
   <li>Subrace</li>
+  <li>Class</li>
   <li>Background</li>
   <li>Alignment</li>
   <li>Experience Points</li>
@@ -17,38 +17,50 @@
       <div layout layout-sm="column">
         <md-input-container flex>
           <label>Character Name</label>
-          <input ng-model="user.firstName">
+          <input ng-model="details.name">
         </md-input-container>
 
         <md-input-container class="selectBox" flex>
-          <label class="md-primary select-label">Class</label>
-          <select ng-model="selectedItem" ng-options="item for item in characterClasses">
+          <label class="md-primary select-label">Race</label>
+          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
           </select>
+        </md-input-container>
 
+        <md-input-container class="selectBox" flex>
+          <label class="md-primary select-label">Subrace</label>
+          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
+          </select>
         </md-input-container>
       </div>
-      <md-input-container flex>
-        <label>Address</label>
-        <input ng-model="user.address">
-      </md-input-container>
+
+      <div layout layout-sm="column">
+        <md-input-container class="selectBox" flex>
+          <label class="md-primary select-label">Class</label>
+          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
+          </select>
+        </md-input-container>
+        <md-input-container class="selectBox" flex>
+          <label class="md-primary select-label">Background</label>
+          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
+          </select>
+        </md-input-container>
+        <md-input-container class="selectBox" flex>
+          <label class="md-primary select-label">Alignment</label>
+          <select class="md-input" ng-model="selectedItem" ng-options="item for item in characterClasses">
+          </select>
+        </md-input-container>
+      </div>
+
       <div layout layout-sm="column">
         <md-input-container flex>
-          <label>City</label>
-          <input ng-model="user.city">
+          <label>Experience Points</label>
+          <input ng-model="details.experience">
         </md-input-container>
         <md-input-container flex>
-          <label>State</label>
-          <input ng-model="user.state">
-        </md-input-container>
-        <md-input-container flex>
-          <label>Postal Code</label>
-          <input ng-model="user.postalCode">
+          <label>Level</label>
+          <input ng-model="details.level">
         </md-input-container>
       </div>
-      <md-input-container flex>
-        <label>Biography</label>
-        <textarea ng-model="user.biography" columns="1" md-maxlength="150"></textarea>
-      </md-input-container>
     </form>
   </md-content>
 </div>
