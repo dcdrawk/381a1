@@ -6,6 +6,10 @@ body {
   font-family: 'Roboto', sans-serif;
 }
 
+html, body{
+  font-size:1em;
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,
@@ -100,7 +104,9 @@ md-toolbar{
 }
 
 /* Custom Stuff */
-
+.done{
+  text-decoration: line-through;
+}
 
 md-icon{
   margin-top:0px;
@@ -109,6 +115,13 @@ md-icon{
 .appMenu{
   padding:10px;
   margin-right:10px;
+}
+
+.closeAppMenu{
+  float:right;
+}
+.closeAppMenu object{
+  width:24px;
 }
 
 .menu-item{

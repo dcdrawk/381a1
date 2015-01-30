@@ -30,16 +30,24 @@
       <md-toolbar class="md-primary">
         <div class="md-toolbar-tools">
           <md-button class="md-primary appMenu" ng-click="toggleLeft()" aria-label="Menu">
-            <md-icon icon="/img/icons/ic_menu_white_24dp.png" style="width: 24px; height: 24px;"></md-icon>
+            <md-icon icon="img/icons/ic_menu_white_24dp.png" style="width: 24px; height: 24px;"></md-icon>
           </md-button>
-          <span class="md-flex">Pocket Scroll</span>
+          <span class="md-flex">Scrollbinder</span>
         </div>
 
       </md-toolbar>
       <section layout="row" flex>
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-is-open="false" md-component-id="left">
           <md-toolbar>
-            <h1 class="md-toolbar-tools">Menu</h1>
+            <div class="md-toolbar-tools">
+              <span flex="85" class="md-flex">Menu</span>
+
+              <md-button flex="15" class="md-primary closeAppMenu" ng-click="toggleLeft()" aria-label="Close Menu">
+                <md-icon icon="img/icons/ic_clear_white_24dp.png" style="width: 24px; height: 24px;"></md-icon>
+              </md-button>
+
+            </div>
+
           </md-toolbar>
           <md-content ng-controller="LeftCtrl">
 
@@ -53,6 +61,10 @@
 
             <md-button ng-click="go('/ability-scores')" class="md-padding md-primary menu-item">
               Ability Scores
+            </md-button>
+
+            <md-button ng-click="go('/to-do')" class="md-padding md-primary menu-item">
+              To Do
             </md-button>
 
             <md-button ng-click="go('/example')" class="md-padding md-primary menu-item">
@@ -115,6 +127,7 @@
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/details.js"></script>
         <script src="scripts/controllers/ability-scores.js"></script>
+        <script src="scripts/controllers/to-do.js"></script>
         <script src="scripts/controllers/example.js"></script>
         <!-- endbuild -->
 </body>

@@ -18,7 +18,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'ngMaterial',
-    'ngMdIcons'
+    'ngMdIcons',
+    'ngCookies'
   ])
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
@@ -50,6 +51,10 @@ angular
       .when('/ability-scores', {
         templateUrl: 'views/ability-scores.html',
         controller: 'AScoreCtrl'
+      })
+      .when('/to-do', {
+        templateUrl: 'views/to-do.html',
+        controller: 'ToDoCtrl'
       })
       .when('/example', {
         templateUrl: 'views/example.html',
