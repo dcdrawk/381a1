@@ -48,6 +48,10 @@ angular
         templateUrl: 'views/character-details.html',
         controller: 'DetailsCtrl'
       })
+      .when('/proficiency', {
+        templateUrl: 'views/proficiency.html',
+        controller: 'ProfCtrl'
+      })
       .when('/ability-scores', {
         templateUrl: 'views/ability-scores.html',
         controller: 'AScoreCtrl'

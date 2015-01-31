@@ -1,6 +1,5 @@
 /* Space out content a bit */
 body {
-  padding-bottom: 20px;
   height: 100%;
   display:flex;
   font-family: 'Roboto', sans-serif;
@@ -43,6 +42,7 @@ html, body{
 
 #view-content{
   width:960px;
+  box-shadow: 0px 0px 3px 1px #9D9D9D;
 }
 
 h1{
@@ -88,6 +88,10 @@ h1{
   margin-right:5px;
   margin-bottom:5px;
 }
+.titleBar .md-button{
+  margin-bottom:0;
+}
+
 
 /*Stop anchor tags with md-button from overlapping */
 a.md-button{
@@ -97,6 +101,9 @@ a.md-button{
 /*SideNav Styles */
 md-sidenav .md-button{
   margin:0;
+}
+md-sidenav .md-toolbar-tools{
+  padding-right:0;
 }
 
 md-toolbar{
@@ -116,7 +123,18 @@ md-icon{
   padding:10px;
   margin-right:10px;
 }
-
+.titleBar{
+  padding: 0 0em 0 1em;
+  color: #FFF;
+  background: #FFA000;
+  text-shadow: 1px 1px 1px rgba(153, 67, 0, 0.73);
+}
+.titleBar h2{
+  margin-right:1em;
+}
+.titleBar .md-button{
+  border-radius:0;
+}
 .closeAppMenu{
   float:right;
 }
@@ -156,14 +174,15 @@ label{
 }
 
 .message{
-  border:1px solid #2E7D32;
   background:#C8E6C9;
   padding:.5em;
 }
 .warning{
-  border:1px solid #FF8F00;
-  background:#FFECB3;
+  background:#E53935;
   padding:.5em;
+}
+.warning span{
+  color:#fff;
 }
 
 #viewMessage{
@@ -176,9 +195,14 @@ label{
     display:block;
 }
 
+#characterForm{
+  padding: 0em 1em;
+  margin-top:1em;
+}
+
 /*Ability Scores styles*/
 #abilityScores{
-  margin-top:1em;
+
   text-align:center;
 }
 #abilityScores .heading{
@@ -196,7 +220,7 @@ label{
   margin-top: -6px;
   padding-bottom:0;
 }
-#abilityScores .abilityRow:nth-child(even){
+#abilityScores .abilityRow:nth-child(even), .profStat:nth-child(even){
   background:#ECEFF1;
 }
 
@@ -209,6 +233,11 @@ label{
   background: #FFF8E1;
 }
 
+/*proficiency styles*/
+.profStat{
+  padding:1em;
+}
+
 /*pop-up dialog styles*/
 md-dialog p{
   line-height:1.5;
@@ -216,7 +245,14 @@ md-dialog p{
 md-dialog md-content{
   padding:1em;
 }
+md-dialog .md-actions{
+  padding:0;
 
+}
+md-dialog .md-button{
+  margin:0;
+  width: 100%;
+}
 
 
 /*Modified the label text tansform so the text doesn't shrink */
@@ -325,9 +361,23 @@ input[type=number]::-webkit-outer-spin-button {
   }
   #doc-content > .ng-scope{
     width:100%;
-    padding:1em;
   }
   .abilityRow .title{
     text-align:left;
   }
+  #mainMenu, md-toolbar{
+    height: 44px;
+    min-height: 44px;
+  }
+  #mainMenu .md-toolbar-tools{
+    padding-left:0;
+  }
+  .md-toolbar-tools .md-button{
+    border-radius:0;
+    margin:0;
+  }
+  #mainMenu .md-toolbar-tools .md-button{
+    margin-right:1em;
+  }
+
 }

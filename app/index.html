@@ -27,7 +27,7 @@
     <![endif]-->
     <div ng-controller="AppCtrl" layout="column" layout-fill>
     <!-- Add your site or application content here -->
-      <md-toolbar class="md-primary">
+      <md-toolbar id="mainMenu"class="md-primary">
         <div class="md-toolbar-tools">
           <md-button class="md-primary appMenu" ng-click="toggleLeft()" aria-label="Menu">
             <md-icon icon="img/icons/ic_menu_white_24dp.png" style="width: 24px; height: 24px;"></md-icon>
@@ -59,6 +59,10 @@
               Character Details
             </md-button>
 
+            <md-button ng-click="go('/proficiency')" class="md-padding md-primary menu-item">
+              Proficiency
+            </md-button>
+
             <md-button ng-click="go('/ability-scores')" class="md-padding md-primary menu-item">
               Ability Scores
             </md-button>
@@ -73,7 +77,7 @@
 
           </md-content>
         </md-sidenav>
-        <md-content flex class="md-padding">
+        <md-content flex>
           <div id="doc-content" layout="column" layout-fill layout-align="center center">
 
             <!-- Render the selected view -->
@@ -126,6 +130,7 @@
         <script src="scripts/app.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/details.js"></script>
+        <script src="scripts/controllers/proficiency.js"></script>
         <script src="scripts/controllers/ability-scores.js"></script>
         <script src="scripts/controllers/to-do.js"></script>
         <script src="scripts/controllers/example.js"></script>

@@ -19,7 +19,6 @@ angular.module('myappApp')
     var myBackground = $cookies.background;
     var myAlignment = $cookies.alignment;
     var myExp = $cookies.experience;
-
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -161,6 +160,7 @@ angular.module('myappApp')
 
     $scope.setExp = function() {
       $cookies.experience = $scope.characterExp;
+      $cookies.level = $scope.characterLevel;
     };
 
 

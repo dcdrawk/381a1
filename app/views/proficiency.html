@@ -1,0 +1,33 @@
+<md-content>
+
+  <div class="titleBar" layout="row">
+    <h2>Proficiency</h2>
+    <md-button flex="10" flex-sm="20" class="md-primary" ng-click="showAlert($event)" aria-label="Proficiency Info">
+      <md-icon icon="img/icons/help-white.png" style="width: 24px; height: 24px;"></md-icon>
+    </md-button>
+  </div>
+
+  <div class="profStat" layout="row" layout-sm="column" ng-model"profBonus">
+    <span flex="25" flex-md="30" flex-sm="60">Proficiency Bonus:</span><span flex="75" flex-md="70" flex-sm="40"><strong>+{{profBonus}}</strong></span>
+  </div>
+
+  <div class="profStat" layout="row" layout-sm="column" ng-model"armorProf">
+    <span flex="25" flex-md="30" flex-sm="100">Armor:</span><span flex="75" flex-md="70" flex-sm="100"><strong>{{armorProf}}</strong></span>
+  </div>
+
+  <div class="profStat" layout="row" layout-sm="column" ng-model"weapProf">
+    <span flex="25" flex-md="30" flex-sm="100">Weapons:</span><span flex="75" flex-md="70" flex-sm="100"><strong>{{weapProf}}</strong></span>
+  </div>
+
+  <div class="profStat" layout="row" layout-sm="column" ng-model"toolProf">
+    <span flex="25" flex-md="30" flex-sm="100">Tools:</span><span flex="75" flex-md="70" flex-sm="100"><strong>{{toolProf}}</strong></span>
+  </div>
+
+  <div class="profStat" layout="row" layout-sm="column" ng-model"savingThrows">
+    <span flex="25" flex-md="30" flex-sm="100">Saving Throws:</span><span flex="75" flex-md="70" flex-sm="100"><strong>{{savingThrows}}</strong></span>
+  </div>
+
+  <div class="profStat" layout="row" layout-sm="column" ng-model"skillsProf">
+    <span flex="25" flex-md="30" flex-sm="100">Skills:</span><span flex="75" flex-md="70" flex-sm="100"><strong>{{skillsProf}}</strong></span>
+  </div>
+</md-content>
