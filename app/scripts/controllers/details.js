@@ -36,7 +36,7 @@ angular.module('myappApp')
       level: ''
     };
     $scope.races = ['Select a Race', 'Dwarf', 'Elf', 'Halfling', 'Human'];
-    $scope.subraces = ['None available'];
+    $scope.subraces = ['None Available'];
     $scope.characterClasses = ['Select a Class', 'Cleric', 'Fighter', 'Rogue', 'Wizard'];
     $scope.backgrounds = ['Select a Background', 'Acolyte', 'Criminal', 'Folk Hero', 'Noble', 'Sage', 'Soldier'];
     $scope.alignment = ['Select an Alignment', 'Lawful Good', 'Lawful Neutral', 'Lawful Evil', 'Neutral Good', 'True Neutral', 'Neutral Evil','Chaotic Good', 'Chaotic Neutral', 'Chaotic Evil'];
@@ -57,7 +57,7 @@ angular.module('myappApp')
 
     for(i=0; i < $scope.races.length; i++){
       if($scope.selectedRace === 'Select a Race'){ //updates the options for subrace
-        $scope.subraces = ['None available'];
+        $scope.subraces = ['None Available'];
         $scope.selectedSubrace = $scope.subraces[0];
       }
       if($scope.selectedRace === 'Dwarf'){ //updates the options for subrace
@@ -70,7 +70,7 @@ angular.module('myappApp')
         }
       }
       if($scope.selectedRace === 'Elf'){
-        $scope.subraces = ['Select a subrace', 'High Elf', 'Wood Elf'];
+        $scope.subraces = ['Select a Subrace', 'High Elf', 'Wood Elf'];
         for(j=0; j < $scope.subraces.length; j++){
           if(mySubrace === $scope.subraces[j]){
             $scope.selectedSubrace = $scope.subraces[j];
@@ -79,7 +79,7 @@ angular.module('myappApp')
         }
       }
       if($scope.selectedRace === 'Halfling'){
-        $scope.subraces = ['Select a subrace', 'Lightfoot', 'Stout'];
+        $scope.subraces = ['Select a Subrace', 'Lightfoot', 'Stout'];
         for(j=0; j < $scope.subraces.length; j++){
           if(mySubrace === $scope.subraces[j]){
             $scope.selectedSubrace = $scope.subraces[j];
@@ -131,27 +131,6 @@ angular.module('myappApp')
 
     if(myExp >= 0){
       $scope.characterExp = myExp;
-      // $scope.characterLevel= calculateLevel();
-      // if(myExp>= 0){ $scope.characterLevel = '1'; }
-      // if(myExp >= 300){ $scope.characterLevel = '2'; }
-      // if(myExp >= 900){ $scope.characterLevel = '3'; }
-      // if(myExp >= 2700){ $scope.characterLevel = '4'; }
-      // if(myExp >= 6500){ $scope.characterLevel = '5'; }
-      // if(myExp >= 14000){ $scope.characterLevel = '6'; }
-      // if(myExp >= 23000){ $scope.characterLevel = '7'; }
-      // if(myExp >= 34000){ $scope.characterLevel = '8'; }
-      // if(myExp >= 48000){ $scope.characterLevel = '9'; }
-      // if(this.characterExp >= 64000){ $scope.characterLevel = '10'; }
-      // if(this.characterExp >= 85000){ $scope.characterLevel = '11'; }
-      // if(this.characterExp >= 100000){ $scope.characterLevel = '12'; }
-      // if(this.characterExp >= 120000){ $scope.characterLevel = '13'; }
-      // if(this.characterExp >= 140000){ $scope.characterLevel = '14'; }
-      // if(this.characterExp >= 164000){ $scope.characterLevel = '15'; }
-      // if(this.characterExp >= 195000){ $scope.characterLevel = '16'; }
-      // if(this.characterExp >= 225000){ $scope.characterLevel = '17'; }
-      // if(this.characterExp >= 265000){ $scope.characterLevel = '18'; }
-      // if(this.characterExp >= 305000){ $scope.characterLevel = '19'; }
-      // if(this.characterExp >= 355000){ $scope.characterLevel = '20'; }
     }
 
   //  $scope.selectedBackground = $scope.backgrounds[0];
@@ -198,12 +177,12 @@ angular.module('myappApp')
       }
       if($scope.selectedRace === 'Elf'){
         $log.debug('Elf race selected');
-        $scope.subraces = ['Select a subrace', 'High Elf', 'Wood Elf'];
+        $scope.subraces = ['Select a Subrace', 'High Elf', 'Wood Elf'];
         $scope.selectedSubrace = $scope.subraces[0];
       }
       if($scope.selectedRace === 'Halfling'){
         $log.debug('Halfling race selected');
-        $scope.subraces = ['Select a subrace', 'Lightfoot', 'Stout'];
+        $scope.subraces = ['Select a Subrace', 'Lightfoot', 'Stout'];
         $scope.selectedSubrace = $scope.subraces[0];
       }
       if($scope.selectedRace === 'Human'){

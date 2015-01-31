@@ -149,6 +149,60 @@ label{
   top:-25px;
 }
 
+/*Setting up messages and warning dialogue boxes*/
+
+.hide{
+  display:none;
+}
+
+.message{
+  border:1px solid #2E7D32;
+  background:#C8E6C9;
+  padding:.5em;
+}
+.warning{
+  border:1px solid #FF8F00;
+  background:#FFECB3;
+  padding:.5em;
+}
+
+#viewMessage{
+  color:#263238;
+  width:100%;
+  text-align:center;
+}
+#viewMessage span{
+    width:100%;
+    display:block;
+}
+
+/*Ability Scores styles*/
+#abilityScores{
+  margin-top:1em;
+  text-align:center;
+}
+#abilityScores .heading{
+  font-weight:600;
+  color:#37474F;
+}
+.abilityRow{
+  margin-top:1em;
+  padding:1em;
+}
+#abilityScores md-input-container{
+  margin-top: -6px;
+  padding-bottom:0;
+}
+#abilityScores .abilityRow:nth-child(even){
+  background:#ECEFF1;
+}
+
+#abilityScores md-input-container input{
+  width:4em;
+  margin:auto;
+  text-align:center;
+}
+
 
 /*Modified the label text tansform so the text doesn't shrink */
 md-input-container.md-input-focused label, md-input-container.md-input-has-value label {
