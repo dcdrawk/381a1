@@ -8,7 +8,7 @@
  * Controller of the myappApp
  */
 angular.module('myappApp')
-  .controller('AScoreCtrl', function ($scope, $cookies, $log) {
+  .controller('AScoreCtrl', function ($scope, $cookies, $log, $mdDialog) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -16,8 +16,6 @@ angular.module('myappApp')
     ];
     var myRace = $cookies.race;
     var mySubrace = $cookies.subrace;
-
-    var modifier;
     var myStr = $cookies.str;
     var myDex = $cookies.dex;
     var myCon = $cookies.con;
@@ -133,6 +131,8 @@ angular.module('myappApp')
               bns : '+1 Con'
             }];
           }
+          $scope.isMessage = true;
+          $scope.isWarning = false;
         }
         if(myRace === 'Human'){ //Detects the race
           $scope.detectRace = [{//sets the bonus message and value
@@ -197,4 +197,30 @@ angular.module('myappApp')
       $scope.chaMod = $scope.setModifier(this.abilityScores.cha);
       $cookies.cha = $scope.abilityScores.cha;
     };
-  });
+
+    //Code from https://material.angularjs.org/#/demo/material.components.dialog
+    //Use to help build alter dialogues, we would like to use them to explain this to the user.
+    $scope.alert = '';
+    $scope.showAlert = function(ev) {
+      $mdDialog.show(
+        $mdDialog.alert()
+          .title('Ability Score Info')
+          .content('Ability scores determine your characters power in 1 of 6 categories (str, dex, con, int, wis, cha). The score determines the modifier, which can be added to your skills and dice rolls.')
+          .ariaLabel('Ability Score Info')
+          .ok('Close')
+          .targetEvent(ev)
+      );
+    };
+
+    function DialogController($scope, $mdDialog) {
+      $scope.hide = function() {
+        $mdDialog.hide();
+      };
+      $scope.cancel = function() {
+        $mdDialog.cancel();
+      };
+      $scope.answer = function(answer) {
+        $mdDialog.hide(answer);
+      };
+    }
+    });

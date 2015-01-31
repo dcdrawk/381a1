@@ -184,10 +184,13 @@ label{
 #abilityScores .heading{
   font-weight:600;
   color:#37474F;
+  padding:1em;
 }
 .abilityRow{
-  margin-top:1em;
   padding:1em;
+}
+.abilityRow .title, .abilityRow .modifier{
+  padding-top:8px;
 }
 #abilityScores md-input-container{
   margin-top: -6px;
@@ -198,10 +201,22 @@ label{
 }
 
 #abilityScores md-input-container input{
-  width:4em;
-  margin:auto;
-  text-align:center;
+  width: 44px;
+  height: 44px;
+  margin: auto;
+  text-align: center;
+  border: 1px solid rgb(255,202,40);
+  background: #FFF8E1;
 }
+
+/*pop-up dialog styles*/
+md-dialog p{
+  line-height:1.5;
+}
+md-dialog md-content{
+  padding:1em;
+}
+
 
 
 /*Modified the label text tansform so the text doesn't shrink */
@@ -237,6 +252,15 @@ md-input-container select.md-input::-ms-expand {
 }
 
 /*-End of select container styles-*/
+
+/*Needed to remove spinners from number inputs
+code from: http://css-tricks.com/snippets/css/turn-off-number-input-spinners/ */
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
 
 
 .buttondemoBasicUsage {
@@ -283,6 +307,7 @@ md-input-container select.md-input::-ms-expand {
   .jumbotron h1, .jumbotron .h1 {
     font-size: 63px;
   }
+
 }
 @media screen and (max-width: 1024px) {
   #view-content{
@@ -301,5 +326,8 @@ md-input-container select.md-input::-ms-expand {
   #doc-content > .ng-scope{
     width:100%;
     padding:1em;
+  }
+  .abilityRow .title{
+    text-align:left;
   }
 }
