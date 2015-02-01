@@ -1,10 +1,17 @@
 <md-content>
+  <div id="pageTitle" class="titleBar" layout="row">
+      <h2>Proficiency</h2>
+      <md-button flex="10" flex-sm="20" class="md-primary" ng-click="showAlert($event)" aria-label="Proficiency Info">
+        <md-icon icon="img/icons/help-white.png" style="width: 24px; height: 24px;"></md-icon>
+      </md-button>
+  </div>
 
-  <div class="titleBar" layout="row">
-    <h2>Proficiency</h2>
-    <md-button flex="10" flex-sm="20" class="md-primary" ng-click="showAlert($event)" aria-label="Proficiency Info">
-      <md-icon icon="img/icons/help-white.png" style="width: 24px; height: 24px;"></md-icon>
-    </md-button>
+  <!-- Message to user -->
+  <div layout-sm="column">
+    <span id="viewMessage" ng-class="{'hide' : isHidden}" ng-model="warningMessage" ng-init="getRace()">
+      <span ng-model="warningMessage" ng-class="{'warning' : isWarning}" ng-repeat="item in warningMessage">{{item.msg1}}<strong>{{item.bold}}</strong>{{item.msg2}}</span>
+      <span ng-model="detectClass"  ng-class="{'message' : isMessage}" ng-repeat="item2 in detectClass">{{item2.msg1}}<strong>{{item2.bold}}</strong></span>
+    </span>
   </div>
 
   <div class="profStat" layout="row" layout-sm="column" ng-model"profBonus">
