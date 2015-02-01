@@ -406,7 +406,9 @@ input[type=number]::-webkit-outer-spin-button {
   #mainMenu .md-toolbar-tools .md-button{
     margin-right:1em;
   }
-
+  .profStat{
+    line-height: 2em;
+  }
 
 
 }
