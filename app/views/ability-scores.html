@@ -1,16 +1,17 @@
 <md-content>
 
-  <div class="titleBar" layout="row">
+  <div id="pageTitle" class="titleBar" layout="row">
     <h2>Ability Scores</h2>
     <md-button flex="10" flex-sm="20" class="md-primary" ng-click="showAlert($event)" aria-label="Proficiency Info">
       <md-icon icon="img/icons/help-white.png" style="width: 24px; height: 24px;"></md-icon>
     </md-button>
   </div>
 
+  <!-- Message to user -->
   <div layout layout-sm="column">
-    <span id="viewMessage" ng-class="{'hide' : isHidden, 'message' : isMessage, 'warning' : isWarning}" ng-model="detectRace" ng-init="getRace()">
-      <span ng-model="detectRace" ng-repeat="item in detectRace">{{item.msg}}<strong>{{item.bns}}</strong></span>
-      <span ng-model="detectSubrace" ng-repeat="item in detectSubrace">{{item.msg}}<strong>{{item.bns}}</strong></span>
+    <span id="viewMessage" ng-class="{'hide' : isHidden}" ng-model="detectRace" ng-init="getRace()">
+      <span ng-model="detectRace" ng-class="{'warning' : isWarning, 'message' : isMessage}" ng-repeat="item in detectRace">{{item.msg}}<strong>{{item.bns}}</strong></span>
+      <span ng-model="detectSubrace" ng-class="{'message' : isMessage}" ng-repeat="item in detectSubrace">{{item.msg}}<strong>{{item.bns}}</strong></span>
     </span>
   </div>
 
@@ -31,7 +32,7 @@
         </md-input-container>
       </div>
 
-      <div class="modifier" ng-model="strMod" flex="33" ng-init="setStr()">{{strMod}}</div>
+      <div class="modifier" ng-model="strMod" flex="33" ng-init="setStr()"><strong>{{strMod}}</strong></div>
     </div>
 
     <!-- Dexterity -->
@@ -39,10 +40,10 @@
       <div class="title" flex="33">Dexterity</div>
       <div flex="33">
         <md-input-container>
-          <input type="number" ng-model="abilityScores.dex" ng-change="setDex()">
+          <input type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" ng-model="abilityScores.dex" ng-change="setDex()">
         </md-input-container>
       </div>
-      <div class="modifier" ng-model="dexMod" flex="33" ng-init="setDex()">{{dexMod}}</div>
+      <div class="modifier" ng-model="dexMod" flex="33" ng-init="setDex()"><strong>{{dexMod}}</strong></div>
     </div>
 
     <!-- Constitution -->
@@ -50,10 +51,10 @@
       <div class="title" flex="33">Constitution</div>
       <div flex="33">
         <md-input-container>
-          <input type="number" ng-model="abilityScores.con" ng-change="setCon()">
+          <input type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" ng-model="abilityScores.con" ng-change="setCon()">
         </md-input-container>
       </div>
-      <div class="modifier" ng-model="conMod" flex="33" ng-init="setCon()">{{conMod}}</div>
+      <div class="modifier" ng-model="conMod" flex="33" ng-init="setCon()"><strong>{{conMod}}</strong></div>
     </div>
 
     <!-- Intelligence -->
@@ -61,10 +62,10 @@
       <div class="title" flex="33">Intelligence</div>
       <div flex="33">
         <md-input-container>
-          <input type="number" ng-model="abilityScores.int" ng-change="setInt()">
+          <input type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" ng-model="abilityScores.int" ng-change="setInt()">
         </md-input-container>
       </div>
-      <div class="modifier" ng-model="intMod" flex="33" ng-init="setInt()">{{intMod}}</div>
+      <div class="modifier" ng-model="intMod" flex="33" ng-init="setInt()"><strong>{{intMod}}</strong></div>
     </div>
 
     <!-- Wisdom -->
@@ -72,10 +73,10 @@
       <div class="title" flex="33">Wisdom</div>
       <div flex="33">
         <md-input-container>
-          <input type="number" ng-model="abilityScores.wis" ng-change="setWis()">
+          <input type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" ng-model="abilityScores.wis" ng-change="setWis()">
         </md-input-container>
       </div>
-      <div class="modifier" ng-model="wisMod" flex="33" ng-init="setWis()">{{wisMod}}</div>
+      <div class="modifier" ng-model="wisMod" flex="33" ng-init="setWis()"><strong>{{wisMod}}</strong></div>
     </div>
 
     <!-- Charisma -->
@@ -83,10 +84,10 @@
       <div class="title" flex="33">Charisma</div>
       <div flex="33">
         <md-input-container>
-          <input type="number" ng-model="abilityScores.cha" ng-change="setCha()">
+          <input type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" ng-model="abilityScores.cha" ng-change="setCha()">
         </md-input-container>
       </div>
-      <div class="modifier" ng-model="chaMod" flex="33" ng-init="setCha()">{{chaMod}}</div>
+      <div class="modifier" ng-model="chaMod" flex="33" ng-init="setCha()"><strong>{{chaMod}}</strong></div>
     </div>
 
   </div>

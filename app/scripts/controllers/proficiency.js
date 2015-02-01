@@ -10,11 +10,27 @@ angular.module('myappApp')
     var myClass = $cookies.class;
     var myLevel = $cookies.level;
 
+    $scope.isHidden = false;
+    $scope.isMessage = true;
+    $scope.isWarning = true;
+
     //test to see if the level is set
     if(myLevel >= 1){
       $log.debug(myLevel);
     }else{
       $log.debug('level not set');
+      $scope.warningMessage = [{//sets the text for the warning
+        msg1 : 'Level not set. Set level in ',//tell the user
+        bold : 'Character Details',
+        msg2 : ' to show Proficiency Bonus.'
+      }];
+      if(myClass !== 'Cleric' && myClass !== 'Fighter' && myClass !== 'Rogue' && myClass !== 'Wizard'){//Checks if a class is selected yet
+        $scope.warningMessage = [{//sets the text for the warning
+          msg1 : 'Level/Class not set. Set level/class in ',//tell the user
+          bold : 'Character Details',//More detailed warning if class check also fails
+          msg2 : ' to show Proficiency info.'
+        }];
+      }
     }
     if(myLevel >= 1 && myLevel <= 4){$scope.profBonus = 2;}
     if(myLevel >= 5 && myLevel <= 8){$scope.profBonus = 3;}
@@ -23,6 +39,26 @@ angular.module('myappApp')
     if(myLevel >= 17){$scope.profBonus = 6;}
     $cookies.profBonus = $scope.profBonus;
 
+      // $scope.detectClass = [{//sets the text for the warning
+      //   msg1 : 'Class not set. Set class in ',//tell the user
+      //   bold : 'Character Details',
+      //   msg2 : ' to show Proficiency Info.'
+      // }];
+      // $scope.isMessage = false;
+      // $scope.isWarning = true; //Sets the warning class on the message span
+    if(myClass !== 'Cleric' && myClass !== 'Fighter' && myClass !== 'Rogue' && myClass !== 'Wizard'){//Checks if a class is selected yet
+      $log.debug(myClass);
+      $scope.warningMessage = [{//sets the text for the warning
+        msg1 : 'Class not set. Set class in ',//tell the user
+        bold : 'Character Details',//More detailed warning if class check also fails
+        msg2 : ' to show Proficiency info.'
+      }];
+    } else {
+      $scope.detectClass = [{//sets the text for the warning
+        msg1 : 'Displaying proficiency for ',//tell the user
+        bold : 'Level ' + myLevel + ' ' + myClass + '.',//More detailed warning if class check also fails
+      }];
+    }
     if(myClass === 'Cleric'){
       $scope.armorProf = 'Light and medium armor, shields';
       $scope.weapProf = 'All simple weapons';

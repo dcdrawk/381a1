@@ -45,6 +45,10 @@ html, body{
   box-shadow: 0px 0px 3px 1px #9D9D9D;
 }
 
+#view-content h2{
+  margin:.5em 1em .5em 0;
+}
+
 h1{
   margin:.25em 0;
 }
@@ -111,6 +115,9 @@ md-toolbar{
 }
 
 /* Custom Stuff */
+.marketing h2{
+    margin-left:1em!important;
+}
 .done{
   text-decoration: line-through;
 }
@@ -146,6 +153,7 @@ md-icon{
   width:100%;
   text-align:left;
   padding:12px;
+  border-bottom: 1px solid #CFD8DC;
 }
 
 .selectBox select{
@@ -180,10 +188,10 @@ label{
 .warning{
   background:#E53935;
   padding:.5em;
-}
-.warning span{
   color:#fff;
+  text-shadow: 1px 1px 2px #000;
 }
+
 
 #viewMessage{
   color:#263238;
@@ -273,8 +281,26 @@ md-input-container select.md-input {
     margin-bottom: 1px;
 }
 
+md-input-container select.md-input, md-input-container input{
+    height:44px;
+}
+
+md-input-container label, .selectBox label{
+  font-weight:500;
+
+}
+
+md-input-container input, md-input-container select{
+  font-size:1.1em;
+  font-weight:600;
+}
+
+.selectBox label{
+  color:rgba(0,0,0,0.54)!important;
+}
+
 md-input-container select.md-input:focus {
-    border-bottom: 2px solid rgb(0, 188, 212) !important;
+    border-bottom: 2px solid rgb(96, 125, 139) !important;
     margin-bottom: 0;
 }
 
@@ -348,6 +374,7 @@ input[type=number]::-webkit-outer-spin-button {
 @media screen and (max-width: 1024px) {
   #view-content{
     width:100%;
+    box-shadow:none;
   }
 }
 @media screen and (max-width: 600px) {
@@ -379,5 +406,7 @@ input[type=number]::-webkit-outer-spin-button {
   #mainMenu .md-toolbar-tools .md-button{
     margin-right:1em;
   }
+
+
 
 }

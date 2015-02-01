@@ -49,7 +49,7 @@ angular
         controller: 'DetailsCtrl'
       })
       .when('/proficiency', {
-        templateUrl: 'views/proficiency.html',
+        templateUrl: 'views/proficiency.html#profTitle',
         controller: 'ProfCtrl'
       })
       .when('/ability-scores', {
@@ -75,7 +75,7 @@ angular
     $scope.isDisabled = true;
     $scope.googleUrl = 'http://google.com';
   })
-  .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, $location) {
+  .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, $location, $anchorScroll) {
     $scope.toggleLeft = function() {
       $mdSidenav('left').toggle()
       .then(function(){
@@ -86,12 +86,21 @@ angular
       $location.path( path );
       $mdSidenav('left').close();
     };
+
   })
-  .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {
+  .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log, $location, $anchorScroll) {
     $scope.close = function() {
       $mdSidenav('left').close()
       .then(function(){
         $log.debug('close LEFT is done');
       });
+    };
+    $scope.gotoTop = function (){
+      // set the location.hash to the id of
+      // the element you wish to scroll to.
+      $location.hash('pageTitle');
+
+      // call $anchorScroll()
+      $anchorScroll();
     };
   });

@@ -205,7 +205,7 @@ angular.module('myappApp')
       $mdDialog.show(
         $mdDialog.alert()
           .title('Ability Score Info')
-          .content('Ability scores determine your characters power in 1 of 6 categories (str, dex, con, int, wis, cha). The score determines the modifier, which can be added to your skills and dice rolls.')
+          .content('Ability scores determine your characters power in 6 categories (str, dex, con, int, wis, cha). The score determines the modifier, which can be added to your skills and dice rolls.')
           .ariaLabel('Ability Score Info')
           .ok('Close')
           .targetEvent(ev)

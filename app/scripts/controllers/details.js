@@ -19,6 +19,7 @@ angular.module('myappApp')
     var myBackground = $cookies.background;
     var myAlignment = $cookies.alignment;
     var myExp = $cookies.experience;
+    var myLevel = $cookies.level;
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -32,7 +33,7 @@ angular.module('myappApp')
       background: '',
       alignment: '',
       experience: myExp,
-      level: ''
+      level: myLevel
     };
     $scope.races = ['Select a Race', 'Dwarf', 'Elf', 'Halfling', 'Human'];
     $scope.subraces = ['None Available'];
@@ -129,7 +130,7 @@ angular.module('myappApp')
     }//End of alignment loop
 
     if(myExp >= 0){
-      $scope.characterExp = myExp;
+      $scope.characterExp = parseInt(myExp);
     }
 
   //  $scope.selectedBackground = $scope.backgrounds[0];
@@ -159,8 +160,12 @@ angular.module('myappApp')
     };
 
     $scope.setExp = function() {
-      $cookies.experience = $scope.characterExp;
-      $cookies.level = $scope.characterLevel;
+      $cookies.experience = parseInt($scope.characterExp);
+      $cookies.level = parseInt($scope.characterLevel);
+    };
+
+    $scope.setLevel = function() {
+      $cookies.level = parseInt($scope.characterLevel);
     };
 
 
@@ -193,26 +198,26 @@ angular.module('myappApp')
     };
     // Calculates the character's level based on the experience entered
     $scope.calculateLevel = function() {
-      if(this.characterExp >= 0){ $scope.characterLevel = '1'; }
-      if(this.characterExp >= 300){ $scope.characterLevel = '2'; }
-      if(this.characterExp >= 900){ $scope.characterLevel = '3'; }
-      if(this.characterExp >= 2700){ $scope.characterLevel = '4'; }
-      if(this.characterExp >= 6500){ $scope.characterLevel = '5'; }
-      if(this.characterExp >= 14000){ $scope.characterLevel = '6'; }
-      if(this.characterExp >= 23000){ $scope.characterLevel = '7'; }
-      if(this.characterExp >= 34000){ $scope.characterLevel = '8'; }
-      if(this.characterExp >= 48000){ $scope.characterLevel = '9'; }
-      if(this.characterExp >= 64000){ $scope.characterLevel = '10'; }
-      if(this.characterExp >= 85000){ $scope.characterLevel = '11'; }
-      if(this.characterExp >= 100000){ $scope.characterLevel = '12'; }
-      if(this.characterExp >= 120000){ $scope.characterLevel = '13'; }
-      if(this.characterExp >= 140000){ $scope.characterLevel = '14'; }
-      if(this.characterExp >= 164000){ $scope.characterLevel = '15'; }
-      if(this.characterExp >= 195000){ $scope.characterLevel = '16'; }
-      if(this.characterExp >= 225000){ $scope.characterLevel = '17'; }
-      if(this.characterExp >= 265000){ $scope.characterLevel = '18'; }
-      if(this.characterExp >= 305000){ $scope.characterLevel = '19'; }
-      if(this.characterExp >= 355000){ $scope.characterLevel = '20'; }
+      if(this.characterExp >= 0){ $scope.characterLevel = 1; }
+      if(this.characterExp >= 300){ $scope.characterLevel = 2; }
+      if(this.characterExp >= 900){ $scope.characterLevel = 3; }
+      if(this.characterExp >= 2700){ $scope.characterLevel = 4; }
+      if(this.characterExp >= 6500){ $scope.characterLevel = 5; }
+      if(this.characterExp >= 14000){ $scope.characterLevel = 6; }
+      if(this.characterExp >= 23000){ $scope.characterLevel = 7; }
+      if(this.characterExp >= 34000){ $scope.characterLevel = 8; }
+      if(this.characterExp >= 48000){ $scope.characterLevel = 9; }
+      if(this.characterExp >= 64000){ $scope.characterLevel = 10; }
+      if(this.characterExp >= 85000){ $scope.characterLevel = 11; }
+      if(this.characterExp >= 100000){ $scope.characterLevel = 12; }
+      if(this.characterExp >= 120000){ $scope.characterLevel = 13; }
+      if(this.characterExp >= 140000){ $scope.characterLevel = 14; }
+      if(this.characterExp >= 164000){ $scope.characterLevel = 15; }
+      if(this.characterExp >= 195000){ $scope.characterLevel = 16; }
+      if(this.characterExp >= 225000){ $scope.characterLevel = 17; }
+      if(this.characterExp >= 265000){ $scope.characterLevel = 18; }
+      if(this.characterExp >= 305000){ $scope.characterLevel = 19; }
+      if(this.characterExp >= 355000){ $scope.characterLevel = 20; }
     };
 
   });

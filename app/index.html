@@ -2,7 +2,7 @@
 <html class="no-js">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>ScrollBinder</title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width">
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
@@ -21,18 +21,18 @@
 
 
   </head>
-  <body ng-app="myappApp" layout"row" layout-fill role="main">
+  <body ng-app="myappApp" layout="row" layout-fill role="main">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
     <div ng-controller="AppCtrl" layout="column" layout-fill>
     <!-- Add your site or application content here -->
-      <md-toolbar id="mainMenu"class="md-primary">
+      <md-toolbar id="mainMenu" class="md-primary">
         <div class="md-toolbar-tools">
           <md-button class="md-primary appMenu" ng-click="toggleLeft()" aria-label="Menu">
             <md-icon icon="img/icons/ic_menu_white_24dp.png" style="width: 24px; height: 24px;"></md-icon>
           </md-button>
-          <span class="md-flex">Scrollbinder</span>
+          <span class="md-flex">ScrollBinder</span>
         </div>
 
       </md-toolbar>
@@ -43,7 +43,10 @@
               <span flex="85" class="md-flex">Menu</span>
 
               <md-button flex="15" class="md-primary closeAppMenu" ng-click="toggleLeft()" aria-label="Close Menu">
-                <md-icon icon="img/icons/ic_clear_white_24dp.png" style="width: 24px; height: 24px;"></md-icon>
+                <!-- <md-icon icon="img/icons/ic_clear_white_24dp.png" style="width: 24px; height: 24px;"></md-icon> -->
+                <!-- <md-icon></md-icon> -->
+                <img  style="width: 24px; height: 24px;" src="img/icons/ic_clear_white_24dp.png">
+
               </md-button>
 
             </div>
@@ -55,15 +58,15 @@
               Home
             </md-button>
 
-            <md-button ng-click="go('/character-details')" class="md-padding md-primary menu-item">
+            <md-button ng-click="go('/character-details'); gotoTop()" class="md-padding md-primary menu-item">
               Character Details
             </md-button>
 
-            <md-button ng-click="go('/proficiency')" class="md-padding md-primary menu-item">
+            <md-button ng-click="go('/proficiency'); gotoTop()" class="md-padding md-primary menu-item">
               Proficiency
             </md-button>
 
-            <md-button ng-click="go('/ability-scores')" class="md-padding md-primary menu-item">
+            <md-button ng-click="go('/ability-scores'); gotoTop()" class="md-padding md-primary menu-item">
               Ability Scores
             </md-button>
 
