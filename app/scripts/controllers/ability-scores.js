@@ -139,6 +139,8 @@ angular.module('myappApp')
             msg : 'Human Race Bonus: ',
             bns : '+1 to all stats'
           }];
+          $scope.isMessage = true;
+          $scope.isWarning = false;
         }
       }
     }; //End of getRace();

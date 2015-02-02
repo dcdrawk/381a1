@@ -60,9 +60,9 @@ angular
         templateUrl: 'views/to-do.html',
         controller: 'ToDoCtrl'
       })
-      .when('/example', {
-        templateUrl: 'views/example.html',
-        controller: 'ExampleCtrl'
+      .when('/character-summary', {
+        templateUrl: 'views/character-summary.html',
+        controller: 'SummaryCtrl'
       })
       .otherwise({
         redirectTo: '/'

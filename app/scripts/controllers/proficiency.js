@@ -13,7 +13,6 @@ angular.module('myappApp')
     $scope.isHidden = false;
     $scope.isMessage = true;
     $scope.isWarning = true;
-
     //test to see if the level is set
     if(myLevel >= 1){
       $log.debug(myLevel);

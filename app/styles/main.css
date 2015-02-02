@@ -110,6 +110,13 @@ md-sidenav .md-toolbar-tools{
   padding-right:0;
 }
 
+md-sidenav .menu-item img{
+  margin-right:10px;
+}
+md-sidenav .menu-item span{
+  vertical-align:bottom;
+}
+
 md-toolbar{
   box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.5);
 }
@@ -250,10 +257,12 @@ label{
   margin:0;
   display:block;
 }
-
 .profStat div {
   min-height: 2em;
   display: block;
+}
+.statMod p{
+  text-align:center;
 }
 
 /*pop-up dialog styles*/
@@ -272,6 +281,39 @@ md-dialog .md-button{
   width: 100%;
 }
 
+/*Summary styles*/
+#basicInfo{
+  padding:0em 1em;
+  border-bottom:1px solid #bbb;
+  margin-top:1em;
+}
+#modSummary{
+  margin-bottom:1em;
+}
+#modSummary .abilityMod{
+  padding:0em 1em;
+}
+
+#modSummary .abilityMod p{
+  margin: .5em 0;
+}
+
+#modSummary .abilityMod:nth-child(even){
+  background:#ECEFF1;
+}
+#modSummary h3{
+  padding-left:1em;
+  margin-top:1em;
+}
+
+
+/*bottom button styles*/
+
+.bottomButtons .md-button{
+  border-radius:0;
+  border-top:1px solid rgb(69,90,100);
+  margin:0;
+}
 
 /*Modified the label text tansform so the text doesn't shrink */
 md-input-container.md-input-focused label, md-input-container.md-input-has-value label {
