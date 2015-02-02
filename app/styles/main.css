@@ -246,13 +246,13 @@ label{
   padding:1em;
 }
 .profStat p{
-  height:2em;
+  min-height:2em;
   margin:0;
   display:block;
 }
 
 .profStat div {
-  height: 2em;
+  min-height: 2em;
   display: block;
 }
 
