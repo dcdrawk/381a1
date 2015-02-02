@@ -245,6 +245,11 @@ label{
 .profStat{
   padding:1em;
 }
+.profStat p{
+  height:2em;
+  margin:0;
+  display:block;  
+}
 
 /*pop-up dialog styles*/
 md-dialog p{
