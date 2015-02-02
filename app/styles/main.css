@@ -248,7 +248,12 @@ label{
 .profStat p{
   height:2em;
   margin:0;
-  display:block;  
+  display:block;
+}
+
+.profStat div {
+  height: 2em;
+  display: block;
 }
 
 /*pop-up dialog styles*/
