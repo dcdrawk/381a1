@@ -13,7 +13,7 @@
       <div layout layout-sm="column">
 
         <md-input-container flex>
-          <label>Character Name</label>
+          <label class="placeholderLabel">Character Name</label>
           <input ng-model="details.name" ng-change="setName()">
         </md-input-container>
 
@@ -50,12 +50,12 @@
 
       <div layout layout-sm="column">
         <md-input-container flex>
-          <label>Experience Points</label>
-          <input type="number" name="exp" ng-model="characterExp" ng-change="calculateLevel(); setExp()" ng-init="calculateLevel()">
+          <label class="placeholderLabel">Experience Points</label>
+          <input type="number" name="exp" ng-model="characterExp" ng-change="calculateLevel(); setExp()">
         </md-input-container>
         <md-input-container flex>
-          <label>Level</label>
-          <input type="number" ng-change="setLevel()" ng-model="characterLevel">
+          <label class="placeholderLabel">Level</label>
+          <input type="number" ng-model="characterLevel" ng-change="setLevel()" >
         </md-input-container>
       </div>
     </form>

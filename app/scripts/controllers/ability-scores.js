@@ -52,7 +52,7 @@ angular.module('myappApp')
       if(myRace === 'Select a Race' || typeof myRace === 'undefined'){//sees if race are undefined
         $log.debug('no race selected');
         $scope.detectRace = [{
-          msg : 'Warning - No Race or Subrace selected. Select a Race and Subrace to display score bonuses.',//tell the user
+          msg : 'No Race or Subrace selected. Select a Race and Subrace to display score bonuses.',//tell the user
           bns : ''
         }];
         $scope.isMessage = false;
@@ -65,7 +65,7 @@ angular.module('myappApp')
         $log.debug('no subrace selected');
 
         $scope.detectRace = [{
-          msg : 'Warning - No Subrace selected. Select a Race and Subrace to display score bonuses.',//tell the user
+          msg : 'No Subrace selected. Select a Race and Subrace to display score bonuses.',//tell the user
           bns : ''
         }];
         $scope.isMessage = false;
@@ -73,20 +73,16 @@ angular.module('myappApp')
       } else {
 
         if(myRace === 'Dwarf'){ //Detects the race
-          $scope.detectRace = [{ //sets the bonus message and value
-            msg : 'Dwarf Race Bonus: ',
-            bns : '+2 Con'
-          }];
           if(mySubrace === 'Hill Dwarf'){ //detects the subrace
             $scope.detectSubrace = [{
-              msg : 'Hill Dwarf Subrace Bonus: ',
-              bns : '+1 Wis'
+              msg : 'Hill Dwarf Race Bonus: ',
+              bns : '+2con, +1 Wis'
             }];
           }
           if(mySubrace === 'Mountain Dwarf'){ //detects the subrace
             $scope.detectSubrace = [{
-              msg : 'Mountain Dwarf Subrace Bonus: ',
-              bns : '+2 Str'
+              msg : 'Mountain Dwarf Race Bonus: ',
+              bns : '+2con, +2 Str'
             }];
           }
           $scope.isMessage = true;
@@ -94,20 +90,16 @@ angular.module('myappApp')
         }
 
         if(myRace === 'Elf'){ //Detects the race
-          $scope.detectRace = [{//sets the bonus message and value
-            msg : 'Elf Race Bonus: ',
-            bns : '+2 Dex'
-          }];
           if(mySubrace === 'Wood Elf'){ //detects the subrace
             $scope.detectSubrace = [{
-              msg : 'Wood Elf Subrace Bonus: ',
-              bns : '+1 Wis'
+              msg : 'Wood Elf Race Bonus: ',
+              bns : '+2 Dex, +1 Wis'
             }];
           }
           if(mySubrace === 'High Elf'){ //detects the subrace
             $scope.detectSubrace = [{
-              msg : 'High Elf Subrace Bonus: ',
-              bns : '+1 Int'
+              msg : 'High Elf Race Bonus: ',
+              bns : '+2 Dex, +1 Int'
             }];
           }
           $scope.isMessage = true;
@@ -115,27 +107,23 @@ angular.module('myappApp')
         }
 
         if(myRace === 'Halfling'){ //Detects the race
-          $scope.detectRace = [{//sets the bonus message and value
-            msg : 'Halfling Race Bonus: ',
-            bns : '+2 Dex'
-          }];
           if(mySubrace === 'Lightfoot'){ //detects the subrace
             $scope.detectSubrace = [{
-              msg : 'Lightfoot Subrace Bonus: ',
-              bns : '+1 Cha'
+              msg : 'Lightfoot Race Bonus: ',
+              bns : '+2 Dex, +1 Cha'
             }];
           }
           if(mySubrace === 'Stout'){ //detects the subrace
             $scope.detectSubrace = [{
-              msg : 'Stout Subrace Bonus: ',
-              bns : '+1 Con'
+              msg : 'Stout Race Bonus: ',
+              bns : '+2 Dex, +1 Con'
             }];
           }
           $scope.isMessage = true;
           $scope.isWarning = false;
         }
         if(myRace === 'Human'){ //Detects the race
-          $scope.detectRace = [{//sets the bonus message and value
+          $scope.detectSubrace = [{//sets the bonus message and value
             msg : 'Human Race Bonus: ',
             bns : '+1 to all stats'
           }];
@@ -177,26 +165,32 @@ angular.module('myappApp')
     //Using the function above, these set the cookies for each ability
     $scope.setStr = function() {
       $scope.strMod = $scope.setModifier(this.abilityScores.str);
+      $cookies.strMod = $scope.setModifier(this.abilityScores.str);
       $cookies.str = $scope.abilityScores.str;
     };
     $scope.setDex = function() {
       $scope.dexMod = $scope.setModifier(this.abilityScores.dex);
+      $cookies.dexMod = $scope.setModifier(this.abilityScores.dex);
       $cookies.dex = $scope.abilityScores.dex;
     };
     $scope.setCon = function() {
       $scope.conMod = $scope.setModifier(this.abilityScores.con);
+      $cookies.conMod = $scope.setModifier(this.abilityScores.con);
       $cookies.con = $scope.abilityScores.con;
     };
     $scope.setInt = function() {
       $scope.intMod = $scope.setModifier(this.abilityScores.int);
+      $cookies.intMod = $scope.setModifier(this.abilityScores.int);
       $cookies.int = $scope.abilityScores.int;
     };
     $scope.setWis = function() {
       $scope.wisMod = $scope.setModifier(this.abilityScores.wis);
+      $cookies.wisMod = $scope.setModifier(this.abilityScores.wis);
       $cookies.wis = $scope.abilityScores.wis;
     };
     $scope.setCha = function() {
       $scope.chaMod = $scope.setModifier(this.abilityScores.cha);
+      $cookies.chaMod = $scope.setModifier(this.abilityScores.cha);
       $cookies.cha = $scope.abilityScores.cha;
     };
 

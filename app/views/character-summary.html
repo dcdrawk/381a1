@@ -9,6 +9,13 @@
       </md-button> -->
     </div>
 
+    <!-- Message to user -->
+    <div layout-sm="column">
+      <span id="viewMessage" ng-class="{'hide' : isHidden}" ng-model="warningMessage" ng-init="getRace()">
+        <span ng-click="go('/character-details')" ng-model="basicMessage" class="warning" ng-repeat="item in basicMessage">{{item.msg}}</span>
+      </span>
+    </div>
+
     <div id="characterSummary" ng-model="charSummary" ng-repeat="item in charSummary">
       <div layout="column" layout-sm="column">
 
@@ -17,8 +24,17 @@
           <p><strong>Level {{item.level}} {{item.race}} {{item.class}}</strong></p>
         </div>
 
+        <div class="titleBar">
+          <h2>Ability Modifiers:</h2>
+        </div>
+
+        <div layout-sm="column">
+          <span id="viewMessage" ng-class="{'hide' : isModMsgHidden}" ng-model="warningMessage" ng-init="getRace()">
+            <span ng-click="go('/ability-scores')" ng-model="abilityScoreMessage" class="warning" ng-repeat="item in abilityScoreMessage">{{item.msg}}</span>
+          </span>
+        </div>
+
         <div id="modSummary">
-          <h3>Ability Modifiers:</h3>
 
           <div class="abilityMod" layout="row">
             <div flex="50"><p>Strength</p></div>
@@ -63,9 +79,9 @@
           </div>
         </div>
         <!-- end of modSummary -->
-        <div layout="row" layout-sm="column" class="bottomButtons">
-          <md-button ng-href="#/character-details" ng-click="gotoTop()" class="md-primary" flex="50" flex-sm="100"><span>Edit Details</span></md-button>
-          <md-button ng-href="#/ability-scores" ng-click="gotoTop()" class="md-primary" flex="50" flex-sm="100"><span>Edit Ability Scores</span></md-button>
+        <div id="bottomMenu" ng-controller="AppCtrl" layout="row" layout-sm="column" class="">
+          <md-button ng-click="go('/character-details'); gotoTop()" class="topBtn md-primary" flex="50" flex-sm="100"><span>Edit Details</span></md-button>
+          <md-button ng-click="go('/ability-scores'); gotoTop()" class="md-primary" flex="50" flex-sm="100"><span>Edit Ability Scores</span></md-button>
         </div>
       </div>
 

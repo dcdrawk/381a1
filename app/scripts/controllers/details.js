@@ -133,6 +133,10 @@ angular.module('myappApp')
       $scope.characterExp = parseInt(myExp);
     }
 
+    if(myLevel >= 0){
+      $scope.characterLevel = parseInt(myLevel);
+    }
+
   //  $scope.selectedBackground = $scope.backgrounds[0];
   //  $scope.selectedAlignment = $scope.alignment[0];
 
@@ -166,6 +170,7 @@ angular.module('myappApp')
 
     $scope.setLevel = function() {
       $cookies.level = parseInt($scope.characterLevel);
+      $log.debug('etest');
     };
 
 

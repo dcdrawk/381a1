@@ -10,7 +10,7 @@
   <!-- Message to user -->
   <div layout layout-sm="column">
     <span id="viewMessage" ng-class="{'hide' : isHidden}" ng-model="detectRace" ng-init="getRace()">
-      <span ng-model="detectRace" ng-class="{'warning' : isWarning, 'message' : isMessage}" ng-repeat="item in detectRace">{{item.msg}}<strong>{{item.bns}}</strong></span>
+      <span ng-click="go('/character-details')" ng-model="detectRace" ng-class="{'warning' : isWarning, 'message' : isMessage}" ng-repeat="item in detectRace">{{item.msg}}<strong>{{item.bns}}</strong></span>
       <span ng-model="detectSubrace" ng-class="{'message' : isMessage}" ng-repeat="item in detectSubrace">{{item.msg}}<strong>{{item.bns}}</strong></span>
     </span>
   </div>

@@ -68,6 +68,8 @@ h1{
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
   padding:2em;
+  margin-bottom:0;
+  background-color: #ECEFF1;
 }
 
 .jumbotron p{
@@ -103,6 +105,9 @@ a.md-button{
 }
 
 /*SideNav Styles */
+.md-sidenav-left, md-sidenav{
+  background:#ECEFF1;
+}
 md-sidenav .md-button{
   margin:0;
 }
@@ -122,6 +127,14 @@ md-toolbar{
 }
 
 /* Custom Stuff */
+
+/*making the background the lightest version of Blue Grey*/
+/*http://www.google.com/design/spec/style/color.html#color-color-palette*/
+
+md-content.md-default-theme{
+  background:#ECEFF1;
+}
+
 .marketing h2{
     margin-left:1em!important;
 }
@@ -182,6 +195,31 @@ label{
   top:-25px;
 }
 
+#bottomMenu a.md-button, #bottomMenu .md-button{
+  background-color: #B0BEC5;
+  padding: 1em;
+  margin: 0;
+  color: #37474F;
+  border-radius: 0;
+}
+
+#bottomMenu.row{
+  margin:0;
+}
+#bottomMenu .topBtn{
+  border-bottom:2px solid #90A4AE;
+}
+
+/*summary page*/
+#basicInfo p{
+  font-size:1.5em;
+}
+
+md-input-container .placeholderLabel{
+  webkit-transform: translate3d(0, 42px, 0) scale(1);
+  transform: translate3d(0, 42px, 0) scale(1);
+  color: rgba(0,0,0,0.5);
+}
 /*Setting up messages and warning dialogue boxes*/
 
 .hide{
@@ -221,7 +259,7 @@ label{
   text-align:center;
 }
 #abilityScores .heading{
-  font-weight:600;
+  font-weight:500;
   color:#37474F;
   padding:1em;
 }
@@ -235,8 +273,8 @@ label{
   margin-top: -6px;
   padding-bottom:0;
 }
-#abilityScores .abilityRow:nth-child(even), .profStat:nth-child(even){
-  background:#ECEFF1;
+#abilityScores .abilityRow:nth-child(odd), .profStat:nth-child(odd), .abilityMod:nth-child(odd){
+  background:#fff;
 }
 
 #abilityScores md-input-container input{
@@ -249,6 +287,9 @@ label{
 }
 
 /*proficiency styles*/
+.disabled{
+  opacity:.5;
+}
 .profStat{
   padding:1em;
 }
@@ -427,6 +468,9 @@ input[type=number]::-webkit-outer-spin-button {
   #view-content{
     width:100%;
     box-shadow:none;
+  }
+  #doc-content{
+      overflow:hidden;
   }
 }
 @media screen and (max-width: 600px) {

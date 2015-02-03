@@ -10,12 +10,25 @@ angular.module('myappApp')
     var myClass = $cookies.class;
     var myLevel = $cookies.level;
 
+
     $scope.isHidden = false;
     $scope.isMessage = true;
     $scope.isWarning = true;
+
+    $scope.levelMsg = '';
+
+    $scope.isDisabled = false;
+    $scope.bonusDisabled = false;
+    $scope.equipmentDisabled = false;
+
     //test to see if the level is set
     if(myLevel >= 1){
       $log.debug(myLevel);
+      $scope.levelMsg = 'Level ' + myLevel;
+      $scope.detectClass = [{//sets the text for the warning
+        msg1 : 'Displaying proficiency bonus for ',//tell the user
+        bold : $scope.levelMsg+'.',//More detailed warning if class check also fails
+      }];
     }else{
       $log.debug('level not set');
       $scope.warningMessage = [{//sets the text for the warning
@@ -23,6 +36,8 @@ angular.module('myappApp')
         bold : 'Character Details',
         msg2 : ' to show Proficiency Bonus.'
       }];
+      $scope.levelMsg = '';
+      $scope.bonusDisabled = true;
       if(myClass !== 'Cleric' && myClass !== 'Fighter' && myClass !== 'Rogue' && myClass !== 'Wizard'){//Checks if a class is selected yet
         $scope.warningMessage = [{//sets the text for the warning
           msg1 : 'Level/Class not set. Set level/class in ',//tell the user
@@ -30,6 +45,7 @@ angular.module('myappApp')
           msg2 : ' to show Proficiency info.'
         }];
       }
+
     }
     if(myLevel >= 1 && myLevel <= 4){$scope.profBonus = 2;}
     if(myLevel >= 5 && myLevel <= 8){$scope.profBonus = 3;}
@@ -52,10 +68,11 @@ angular.module('myappApp')
         bold : 'Character Details',//More detailed warning if class check also fails
         msg2 : ' to show Proficiency info.'
       }];
+      $scope.equipmentDisabled = true;
     } else {
       $scope.detectClass = [{//sets the text for the warning
         msg1 : 'Displaying proficiency for ',//tell the user
-        bold : 'Level ' + myLevel + ' ' + myClass + '.',//More detailed warning if class check also fails
+        bold : $scope.levelMsg + ' ' + myClass + '.',//More detailed warning if class check also fails
       }];
     }
     if(myClass === 'Cleric'){
