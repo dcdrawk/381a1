@@ -36,6 +36,9 @@ html, body{
   border-top: 1px solid #e5e5e5;
 }
 
+.heading div{
+  font-weight:600;
+}
 #doc-content{
     margin:auto;
 }
