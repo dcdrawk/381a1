@@ -18,23 +18,24 @@ angular
     'ngSanitize',
     'ngTouch',
     'ngMaterial',
-    'ngMdIcons'
+    'ngMdIcons',
+    'ngCookies'
   ])
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
-    .primaryColor('cyan', {
-      'default': '700', // by default use shade 400 from the pink palette for primary intentions
+    .primaryColor('blue-grey', {
+      'default': '700', // by default use shade 700 from the cyan palette for primary intentions
       'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
-      'hue-2': '600', // use shade 600 for the <code>md-hue-2</code> class
+      'hue-2': '200', // use shade 200 for the <code>md-hue-2</code> class
       'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
     })
     // If you specify less than all of the keys, it will inherit from the
     // default shades
-    .accentColor('orange', {
-      'default': '600' // use shade 200 for default, and keep all other shades the same
+    .accentColor('amber', {
+      'default': '400' // use shade 600 for default, and keep all other shades the same
     })
     .warnColor('red', {
-      'default': '400' // use shade 200 for default, and keep all other shades the same
+      'default': '600' // use shade 400 for default, and keep all other shades the same
     });
   })
   .config(function ($routeProvider) {
@@ -47,13 +48,21 @@ angular
         templateUrl: 'views/character-details.html',
         controller: 'DetailsCtrl'
       })
+      .when('/proficiency', {
+        templateUrl: 'views/proficiency.html#profTitle',
+        controller: 'ProfCtrl'
+      })
       .when('/ability-scores', {
         templateUrl: 'views/ability-scores.html',
         controller: 'AScoreCtrl'
       })
-      .when('/example', {
-        templateUrl: 'views/example.html',
-        controller: 'ExampleCtrl'
+      .when('/to-do', {
+        templateUrl: 'views/to-do.html',
+        controller: 'ToDoCtrl'
+      })
+      .when('/character-summary', {
+        templateUrl: 'views/character-summary.html',
+        controller: 'SummaryCtrl'
       })
       .otherwise({
         redirectTo: '/'
@@ -66,7 +75,7 @@ angular
     $scope.isDisabled = true;
     $scope.googleUrl = 'http://google.com';
   })
-  .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, $location) {
+  .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, $location, $anchorScroll) {
     $scope.toggleLeft = function() {
       $mdSidenav('left').toggle()
       .then(function(){
@@ -75,13 +84,23 @@ angular
     };
     $scope.go = function ( path ) {
       $location.path( path );
+      $mdSidenav('left').close();
     };
+
   })
-  .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {
+  .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log, $location, $anchorScroll) {
     $scope.close = function() {
       $mdSidenav('left').close()
       .then(function(){
         $log.debug('close LEFT is done');
       });
+    };
+    $scope.gotoTop = function (){
+      // set the location.hash to the id of
+      // the element you wish to scroll to.
+      $location.hash('pageTitle');
+
+      // call $anchorScroll()
+      $anchorScroll();
     };
   });
