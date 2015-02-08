@@ -70,7 +70,7 @@ h1{
 .jumbotron {
   text-align: center;
   border-bottom: 1px solid #e5e5e5;
-  padding:2em;
+  padding:1em;
   margin-bottom:0;
   background-color: #ECEFF1;
 }
@@ -130,6 +130,10 @@ md-toolbar{
 }
 
 /* Custom Stuff */
+
+#logo{
+  max-width:150px;
+}
 
 /*making the background the lightest version of Blue Grey*/
 /*http://www.google.com/design/spec/style/color.html#color-color-palette*/
@@ -210,7 +214,7 @@ label{
   margin:0;
 }
 #bottomMenu .topBtn{
-  border-bottom:2px solid #90A4AE;
+  border-right:2px solid #90A4AE;
 }
 
 /*summary page*/
@@ -465,7 +469,9 @@ input[type=number]::-webkit-outer-spin-button {
   .jumbotron h1, .jumbotron .h1 {
     font-size: 63px;
   }
-
+  .closeAppMenu{
+    margin-right:1em;
+  }
 }
 @media screen and (max-width: 1024px) {
   #view-content{
@@ -477,6 +483,10 @@ input[type=number]::-webkit-outer-spin-button {
   }
 }
 @media screen and (max-width: 600px) {
+  #logo{
+    width:150px;
+    max-width:100%;
+  }
   a.md-button{
     max-width:100%;
     width:100%;
@@ -509,6 +519,9 @@ input[type=number]::-webkit-outer-spin-button {
     line-height: 2em;
     min-height:70px;
   }
-
+  #bottomMenu .topBtn{
+    border-bottom:2px solid #90A4AE;
+    border-right:none;
+  }
 
 }

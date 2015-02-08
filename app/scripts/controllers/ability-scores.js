@@ -144,6 +144,7 @@ angular.module('myappApp')
 
     //Ability score calculations as defined by the basic player's guide
     $scope.setModifier = function( abilityScore ) {
+      if(abilityScore === null){return null;}
       if(abilityScore <= 1){return -5;}
       if(abilityScore >= 2 && abilityScore <= 3){return -4;}
       if(abilityScore >= 4 && abilityScore <= 5){return -3;}
@@ -201,7 +202,7 @@ angular.module('myappApp')
       $mdDialog.show(
         $mdDialog.alert()
           .title('Ability Score Info')
-          .content('Ability scores determine your characters power in 6 categories (str, dex, con, int, wis, cha). The score determines the modifier, which can be added to your skills and dice rolls.')
+          .content('Ability scores determine your characters power in 6 categories (str, dex, con, int, wis, cha) and can range from 0-30. The score determines the modifier, which can be added to your skills and dice rolls.')
           .ariaLabel('Ability Score Info')
           .ok('Close')
           .targetEvent(ev)
