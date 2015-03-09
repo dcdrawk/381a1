@@ -209,6 +209,13 @@ label{
   position:absolute;
   top:-25px;
 }
+md-select-menu{
+	max-width: 90%;
+	margin:auto;
+}
+.md-select-menu-container{
+	left:0px!important;
+}
 
 md-input-label{
     padding-left: .5em;
