@@ -23,7 +23,7 @@ angular
   ])
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
-    .primaryColor('blue-grey', {
+    .primaryPalette('blue-grey', {
       'default': '700', // by default use shade 700 from the cyan palette for primary intentions
       'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
       'hue-2': '200', // use shade 200 for the <code>md-hue-2</code> class
@@ -31,10 +31,10 @@ angular
     })
     // If you specify less than all of the keys, it will inherit from the
     // default shades
-    .accentColor('amber', {
+    .accentPalette  ('amber', {
       'default': '400' // use shade 600 for default, and keep all other shades the same
     })
-    .warnColor('red', {
+    .warnPalette('red', {
       'default': '600' // use shade 400 for default, and keep all other shades the same
     });
   })

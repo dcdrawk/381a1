@@ -95,7 +95,6 @@ h1{
 .md-button{
   padding:10px;
   margin-right:5px;
-  margin-bottom:5px;
 }
 .titleBar .md-button{
   margin-bottom:0;
@@ -113,6 +112,7 @@ a.md-button{
 }
 md-sidenav .md-button{
   margin:0;
+    color:rgb(69, 90, 100);
 }
 md-sidenav .md-toolbar-tools{
   padding-right:0;
@@ -190,7 +190,15 @@ md-icon{
 }
 
 .selectBox{
-  padding-top:25px;
+  padding-top:0px;
+}
+
+.selectBox label{
+  padding-left:.5em;
+}
+
+md-select-menu{
+    font-weight: 700;
 }
 
 label{
@@ -201,6 +209,16 @@ label{
   position:absolute;
   top:-25px;
 }
+
+md-input-label{
+    padding-left: .5em;
+    padding-right: .5em;
+}
+md-input-container{
+    padding-left:.5em;
+    padding-right:.5em;
+}
+
 
 #bottomMenu a.md-button, #bottomMenu .md-button{
   background-color: #B0BEC5;
@@ -226,6 +244,14 @@ md-input-container .placeholderLabel{
   webkit-transform: translate3d(0, 42px, 0) scale(1);
   transform: translate3d(0, 42px, 0) scale(1);
   color: rgba(0,0,0,0.5);
+}
+
+md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float){
+     transform: translate3d(0, -2px, 0) scale(1);
+ }
+
+md-input-container label:not(.md-no-float){
+     transform: translate3d(0, 44px, 0) scale(1);
 }
 /*Setting up messages and warning dialogue boxes*/
 
@@ -276,7 +302,7 @@ md-input-container .placeholderLabel{
 .abilityRow .title, .abilityRow .modifier{
   padding-top:8px;
 }
-#abilityScores md-input-container{
+#abilityScores md-input-container, #abilityScores .abScore{
   margin-top: -6px;
   padding-bottom:0;
 }
@@ -284,15 +310,20 @@ md-input-container .placeholderLabel{
   background:#fff;
 }
 
-#abilityScores md-input-container input{
+#abilityScores md-input-container input, #abilityScores .abScore input{
   width: 44px;
   height: 44px;
   margin: auto;
   text-align: center;
   border: 1px solid rgb(255,202,40);
   background: #FFF8E1;
+    font-weight: 700;
 }
 
+.abScore .md-placeholder{
+    transform: none;
+    -webkit-transform:none;
+}
 /*proficiency styles*/
 .disabled{
   opacity:.5;
@@ -317,6 +348,7 @@ md-input-container .placeholderLabel{
 md-dialog p{
   line-height:1.5;
 }
+
 md-dialog md-content{
   padding:1em;
 }
@@ -387,7 +419,6 @@ md-input-container select.md-input, md-input-container input{
 
 md-input-container label, .selectBox label{
   font-weight:500;
-
 }
 
 md-input-container input, md-input-container select{
@@ -413,6 +444,20 @@ md-input-container select.md-input::-ms-expand {
     display: none;
 }
 
+md-select{
+    margin-top: .8em;
+    width: 100%;
+    padding: 0 .5em;
+    font-size: 1.1em;
+    padding-bottom: 26px;
+}
+.md-select-label .md-select-icon{
+    position:absolute;
+    right: 5px;
+}
+md-select-label{
+    font-weight:700;
+}
 /*-End of select container styles-*/
 
 /*Needed to remove spinners from number inputs

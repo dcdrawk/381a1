@@ -27,9 +27,9 @@
     <div class="abilityRow" layout="row" ng-model="strength">
       <div class="title" flex="33">Strength</div>
       <div flex="33">
-        <md-input-container>
+        <div class="abScore">
           <input tabindex="1" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="abilityScores.str" ng-change="setStr()">
-        </md-input-container>
+        </div>
       </div>
 
       <div class="modifier" ng-model="strMod" flex="33" ng-init="setStr()"><strong>{{strMod}}</strong></div>
@@ -39,9 +39,9 @@
     <div class="abilityRow" layout="row" ng-model="dexterity">
       <div class="title" flex="33">Dexterity</div>
       <div flex="33">
-        <md-input-container>
+        <div class="abScore">
           <input tabindex="2" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="abilityScores.dex" ng-change="setDex()">
-        </md-input-container>
+        </div>
       </div>
       <div class="modifier" ng-model="dexMod" flex="33" ng-init="setDex()"><strong>{{dexMod}}</strong></div>
     </div>
@@ -50,9 +50,9 @@
     <div class="abilityRow" layout="row" ng-model="constitution">
       <div class="title" flex="33">Constitution</div>
       <div flex="33">
-        <md-input-container>
+        <div class="abScore">
           <input tabindex="3" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="abilityScores.con" ng-change="setCon()">
-        </md-input-container>
+        </div>
       </div>
       <div class="modifier" ng-model="conMod" flex="33" ng-init="setCon()"><strong>{{conMod}}</strong></div>
     </div>
@@ -61,9 +61,9 @@
     <div class="abilityRow" layout="row" ng-model="intelligence">
       <div class="title" flex="33">Intelligence</div>
       <div flex="33">
-        <md-input-container>
+        <div class="abScore">
           <input tabindex="4" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="abilityScores.int" ng-change="setInt()">
-        </md-input-container>
+        </div>
       </div>
       <div class="modifier" ng-model="intMod" flex="33" ng-init="setInt()"><strong>{{intMod}}</strong></div>
     </div>
@@ -72,9 +72,9 @@
     <div class="abilityRow" layout="row" ng-model="wisdom">
       <div class="title" flex="33">Wisdom</div>
       <div flex="33">
-        <md-input-container>
+        <div class="abScore">
           <input tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="abilityScores.wis" ng-change="setWis()">
-        </md-input-container>
+        </div>
       </div>
       <div class="modifier" ng-model="wisMod" flex="33" ng-init="setWis()"><strong>{{wisMod}}</strong></div>
     </div>
@@ -83,9 +83,9 @@
     <div class="abilityRow" layout="row" ng-model="charisma">
       <div class="title" flex="33">Charisma</div>
       <div flex="33">
-        <md-input-container>
+        <div class="abScore">
           <input tabindex="6" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="abilityScores.cha" ng-change="setCha()">
-        </md-input-container>
+        </div>
       </div>
       <div class="modifier" ng-model="chaMod" flex="33" ng-init="setCha()"><strong>{{chaMod}}</strong></div>
     </div>
