@@ -77,10 +77,19 @@ angular
   })
   .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, $location, $anchorScroll) {
     $scope.toggleLeft = function() {
+		$log.debug('toggled');
       $mdSidenav('left').toggle()
       .then(function(){
         $log.debug('toggle left is done');
       });
+    };
+	$scope.openLeft = function() {
+		$log.debug('OPEN!');
+      $mdSidenav('left').open();
+    };
+	$scope.closeLeft = function() {
+		$log.debug('CLOSE!');
+      $mdSidenav('left').close();
     };
     $scope.go = function ( path ) {
       $location.path( path );

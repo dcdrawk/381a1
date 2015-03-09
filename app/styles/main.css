@@ -199,6 +199,11 @@ md-icon{
 
 md-select-menu{
     font-weight: 700;
+	max-width:90%;
+	margin:auto;
+}
+.md-select-menu-container{
+	left:0px!important;
 }
 
 label{
