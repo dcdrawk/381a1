@@ -8,10 +8,10 @@
  * Controller of the myappApp
  */
 angular.module('myappApp')
-  .controller('SummaryCtrl', function ($scope, $cookies, $log, $location, $anchorScroll) {
+  .controller('SummaryCtrl', function ($scope, $cookies, $log) {
 
 
-    var myName = $cookies.charName;
+    //var myName = $cookies.charName;
     var myLevel = $cookies.level;
     var myRace = $cookies.race;
     var myClass = $cookies.class;

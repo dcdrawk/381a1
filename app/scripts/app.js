@@ -75,7 +75,7 @@ angular
     $scope.isDisabled = true;
     $scope.googleUrl = 'http://google.com';
   })
-  .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, $location, $anchorScroll) {
+  .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, $location) {
     $scope.toggleLeft = function() {
       $mdSidenav('left').toggle()
       .then(function(){

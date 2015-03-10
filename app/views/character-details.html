@@ -19,10 +19,19 @@
 
        <div class="selectBox" flex>
             <label class="md-primary">Race</label>
-            <md-select ng-model="selectedRace" placeholder="Select a Race" ng-change="updateSubrace(); setRace(); setSubrace()">
+            <md-select ng-class="{'show' : customRace == false, 'hide' : customRace}" ng-model="selectedRace" placeholder="Select a Race" ng-change="updateSubrace(); setRace(); setSubrace()">
                 <md-select-label>{{selectedRace}}</md-select-label>
                 <md-option ng-repeat="item in races track by item" ng-value="item">{{item}}</md-option>
             </md-select>
+           
+            <md-input-container class="customInputContainer" layout="row" ng-class="{'show' : customRace, 'hide' : customRace == false}" flex>
+                <input type="text" class="customInput inline" placeholder="Custom Race" class="md-input" ng-model="selectedRace" ng-change="setRace()" flex="75">
+                
+                <md-button flex class="md-primary clearCustom" ng-click="clearRace()" aria-label="Close Menu">
+                    <img  style="width: 24px; height: 24px;" src="img/icons/clear-grey.png">
+                </md-button>
+           </md-input-container>
+           
       </div>
           
           

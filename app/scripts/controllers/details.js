@@ -8,7 +8,7 @@
  * Controller of the myappApp
  */
 angular.module('myappApp')
-  .controller('DetailsCtrl', function ($scope, $log, $cookies) {
+.controller('DetailsCtrl', function ($scope, $log, $cookies) {
     var i; //Setting variables for forloops
     var j;
 
@@ -20,14 +20,10 @@ angular.module('myappApp')
     var myAlignment = $cookies.alignment;
     var myExp = $cookies.experience;
     var myLevel = $cookies.level;
-    $scope.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+    
     $scope.details = {
       name: myName,
-      race: myRace,
+      race: '',
       subrace: '',
       class: '',
       background: '',
@@ -35,8 +31,14 @@ angular.module('myappApp')
       experience: myExp,
       level: myLevel
     };
-    $scope.races = ['Select a Race', 'Dwarf', 'Elf', 'Halfling', 'Human'];
-    $scope.subraces = ['None Available'];
+    
+    $scope.customRace = false;
+    $scope.races = ['Select a Race', 'Dwarf', 'Elf', 'Halfling', 'Human', 'Custom Race'];
+    $scope.subraces = ['None Available', 'Custom Subrace'];
+    $scope.subracesDwarf = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
+    $scope.subracesElf = ['Select a Subrace', 'High Elf', 'Wood Elf'];
+    $scope.subracesHalfling = ['Select a Subrace', 'High Elf', 'Wood Elf'];
+    
     $scope.characterClasses = ['Select a Class', 'Cleric', 'Fighter', 'Rogue', 'Wizard'];
     $scope.backgrounds = ['Select a Background', 'Acolyte', 'Criminal', 'Folk Hero', 'Noble', 'Sage', 'Soldier'];
     $scope.alignment = ['Select an Alignment', 'Lawful Good', 'Lawful Neutral', 'Lawful Evil', 'Neutral Good', 'True Neutral', 'Neutral Evil','Chaotic Good', 'Chaotic Neutral', 'Chaotic Evil'];
@@ -45,58 +47,80 @@ angular.module('myappApp')
     $scope.selectedSubrace = $scope.subraces[0]; //Initially sets subraces select to index 0
 
     //This loop goes the list of races and sets it to the cookie, else sets it to the default
-    for(i=0; i < $scope.races.length; i++){
-      if($cookies.race !== $scope.races[i]){ //first check if it's not there
-        $scope.selectedRace = $scope.races[0];
-      }
-      if($cookies.race === $scope.races[i]){ //this one checks if it is there
-        $scope.selectedRace = $scope.races[i];
-        break; //break out of the for loop once this has been set
-      }
+    for(i = 0; i < $scope.races.length; i++){
+        if($cookies.race !== $scope.races[i]){ //first check if it's not there
+            $scope.selectedRace = $scope.races[0];
+        }
+        if($cookies.race === $scope.races[i]){ //this one checks if it is there
+            $scope.selectedRace = $scope.races[i];
+            break; //break out of the for loop once this has been set
+        }
     }
 
     for(i=0; i < $scope.races.length; i++){
-      if($scope.selectedRace === 'Select a Race'){ //updates the options for subrace
-        $scope.subraces = ['None Available'];
-        $scope.selectedSubrace = $scope.subraces[0];
-      }
-      if($scope.selectedRace === 'Dwarf'){ //updates the options for subrace
-        $scope.subraces = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
-        for(j=0; j < $scope.subraces.length; j++){ //Go through subrace array
-          if(mySubrace === $scope.subraces[j]){ //checks for a subrace that matches the current one
-            $scope.selectedSubrace = $scope.subraces[j];
-            break;
-          }
+        if($scope.selectedRace === 'Select a Race'){ //updates the options for subrace
+            $scope.subraces = ['None Available'];
+            $scope.selectedSubrace = $scope.subraces[0];
         }
-      }
-      if($scope.selectedRace === 'Elf'){
-        $scope.subraces = ['Select a Subrace', 'High Elf', 'Wood Elf'];
-        for(j=0; j < $scope.subraces.length; j++){
-          if(mySubrace === $scope.subraces[j]){
-            $scope.selectedSubrace = $scope.subraces[j];
-            break;
-          }
+        if($scope.selectedRace === 'Dwarf'){ //updates the options for subrace
+            $scope.subraces = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
+            for(j=0; j < $scope.subraces.length; j++){ //Go through subrace array
+                if(mySubrace === $scope.subraces[j]){ //checks for a subrace that matches the current one
+                    $scope.selectedSubrace = $scope.subraces[j];
+                    break;
+                }
+            }
         }
-      }
-      if($scope.selectedRace === 'Halfling'){
-        $scope.subraces = ['Select a Subrace', 'Lightfoot', 'Stout'];
-        for(j=0; j < $scope.subraces.length; j++){
-          if(mySubrace === $scope.subraces[j]){
-            $scope.selectedSubrace = $scope.subraces[j];
-            break;
-          }
+        if($scope.selectedRace === 'Elf'){
+            $scope.subraces = ['Select a Subrace', 'High Elf', 'Wood Elf'];
+            for(j=0; j < $scope.subraces.length; j++){
+                if(mySubrace === $scope.subraces[j]){
+                    $scope.selectedSubrace = $scope.subraces[j];
+                    break;
+                }
+            }
         }
-      }
-      if($scope.selectedRace === 'Human'){
-        $scope.subraces = ['None Available'];
-        for(j=0; j < $scope.subraces.length; j++){
-          if(mySubrace === $scope.subraces[j]){
-            $scope.selectedSubrace = $scope.subraces[j];
+        if($scope.selectedRace === 'Halfling'){
+            $scope.subraces = ['Select a Subrace', 'Lightfoot', 'Stout'];
+            for(j=0; j < $scope.subraces.length; j++){
+                if(mySubrace === $scope.subraces[j]){
+                    $scope.selectedSubrace = $scope.subraces[j];
+                    break;
+                }
+            }
+        }
+        if($scope.selectedRace === 'Human'){
+            $scope.subraces = ['None Available'];
+            for(j=0; j < $scope.subraces.length; j++){
+                if(mySubrace === $scope.subraces[j]){
+                    $scope.selectedSubrace = $scope.subraces[j];
+                    break;
+                }
+            }
+        }
+        if($scope.selectedRace === 'Custom Race'){
+            $scope.subraces = ['Custom!'];
+            for(j=0; j < $scope.subraces.length; j++){
+                if(mySubrace === $scope.subraces[j]){
+                    $scope.selectedSubrace = $scope.subraces[j];
+                    break;
+                }
+            }
+        }
+        $log.debug($scope.selectedRace);
+        $log.debug(myRace);
+//        for(j=0; j < $scope.races.length; j++){
+            if(myRace !== 'Select a Race' && myRace !== 'Dwarf' && myRace !== 'Elf' && myRace !== 'Halfling' && myRace !== 'Human' && myRace !== 'Custom Race' && typeof(myRace) !== 'undefined'){
+                $scope.customRace = true;
+                $scope.selectedRace = myRace;
+                break;
+//            }else{
+//                $scope.customRace = false;
+            }
+//        }
+//        } else {
 
-            break;
-          }
-        }
-      }
+//        }
     }//End of race/subrace for loop
 
     //Loop for setting the class
@@ -172,6 +196,13 @@ angular.module('myappApp')
       $cookies.level = parseInt($scope.characterLevel);
       $log.debug('etest');
     };
+    
+    $scope.clearRace = function() {
+        $scope.customRace = false;
+        $scope.selectedRace = $scope.races[0];
+        $cookies.race = 'Select a Race';
+    };
+
 
 
     $scope.updateSubrace = function() {
@@ -200,6 +231,16 @@ angular.module('myappApp')
         $scope.subraces = ['None Available'];
         $scope.selectedSubrace = $scope.subraces[0];
       }
+      if($scope.selectedRace === 'Custom Race'){
+        $scope.subraces = ['None Available'];
+        $scope.selectedSubrace = $scope.subraces[0];
+          
+          $scope.customRace = true;
+          $scope.customSubrace = true;
+          $scope.selectedRace = '';
+          
+      }
+        
     };
     // Calculates the character's level based on the experience entered
     $scope.calculateLevel = function() {
