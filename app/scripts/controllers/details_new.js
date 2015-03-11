@@ -8,28 +8,77 @@
  * Controller of the myappApp
  */
 angular.module('myappApp')
-.controller('DetailsCtrl', function ($scope, $log, $cookies) {
+.controller('DetailsCtrl', function ($scope, $log, $cookies, $cookieStore) {
     var i; //Setting variables for forloops
     var j;
-
-    var myRace = $cookies.race;
-    var mySubrace = $cookies.subrace;
-    var myName = $cookies.charName;
-    var myClass = $cookies.class;
-    var myBackground = $cookies.background;
-    var myAlignment = $cookies.alignment;
-    var myExp = $cookies.experience;
-    var myLevel = $cookies.level;
+    var test;
+//    var myDetails = $cookies.charDetails;
+//    var myName = $cookies.charName;
+//    var myRace = $cookies.race;
+//    var mySubrace = $cookies.subrace;
+//    var myClass = $cookies.class;
+//    var myBackground = $cookies.background;
+//    var myAlignment = $cookies.alignment;
+//    var myExp = $cookies.experience;
+//    var myLevel = $cookies.level;
     
-    $scope.details = {
-      name: myName,
-      race: '',
-      subrace: '',
-      class: '',
-      background: '',
-      alignment: '',
-      experience: myExp,
-      level: myLevel
+    if(typeof $cookieStore.charDetails === 'undefined'){
+        $cookieStore.charDetails = {
+            name: '',
+            race: '',
+            subrace: '',
+            class: '',
+            background: '',
+            alignment: '',
+            experience: '',
+            level: ''
+        };
+        //test = $cookies.charDetails.name;
+        $log.debug('details not set!');
+    } else {
+        test = $cookieStore.charDetails.name;
+        $log.debug(test);    
+        //$log.debug($cookies.charDetails);
+    }
+    $log.debug($cookieStore.charDetails);
+//    if(typeof $cookies.charDetails === 'undefined'){
+//        $log.debug('details not set!');
+//        $cookies.charDetails = {
+//            charName: '',
+//            race: '',
+//            subrace: 'dsadsa',
+//        };
+//        $log.debug($cookies.charDetails);
+//    }
+ //   $log.debug(myDetails);
+    //$log.debug($cookies.charDetails.toArray());
+//    
+
+//    $log.debug($cookies.charDetails);
+//    $cookies.charDetails.charClass = 'Whale';
+//    
+//    $log.debug($cookies.charDetails);
+    
+//    $scope.details = {
+//      name: myName,
+//      race: '',
+//      subrace: '',
+//      class: '',
+//      background: '',
+//      alignment: '',
+//      experience: myExp,
+//      level: myLevel
+//    };
+    
+    $scope.characterDetails = {
+      name: $cookieStore.charDetails.name,
+      race: $cookieStore.charDetails.race,
+      subrace: $cookieStore.charDetails.subrace,
+      class: $cookieStore.charDetails.class,
+      background: $cookieStore.charDetails.background,
+      alignment: $cookieStore.charDetails.alignment,
+      experience: $cookieStore.charDetails.experience,
+      level: $cookieStore.charDetails.level,
     };
     
     $scope.customRace = false;
@@ -65,7 +114,7 @@ angular.module('myappApp')
         if($scope.selectedRace === 'Dwarf'){ //updates the options for subrace
             $scope.subraces = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
             for(j=0; j < $scope.subraces.length; j++){ //Go through subrace array
-                if(mySubrace === $scope.subraces[j]){ //checks for a subrace that matches the current one
+                if($scope.characterDetails.subrace === $scope.subraces[j]){ //checks for a subrace that matches the current one
                     $scope.selectedSubrace = $scope.subraces[j];
                     break;
                 }
@@ -74,7 +123,7 @@ angular.module('myappApp')
         if($scope.selectedRace === 'Elf'){
             $scope.subraces = ['Select a Subrace', 'High Elf', 'Wood Elf'];
             for(j=0; j < $scope.subraces.length; j++){
-                if(mySubrace === $scope.subraces[j]){
+                if($scope.characterDetails.subrace === $scope.subraces[j]){
                     $scope.selectedSubrace = $scope.subraces[j];
                     break;
                 }
@@ -83,7 +132,7 @@ angular.module('myappApp')
         if($scope.selectedRace === 'Halfling'){
             $scope.subraces = ['Select a Subrace', 'Lightfoot', 'Stout'];
             for(j=0; j < $scope.subraces.length; j++){
-                if(mySubrace === $scope.subraces[j]){
+                if($scope.characterDetails.subrace === $scope.subraces[j]){
                     $scope.selectedSubrace = $scope.subraces[j];
                     break;
                 }
@@ -92,7 +141,7 @@ angular.module('myappApp')
         if($scope.selectedRace === 'Human'){
             $scope.subraces = ['None Available'];
             for(j=0; j < $scope.subraces.length; j++){
-                if(mySubrace === $scope.subraces[j]){
+                if($scope.characterDetails.subrace === $scope.subraces[j]){
                     $scope.selectedSubrace = $scope.subraces[j];
                     break;
                 }
@@ -101,18 +150,18 @@ angular.module('myappApp')
         if($scope.selectedRace === 'Custom Race'){
             $scope.subraces = ['Custom!'];
             for(j=0; j < $scope.subraces.length; j++){
-                if(mySubrace === $scope.subraces[j]){
+                if($scope.characterDetails.subrace === $scope.subraces[j]){
                     $scope.selectedSubrace = $scope.subraces[j];
                     break;
                 }
             }
         }
-        $log.debug($scope.selectedRace);
-        $log.debug(myRace);
+//        $log.debug($scope.selectedRace);
+//        $log.debug(myRace);
 //        for(j=0; j < $scope.races.length; j++){
-            if(myRace !== 'Select a Race' && myRace !== 'Dwarf' && myRace !== 'Elf' && myRace !== 'Halfling' && myRace !== 'Human' && myRace !== 'Custom Race' && typeof(myRace) !== 'undefined'){
+            if($scope.characterDetails.race !== 'Select a Race' && $scope.characterDetails.race !== 'Dwarf' && $scope.characterDetails.race !== 'Elf' && $scope.characterDetails.race !== 'Halfling' && $scope.characterDetails.race !== 'Human' && $scope.characterDetails.race !== 'Custom Race' && typeof($scope.characterDetails.race) !== 'undefined'){
                 $scope.customRace = true;
-                $scope.selectedRace = myRace;
+                $scope.selectedRace = $scope.characterDetails.race;
                 break;
 //            }else{
 //                $scope.customRace = false;
@@ -125,7 +174,7 @@ angular.module('myappApp')
 
     //Loop for setting the class
     for(i=0; i < $scope.characterClasses.length; i++){
-      if(myClass === $scope.characterClasses[i]){
+      if($scope.characterDetails.class === $scope.characterClasses[i]){
         $scope.selectedClass = $scope.characterClasses[i];
         break;
       } else {
@@ -135,7 +184,7 @@ angular.module('myappApp')
 
     //Loop for setting the background
     for(i=0; i < $scope.backgrounds.length; i++){
-      if(myBackground === $scope.backgrounds[i]){
+      if($scope.characterDetails.background === $scope.backgrounds[i]){
         $scope.selectedBackground = $scope.backgrounds[i];
         break;
       } else {
@@ -145,7 +194,7 @@ angular.module('myappApp')
 
     //Loop for setting the alignment
     for(i=0; i < $scope.alignment.length; i++){
-      if(myAlignment === $scope.alignment[i]){
+      if($scope.characterDetails.alignment === $scope.alignment[i]){
         $scope.selectedAlignment = $scope.alignment[i];
         break;
       } else {
@@ -153,54 +202,55 @@ angular.module('myappApp')
       }
     }//End of alignment loop
 
-    if(myExp >= 0){
-      $scope.characterExp = parseInt(myExp);
+    if($scope.characterDetails.experience >= 0){
+      $scope.characterExp = parseInt($scope.characterDetails.experience);
     }
 
-    if(myLevel >= 0){
-      $scope.characterLevel = parseInt(myLevel);
+    if($scope.characterDetails.level >= 0){
+      $scope.characterLevel = parseInt($scope.characterDetails.level);
     }
 
   //  $scope.selectedBackground = $scope.backgrounds[0];
   //  $scope.selectedAlignment = $scope.alignment[0];
 
     $scope.setName = function() {
-      $cookies.charName = $scope.details.name;
+      //$cookieStore.charDetails.charName = $scope.characterDetails.name;
+         $cookieStore.put('charDetails.charName', $scope.characterDetails.name);
     };
     $scope.setRace = function() {
-      $cookies.race = $scope.selectedRace;
+      $cookieStore.charDetails.race = $scope.selectedRace;
     };
 
     $scope.setSubrace = function() {
-      $cookies.subrace = $scope.selectedSubrace;
+      $cookieStore.charDetails.subrace = $scope.selectedSubrace;
     };
 
     $scope.setClass = function() {
-      $cookies.class = $scope.selectedClass;
+      $cookieStore.charDetails.class = $scope.selectedClass;
     };
 
     $scope.setBackground = function() {
-      $cookies.background = $scope.selectedBackground;
+      $cookieStore.charDetails.background = $scope.selectedBackground;
     };
 
     $scope.setAlignment = function() {
-      $cookies.alignment = $scope.selectedAlignment;
+      $cookieStore.charDetails.alignment = $scope.selectedAlignment;
     };
 
     $scope.setExp = function() {
-      $cookies.experience = parseInt($scope.characterExp);
-      $cookies.level = parseInt($scope.characterLevel);
+      $cookieStore.charDetails.experience = parseInt($scope.characterExp);
+      $cookieStore.charDetails.level = parseInt($scope.characterLevel);
     };
 
     $scope.setLevel = function() {
-      $cookies.level = parseInt($scope.characterLevel);
+      $cookieStore.charDetails.level = parseInt($scope.characterLevel);
       $log.debug('etest');
     };
     
     $scope.clearRace = function() {
         $scope.customRace = false;
         $scope.selectedRace = $scope.races[0];
-        $cookies.race = 'Select a Race';
+        $cookieStore.charDetails.race = 'Select a Race';
     };
 
 
