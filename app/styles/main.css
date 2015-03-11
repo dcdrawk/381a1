@@ -140,6 +140,7 @@ md-toolbar{
 
 md-content.md-default-theme{
   background:#ECEFF1;
+	display:inline;
 }
 
 .marketing h2{
@@ -162,6 +163,7 @@ md-icon{
   color: #FFF;
   background: #FFA000;
   text-shadow: 1px 1px 1px rgba(153, 67, 0, 0.73);
+	width:100%!important;
 }
 .titleBar h2{
   margin-right:1em;
@@ -199,8 +201,13 @@ md-icon{
 
 md-select-menu{
     font-weight: 700;
+	width: 100%;
+	margin: 0px auto 0px auto;
 }
-
+.md-select-menu-container{
+	align-content: center;
+	left:0px!important;
+}
 label{
   padding:0;
 }
@@ -216,7 +223,7 @@ md-input-label{
 }
 md-input-container{
     padding-left:.5em;
-    padding-right:.5em;
+    padding-right:0em;
     padding-top: 0;
     top: 2px;
 }
@@ -267,7 +274,7 @@ md-input-container .md-placeholder{
 
 /*Setting up messages and warning dialogue boxes*/
 .customInput{
-    width:80%;
+    width:90%;
 }
 .clearCustom{
     margin:0;
@@ -599,5 +606,6 @@ input[type=number]::-webkit-outer-spin-button {
 
 .customInputContainer {
     top:2px;
-    padding: 0 .5em;
+    padding-left:.5em;	
+	padding-bottom:1.5em;
 }
