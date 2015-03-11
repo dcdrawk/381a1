@@ -25,11 +25,12 @@
             </md-select>
            
             <md-input-container class="customInputContainer" layout="row" ng-class="{'show' : customRace, 'hide' : customRace == false}" flex>
-                <input type="text" class="customInput inline" placeholder="Custom Race" class="md-input" ng-model="selectedRace" ng-change="setRace()" ng-blur="setRace()" flex="80">
-                
-                <md-button flex class="md-primary clearCustom" ng-click="clearRace()" aria-label="Close Menu">
-                    <img  style="width: 24px; height: 24px;" src="img/icons/clear-grey.png">
-                </md-button>
+                <input type="text" class="customInput inline" placeholder="Custom Race" class="md-input" ng-model="selectedRace" ng-change="setRace()" ng-blur="setRace()" flex-sm="80" flex="70">
+                <div class="clearCustom" flex="15">
+                    <md-button type="reset" class="md-primary" ng-click="clearRace()" aria-label="Close Menu">
+                        <img style="width: 24px; height: 24px;" src="img/icons/clear-grey.png">
+                    </md-button>
+                </div>
            </md-input-container>
            
       </div>

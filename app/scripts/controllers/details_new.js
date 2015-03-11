@@ -33,7 +33,6 @@ angular.module('myappApp')
     };
     
     $scope.customRace = false;
-    $scope.customSubrace = false;
     $scope.races = ['Select a Race', 'Dwarf', 'Elf', 'Halfling', 'Human', 'Custom Race'];
     $scope.subraces = ['None Available', 'Custom Subrace'];
     $scope.subracesDwarf = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
@@ -60,11 +59,11 @@ angular.module('myappApp')
 
     for(i=0; i < $scope.races.length; i++){
         if($scope.selectedRace === 'Select a Race'){ //updates the options for subrace
-            $scope.subraces = $scope.subraces;
+            $scope.subraces = ['None Available'];
             $scope.selectedSubrace = $scope.subraces[0];
         }
         if($scope.selectedRace === 'Dwarf'){ //updates the options for subrace
-            $scope.subraces = $scope.subracesDwarf;
+            $scope.subraces = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
             for(j=0; j < $scope.subraces.length; j++){ //Go through subrace array
                 if(mySubrace === $scope.subraces[j]){ //checks for a subrace that matches the current one
                     $scope.selectedSubrace = $scope.subraces[j];
