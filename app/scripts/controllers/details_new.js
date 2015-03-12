@@ -8,29 +8,69 @@
  * Controller of the myappApp
  */
 angular.module('myappApp')
-.controller('DetailsCtrl', function ($scope, $log, $cookies) {
+.controller('DetailsCtrl', function ($scope, $log, $cookies, $cookieStore) {
     var i; //Setting variables for forloops
     var j;
 
-    var myRace = $cookies.race;
-    var mySubrace = $cookies.subrace;
-    var myName = $cookies.charName;
-    var myClass = $cookies.class;
-    var myBackground = $cookies.background;
-    var myAlignment = $cookies.alignment;
-    var myExp = $cookies.experience;
-    var myLevel = $cookies.level;
+    //cookie example
+    // Put cookie
+//    $cookieStore.put('myFavorite','oatmeal');
+//    // Get cookie
+//    var favoriteCookie = $cookieStore.get('myFavorite');
+//        
+//    // Removing a cookie
+//    $cookieStore.remove('myFavorite');
+//    $log.debug(favoriteCookie);
     
-    $scope.details = {
-      name: myName,
-      race: '',
-      subrace: '',
-      class: '',
-      background: '',
-      alignment: '',
-      experience: myExp,
-      level: myLevel
-    };
+//    var testcc = $cookieStore.get('charDetails');
+//    if(typeof testcc === 'undefined'){
+//        
+//    }
+    //$cookieStore.put('charDetails');
+    var detailsArray = $cookieStore.get('charDetails');
+    
+    if(typeof detailsArray === 'undefined'){
+        $scope.details = {
+            name: '',
+            race: '',
+            subrace: '',
+            class: '',
+            background: '',
+            alignment: '',
+            experience: '',
+            level: ''
+        };
+        $cookieStore.put('charDetails', $scope.details);
+        detailsArray = $cookieStore.get('charDetails');
+    } else {
+        $scope.details = {
+            name: detailsArray.name,
+            race: detailsArray.race,
+            subrace: detailsArray.subrace,
+            class: detailsArray.class,
+            background: detailsArray.background,
+            alignment: detailsArray.alignment,
+            experience: detailsArray.experience,
+            level: detailsArray.level,
+        };
+    }
+    
+    var myRace = $scope.details.race;
+    var mySubrace = $scope.details.subrace;
+    //var myName = $scope.details.charName;
+    var myClass = $scope.details.class;
+    var myBackground = $scope.details.background;
+    var myAlignment = $scope.details.alignment;
+    var myExp = $scope.details.experience;
+    var myLevel = $scope.details.level;
+    
+    //$cookieStore.put('charDetails')
+
+    
+    //$cookieStore.put('charDetails', $scope.details);
+
+      
+    
     
     $scope.customRace = false;
     $scope.races = ['Select a Race', 'Dwarf', 'Elf', 'Halfling', 'Human', 'Custom Race'];
@@ -107,10 +147,10 @@ angular.module('myappApp')
                 }
             }
         }
-        $log.debug($scope.selectedRace);
-        $log.debug(myRace);
+//        $log.debug($scope.selectedRace);
+//        $log.debug(myRace);
 //        for(j=0; j < $scope.races.length; j++){
-            if(myRace !== 'Select a Race' && myRace !== 'Dwarf' && myRace !== 'Elf' && myRace !== 'Halfling' && myRace !== 'Human' && myRace !== 'Custom Race' && typeof(myRace) !== 'undefined'){
+            if(myRace !== 'Select a Race' && myRace !== 'Dwarf' && myRace !== 'Elf' && myRace !== 'Halfling' && myRace !== 'Human' && myRace !== 'Custom Race' && typeof(myRace) !== 'undefined' && myRace !== ''){
                 $scope.customRace = true;
                 $scope.selectedRace = myRace;
                 break;
@@ -165,7 +205,8 @@ angular.module('myappApp')
   //  $scope.selectedAlignment = $scope.alignment[0];
 
     $scope.setName = function() {
-      $cookies.charName = $scope.details.name;
+        detailsArray.name = $scope.details.name;
+        $cookieStore.put('charDetails', detailsArray);  
     };
     $scope.setRace = function() {
       $cookies.race = $scope.selectedRace;
