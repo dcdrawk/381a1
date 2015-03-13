@@ -47,8 +47,8 @@
             <div layout layout-sm="column">          
                 <div class="selectBox" flex>
                     <label class="md-primary">Class</label>
-                    <md-select ng-model="selectedClass" ng-change="setClass();">
-                        <md-select-label>{{selectedClass}}</md-select-label>
+                    <md-select ng-model="details.class" ng-change="setClass();">
+                        <md-select-label>{{details.class}}</md-select-label>
                         <md-option ng-repeat="item in characterClasses track by item" ng-value="item">{{item}}</md-option>
                     </md-select>
                 </div>
@@ -88,29 +88,79 @@
 <!--    Personality Section-->
     <section>
         <div id="personalityTitle" class="titleBar" layout="row">
-                <h2>Personality</h2>
+            <h2>Personality</h2>
         </div>
 <!--        <md-subheader class="md-primary">Unread Messages</md-subheader>-->
         
-            <div class="personalityInfo" layout="row" layout-sm="column">            
+            <div class="personalityInfo margin-top" layout="row" layout-sm="column">            
                 <md-input-container flex="50" flex-sm="100">
                     <label class="md-primary">Character Traits</label>
-                    <textarea id="traits" ng-model="personality.traits" columns="1" md-maxlength="150" ng-change="setPersonality('traits')"></textarea>
+                    <textarea id="traits" ng-model="personality.traits" columns="1" ng-change="setPersonality('traits')"></textarea>
                 </md-input-container>
                 <md-input-container flex="50" flex-sm="100">
                     <label class="md-primary">Ideals</label>
-                    <textarea ng-model="personality.ideals" columns="1" md-maxlength="150" ng-change="setPersonality('ideals')"></textarea>
+                    <textarea ng-model="personality.ideals" columns="1" ng-change="setPersonality('ideals')"></textarea>
                 </md-input-container>
             </div>
             <div class="personalityInfo" layout="row" layout-sm="column">
                 <md-input-container flex="50" flex-sm="100">
                     <label class="md-primary">Bonds</label>
-                    <textarea ng-model="personality.bonds" columns="1" md-maxlength="150" ng-change="setPersonality('bonds')"></textarea>
+                    <textarea ng-model="personality.bonds" columns="1" ng-change="setPersonality('bonds')"></textarea>
                 </md-input-container>
                 <md-input-container flex="50" flex-sm="100">
                     <label class="md-primary">Flaws</label>
-                    <textarea ng-model="personality.flaws" columns="1" md-maxlength="150" ng-change="setPersonality('flaws')"></textarea>
+                    <textarea ng-model="personality.flaws" columns="1" ng-change="setPersonality('flaws')"></textarea>
                 </md-input-container>
             </div>
+    </section>
+    
+<!--    <section ng-controller="ProfCtrl">-->
+        
+    <section>
+        <div id="personalityTitle" class="titleBar" layout="row">
+            <h2>Proficiency</h2>
+        </div>
+        <!-- Message to user -->
+<!--
+          <div layout-sm="column">
+            <span id="viewMessage" ng-class="{'hide' : isHidden}" ng-model="warningMessage" ng-init="getRace()">
+              <span ng-click="go('/character-details')" ng-model="warningMessage" ng-class="{'warning' : isWarning}" ng-repeat="item in warningMessage">{{item.msg1}}<strong>{{item.bold}}</strong>{{item.msg2}}</span>
+              <span ng-model="detectClass"  ng-class="{'message' : isMessage}" ng-repeat="item2 in detectClass">{{item2.msg1}}<strong>{{item2.bold}}</strong></span>
+            </span>
+          </div>-->
+
+          <section id="profTable" ng-controller="ProfCtrl" ng-class="{'disabled' : isDisabled}">
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : characterLevel == false}" ng-model="profBonus">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Proficiency Bonus:</p></div><div flex="75" flex-md="70" flex-sm="100"><p><strong>+{{profBonus}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="armorProf">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Armor:</p></div><div flex="75" flex-md="70" flex-sm="100"><p><strong>{{armorProf}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="weapProf">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Weapons:</p></div><div flex="75" flex-md="70" flex-sm="100"><p><strong>{{weapProf}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="toolProf">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Tools:</p></div><div flex="75" flex-md="70" flex-sm="100"><strong><p>{{toolProf}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="savingThrows">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Saving Throws:</p></div><div flex="75" flex-md="70" flex-sm="100"><strong><p>{{savingThrows}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="skillsProf">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Skills:</p></div><div flex="75" flex-md="70" flex-sm="100"><strong><p>{{skillsProf}}</strong></p></div>
+            </div>
+            <div class="profStat" layout="row" layout-sm="column">
+            <md-input-container class="languages" flex="100">
+                    <label class="md-primary">Languages</label>
+                    <textarea ng-model="proficiency.languages" columns="1" ng-change="setLanguages()"></textarea>
+            </md-input-container>
+            </div>
+          </section>
+        
     </section>
 </div>

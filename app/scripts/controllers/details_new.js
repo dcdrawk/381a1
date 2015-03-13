@@ -29,6 +29,8 @@ angular.module('myappApp')
     //$cookieStore.put('charDetails');
     var detailsArray = $cookieStore.get('charDetails');
     var personalityArray = $cookieStore.get('personality');
+    var proficiencyArray = $cookieStore.get('proficiency');
+    $log.debug(proficiencyArray);
 //
 //  setting up the cookies
     if(typeof detailsArray === 'undefined'){        
@@ -56,6 +58,13 @@ angular.module('myappApp')
         $cookieStore.put('personality', $scope.personality);
         personalityArray = $cookieStore.get('personality');
     }
+    if(typeof proficiencyArray === 'undefined'){
+       $scope.proficiency = {
+            languages: '',
+        };
+        $cookieStore.put('proficiency', $scope.proficiency);
+        proficiencyArray = $cookieStore.get('proficiency');
+    }
 
     $scope.details = {
         name: detailsArray.name,
@@ -74,7 +83,9 @@ angular.module('myappApp')
         bonds: personalityArray.bonds,
         flaws: personalityArray.flaws,
     };
-    
+    $scope.proficiency = {
+        languages: proficiencyArray.languages
+    };
 //        for (var key in $scope.details) {
 //            //$log.debug(key);
 //            //$log.debug($scope.details[key]);
@@ -205,14 +216,14 @@ angular.module('myappApp')
                 break;
             }
     }//End of race/subrace for loop
-
+    $log.debug($scope.characterLevel);
     //Loop for setting the class
     for(i=0; i < $scope.characterClasses.length; i++){
       if(myClass === $scope.characterClasses[i]){
-        $scope.selectedClass = $scope.characterClasses[i];
+        $scope.details.class = $scope.characterClasses[i];
         break;
       } else {
-        $scope.selectedClass = $scope.characterClasses[0];
+        $scope.details.class = $scope.characterClasses[0];
       }
     }//End of class loop
 
@@ -242,8 +253,20 @@ angular.module('myappApp')
 
     if(myLevel >= 0){
       $scope.characterLevel = parseInt(myLevel);
+        if($scope.characterLevel >= 1 && $scope.characterLevel <= 4){$scope.profBonus = 2;}
+        if($scope.characterLevel >= 5 && $scope.characterLevel <= 8){$scope.profBonus = 3;}
+        if($scope.characterLevel >= 9 && $scope.characterLevel <= 12){$scope.profBonus = 4;}
+        if($scope.characterLevel >= 12 && $scope.characterLevel <= 16){$scope.profBonus = 5;}
+        if($scope.characterLevel >= 17){$scope.profBonus = 6;}
+    } else {
+        
+       $scope.characterLevel = ''; 
     }
-
+    
+    if(typeof $scope.characterLevel == 'NaN' || typeof $scope.characterLevel == 'null'){
+       $scope.characterLevel = ''; 
+    }
+$log.debug($scope.characterLevel);
   //  $scope.selectedBackground = $scope.backgrounds[0];
   //  $scope.selectedAlignment = $scope.alignment[0];
 
@@ -262,8 +285,9 @@ angular.module('myappApp')
     };
 
     $scope.setClass = function() {
-        detailsArray.class = $scope.selectedClass;
+        detailsArray.class = $scope.details.class;
         $cookieStore.put('charDetails', detailsArray);
+        $scope.setProficiency();
     };
 
     $scope.setBackground = function() {
@@ -279,18 +303,40 @@ angular.module('myappApp')
     $scope.setExp = function() {
         detailsArray.experience = parseInt($scope.characterExp);
         detailsArray.level = parseInt($scope.characterLevel);
-        $cookieStore.put('charDetails', detailsArray); 
+        $cookieStore.put('charDetails', detailsArray);
+        
+        if($scope.characterLevel >= 1 && $scope.characterLevel <= 4){$scope.profBonus = 2;}
+        if($scope.characterLevel >= 5 && $scope.characterLevel <= 8){$scope.profBonus = 3;}
+        if($scope.characterLevel >= 9 && $scope.characterLevel <= 12){$scope.profBonus = 4;}
+        if($scope.characterLevel >= 12 && $scope.characterLevel <= 16){$scope.profBonus = 5;}
+        if($scope.characterLevel >= 17){$scope.profBonus = 6;}
     };
 
     $scope.setLevel = function() {
-        $log.debug(this);
+        $log.debug($scope.characterLevel);
         detailsArray.level = $scope.characterLevel;
-        $cookieStore.put('charDetails', detailsArray); 
+        $cookieStore.put('charDetails', detailsArray);
+        if($scope.characterLevel >= 1 && $scope.characterLevel <= 4){$scope.profBonus = 2;}
+        if($scope.characterLevel >= 5 && $scope.characterLevel <= 8){$scope.profBonus = 3;}
+        if($scope.characterLevel >= 9 && $scope.characterLevel <= 12){$scope.profBonus = 4;}
+        if($scope.characterLevel >= 12 && $scope.characterLevel <= 16){$scope.profBonus = 5;}
+        if($scope.characterLevel >= 17){$scope.profBonus = 6;}
+        if($scope.characterLevel == null){
+            //$scope.characterLevel = false;
+            $scope.profBonus = 0;
+        }
     };
     
     $scope.clearRace = function() {
         $scope.customRace = false;
         $scope.selectedRace = $scope.races[0];
+    };
+    
+    $scope.setLanguages = function() {
+        //proficiencyArray.languages = parseInt($scope.characterExp);
+        $log.debug('test');
+        proficiencyArray.languages = $scope.proficiency.languages;
+        $cookieStore.put('proficiency', proficiencyArray);
     };
     
     //function to set the personality text fields
@@ -372,5 +418,46 @@ angular.module('myappApp')
         if(this.characterExp >= 305000){ $scope.characterLevel = 19; }
         if(this.characterExp >= 355000){ $scope.characterLevel = 20; }
     };
+    $scope.setProficiency = function(){
+        //$log.debug($scope.details.class)
+        if(myClass === 'Select a Class'){
+          $scope.armorProf = '';
+          $scope.weapProf = '';
+          $scope.toolProf = '';
+          $scope.savingThrows = '';
+          $scope.skillsProf = '';
+        }
+        if($scope.details.class === 'Cleric'){
+          $scope.armorProf = 'Light and medium armor, shields';
+          $scope.weapProf = 'All simple weapons';
+          $scope.toolProf = 'None';
+          $scope.savingThrows = 'Wisdom, Charisma';
+          $scope.skillsProf = 'Choose two from History, Insight, Medicine, Persuasion, and Religion';
+        }
 
+        if($scope.details.class === 'Fighter'){
+          $scope.armorProf = 'All armor, shields';
+          $scope.weapProf = 'Simple weapons, martial weapons';
+          $scope.toolProf = 'None.';
+          $scope.savingThrows = 'Strength, Constitution';
+          $scope.skillsProf = 'Choose two from Acrobatics, Animal Handling, Athletics, History, Insight, Intimidation, Perception, and Survival';
+        }
+
+        if($scope.details.class === 'Rogue'){
+          $scope.armorProf = 'Light Armor';
+          $scope.weapProf = 'Simple weapons, hand crossbows, longswords, rapiers, shortswords';
+          $scope.toolProf = 'Thieves tools';
+          $scope.savingThrows = 'Dexterity, Intelligence';
+          $scope.skillsProf = 'Choose four from Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, and Stealth';
+        }
+
+        if($scope.details.class === 'Wizard'){
+          $scope.armorProf = 'None';
+          $scope.weapProf = 'Daggers, darts, slings, quarterstaffs, light crossbows.';
+          $scope.toolProf = 'None';
+          $scope.savingThrows = 'Intelligence, Wisdom';
+          $scope.skillsProf = 'Choose two from Arcana, History, Insight, Investigation, Medicine, and Religion';
+        }
+    }
+        $scope.setProficiency();
 });
