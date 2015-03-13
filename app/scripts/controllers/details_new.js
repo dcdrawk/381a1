@@ -8,7 +8,7 @@
  * Controller of the myappApp
  */
 angular.module('myappApp')
-.controller('DetailsCtrl', function ($scope, $log, $cookies, $cookieStore) {
+.controller('DetailsCtrl', function ($scope, $log, $cookies, $cookieStore, $anchorScroll, $location, $document) {
     var i; //Setting variables for forloops
     var j;
 
@@ -28,8 +28,10 @@ angular.module('myappApp')
 //    }
     //$cookieStore.put('charDetails');
     var detailsArray = $cookieStore.get('charDetails');
-    
-    if(typeof detailsArray === 'undefined'){
+    var personalityArray = $cookieStore.get('personality');
+//
+//  setting up the cookies
+    if(typeof detailsArray === 'undefined'){        
         $scope.details = {
             name: '',
             race: '',
@@ -42,19 +44,63 @@ angular.module('myappApp')
         };
         $cookieStore.put('charDetails', $scope.details);
         detailsArray = $cookieStore.get('charDetails');
-    } else {
-        $scope.details = {
-            name: detailsArray.name,
-            race: detailsArray.race,
-            subrace: detailsArray.subrace,
-            class: detailsArray.class,
-            background: detailsArray.background,
-            alignment: detailsArray.alignment,
-            experience: detailsArray.experience,
-            level: detailsArray.level,
-        };
     }
+    //Personality cookies
+    if(typeof personalityArray === 'undefined'){
+       $scope.personality = {
+            traits: '',
+            ideals: '',
+            bonds: '',
+            flaws: ''
+        };
+        $cookieStore.put('personality', $scope.personality);
+        personalityArray = $cookieStore.get('personality');
+    }
+
+    $scope.details = {
+        name: detailsArray.name,
+        race: detailsArray.race,
+        subrace: detailsArray.subrace,
+        class: detailsArray.class,
+        background: detailsArray.background,
+        alignment: detailsArray.alignment,
+        experience: detailsArray.experience,
+        level: detailsArray.level,
+    };
+
+    $scope.personality = {
+        traits: personalityArray.traits,
+        ideals: personalityArray.ideals,
+        bonds: personalityArray.bonds,
+        flaws: personalityArray.flaws,
+    };
     
+//        for (var key in $scope.details) {
+//            //$log.debug(key);
+//            //$log.debug($scope.details[key]);
+//            //$log.debug(typeof $scope.details[key]);
+//            if(typeof $scope.details[key] === 'undefined'){
+//                $log.debug(key + ' is not defined!');
+//            }
+//
+//        }
+    
+            $cookieStore.put('charDetails', $scope.details);
+        detailsArray = $cookieStore.get('charDetails');
+    $log.debug(Object.keys($scope.details).length);
+        
+//    for(i = 0; i <  Object.keys($scope.details).length; i++){
+//            $log.debug($scope.details.i + 'WUT');
+//            if(typeof $scope.details[i] === 'undefined'){
+////                $scope.details[i] = 'test';
+//                $log.debug($scope.details.hasOwnProperty(i));
+//            } else {
+//                //$log.debug($scope.details[i] + ' didnt work');
+//            }
+//        }
+
+//    }
+
     var myRace = $scope.details.race;
     var mySubrace = $scope.details.subrace;
     //var myName = $scope.details.charName;
@@ -73,8 +119,8 @@ angular.module('myappApp')
     
     
     $scope.customRace = false;
-    $scope.races = ['Select a Race', 'Dwarf', 'Elf', 'Halfling', 'Human', 'Custom Race'];
-    $scope.subraces = ['None Available', 'Custom Subrace'];
+    $scope.races = ['Select a Race', 'Dwarf', 'Elf', 'Halfling', 'Human'];
+    $scope.subraces = ['None Available'];
     $scope.subracesDwarf = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
     $scope.subracesElf = ['Select a Subrace', 'High Elf', 'Wood Elf'];
     $scope.subracesHalfling = ['Select a Subrace', 'High Elf', 'Wood Elf'];
@@ -84,26 +130,32 @@ angular.module('myappApp')
     $scope.alignment = ['Select an Alignment', 'Lawful Good', 'Lawful Neutral', 'Lawful Evil', 'Neutral Good', 'True Neutral', 'Neutral Evil','Chaotic Good', 'Chaotic Neutral', 'Chaotic Evil'];
 
     $scope.testarray = [{ 'value': 222, 'text': '1st' }, { 'value': 2, 'text': '2nd' }];
+    
+    $scope.selectedRace = $scope.details.race;
+    //$log.debug($scope.selectedRace);
+    
     $scope.selectedSubrace = $scope.subraces[0]; //Initially sets subraces select to index 0
 
     //This loop goes the list of races and sets it to the cookie, else sets it to the default
     for(i = 0; i < $scope.races.length; i++){
-        if($cookies.race !== $scope.races[i]){ //first check if it's not there
+        if($scope.details.race !== $scope.races[i]){ //first check if it's not there
             $scope.selectedRace = $scope.races[0];
         }
-        if($cookies.race === $scope.races[i]){ //this one checks if it is there
+        if($scope.details.race === $scope.races[i]){ //this one checks if it is there
             $scope.selectedRace = $scope.races[i];
             break; //break out of the for loop once this has been set
         }
     }
 
     for(i=0; i < $scope.races.length; i++){
+        //$log.debug($scope.selectedRace);
         if($scope.selectedRace === 'Select a Race'){ //updates the options for subrace
-            $scope.subraces = ['None Available'];
+            $scope.subraces = $scope.subraces;
             $scope.selectedSubrace = $scope.subraces[0];
         }
         if($scope.selectedRace === 'Dwarf'){ //updates the options for subrace
-            $scope.subraces = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
+            $scope.subraces = $scope.subracesDwarf;
+            //$log.debug('WHUAIOHUDWA');
             for(j=0; j < $scope.subraces.length; j++){ //Go through subrace array
                 if(mySubrace === $scope.subraces[j]){ //checks for a subrace that matches the current one
                     $scope.selectedSubrace = $scope.subraces[j];
@@ -147,20 +199,11 @@ angular.module('myappApp')
                 }
             }
         }
-//        $log.debug($scope.selectedRace);
-//        $log.debug(myRace);
-//        for(j=0; j < $scope.races.length; j++){
-            if(myRace !== 'Select a Race' && myRace !== 'Dwarf' && myRace !== 'Elf' && myRace !== 'Halfling' && myRace !== 'Human' && myRace !== 'Custom Race' && typeof(myRace) !== 'undefined' && myRace !== ''){
+        if(myRace !== 'Select a Race' && myRace !== 'Dwarf' && myRace !== 'Elf' && myRace !== 'Halfling' && myRace !== 'Human' && myRace !== 'Custom Race' && typeof(myRace) !== 'undefined' && myRace !== ''){
                 $scope.customRace = true;
                 $scope.selectedRace = myRace;
                 break;
-//            }else{
-//                $scope.customRace = false;
             }
-//        }
-//        } else {
-
-//        }
     }//End of race/subrace for loop
 
     //Loop for setting the class
@@ -209,102 +252,125 @@ angular.module('myappApp')
         $cookieStore.put('charDetails', detailsArray);  
     };
     $scope.setRace = function() {
-      $cookies.race = $scope.selectedRace;
+        detailsArray.race = $scope.selectedRace;
+        $cookieStore.put('charDetails', detailsArray);  
     };
 
     $scope.setSubrace = function() {
-      $cookies.subrace = $scope.selectedSubrace;
+        detailsArray.subrace = $scope.selectedSubrace;
+        $cookieStore.put('charDetails', detailsArray); 
     };
 
     $scope.setClass = function() {
-      $cookies.class = $scope.selectedClass;
+        detailsArray.class = $scope.selectedClass;
+        $cookieStore.put('charDetails', detailsArray);
     };
 
     $scope.setBackground = function() {
-      $cookies.background = $scope.selectedBackground;
+        detailsArray.background = $scope.selectedBackground;
+        $cookieStore.put('charDetails', detailsArray);        
     };
 
     $scope.setAlignment = function() {
-      $cookies.alignment = $scope.selectedAlignment;
+        detailsArray.alignment = $scope.selectedAlignment;
+        $cookieStore.put('charDetails', detailsArray); 
     };
 
     $scope.setExp = function() {
-      $cookies.experience = parseInt($scope.characterExp);
-      $cookies.level = parseInt($scope.characterLevel);
+        detailsArray.experience = parseInt($scope.characterExp);
+        detailsArray.level = parseInt($scope.characterLevel);
+        $cookieStore.put('charDetails', detailsArray); 
     };
 
     $scope.setLevel = function() {
-      $cookies.level = parseInt($scope.characterLevel);
-      $log.debug('etest');
+        $log.debug(this);
+        detailsArray.level = $scope.characterLevel;
+        $cookieStore.put('charDetails', detailsArray); 
     };
     
     $scope.clearRace = function() {
         $scope.customRace = false;
         $scope.selectedRace = $scope.races[0];
-        $cookies.race = 'Select a Race';
     };
-
+    
+    //function to set the personality text fields
+    $scope.setPersonality = function($value) {
+        $log.debug('typing' + $value);
+        if($value === 'traits'){
+            personalityArray.traits = $scope.personality.traits;
+            $cookieStore.put('personality', personalityArray); 
+        }
+        if($value === 'ideals'){
+            personalityArray.ideals = $scope.personality.ideals;
+            $cookieStore.put('personality', personalityArray); 
+        }
+        if($value === 'bonds'){
+            personalityArray.bonds = $scope.personality.bonds;
+            $cookieStore.put('personality', personalityArray); 
+        }
+        if($value === 'flaws'){
+            personalityArray.flaws = $scope.personality.flaws;
+            $cookieStore.put('personality', personalityArray); 
+        }
+    };
 
 
     $scope.updateSubrace = function() {
-      if($scope.selectedRace === 'Select a Race'){
-        $log.debug('no race selected');
-        $scope.subraces = ['None available'];
-        $scope.selectedSubrace = $scope.subraces[0];
-      }
-      if($scope.selectedRace === 'Dwarf'){
-        $log.debug('Dwarf race selected');
-        $scope.subraces = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
-        $scope.selectedSubrace = $scope.subraces[0];
-      }
-      if($scope.selectedRace === 'Elf'){
-        $log.debug('Elf race selected');
-        $scope.subraces = ['Select a Subrace', 'High Elf', 'Wood Elf'];
-        $scope.selectedSubrace = $scope.subraces[0];
-      }
-      if($scope.selectedRace === 'Halfling'){
-        $log.debug('Halfling race selected');
-        $scope.subraces = ['Select a Subrace', 'Lightfoot', 'Stout'];
-        $scope.selectedSubrace = $scope.subraces[0];
-      }
-      if($scope.selectedRace === 'Human'){
-        $log.debug('Human race selected');
-        $scope.subraces = ['None Available'];
-        $scope.selectedSubrace = $scope.subraces[0];
-      }
-      if($scope.selectedRace === 'Custom Race'){
-        $scope.subraces = ['None Available'];
-        $scope.selectedSubrace = $scope.subraces[0];
-          
-          $scope.customRace = true;
-          $scope.customSubrace = true;
-          $scope.selectedRace = '';
-          
-      }
-        
+        if($scope.selectedRace === 'Select a Race'){
+            $log.debug('no race selected');
+            $scope.subraces = ['None available'];
+            $scope.selectedSubrace = $scope.subraces[0];
+        }
+        if($scope.selectedRace === 'Dwarf'){
+            $log.debug('Dwarf race selected');
+            $scope.subraces = ['Select a Subrace', 'Hill Dwarf', 'Mountain Dwarf'];
+            $scope.selectedSubrace = $scope.subraces[0];
+        }
+        if($scope.selectedRace === 'Elf'){
+            $log.debug('Elf race selected');
+            $scope.subraces = ['Select a Subrace', 'High Elf', 'Wood Elf'];
+            $scope.selectedSubrace = $scope.subraces[0];
+        }
+        if($scope.selectedRace === 'Halfling'){
+            $log.debug('Halfling race selected');
+            $scope.subraces = ['Select a Subrace', 'Lightfoot', 'Stout'];
+            $scope.selectedSubrace = $scope.subraces[0];
+        }
+        if($scope.selectedRace === 'Human'){
+            $log.debug('Human race selected');
+            $scope.subraces = ['None Available'];
+            $scope.selectedSubrace = $scope.subraces[0];
+        }
+        if($scope.selectedRace === 'Custom Race'){
+            $scope.subraces = ['None Available'];
+            $scope.selectedSubrace = $scope.subraces[0];
+            $scope.customRace = true;
+            $scope.customSubrace = true;
+            $scope.selectedRace = '';
+        }        
     };
     // Calculates the character's level based on the experience entered
     $scope.calculateLevel = function() {
-      if(this.characterExp >= 0){ $scope.characterLevel = 1; }
-      if(this.characterExp >= 300){ $scope.characterLevel = 2; }
-      if(this.characterExp >= 900){ $scope.characterLevel = 3; }
-      if(this.characterExp >= 2700){ $scope.characterLevel = 4; }
-      if(this.characterExp >= 6500){ $scope.characterLevel = 5; }
-      if(this.characterExp >= 14000){ $scope.characterLevel = 6; }
-      if(this.characterExp >= 23000){ $scope.characterLevel = 7; }
-      if(this.characterExp >= 34000){ $scope.characterLevel = 8; }
-      if(this.characterExp >= 48000){ $scope.characterLevel = 9; }
-      if(this.characterExp >= 64000){ $scope.characterLevel = 10; }
-      if(this.characterExp >= 85000){ $scope.characterLevel = 11; }
-      if(this.characterExp >= 100000){ $scope.characterLevel = 12; }
-      if(this.characterExp >= 120000){ $scope.characterLevel = 13; }
-      if(this.characterExp >= 140000){ $scope.characterLevel = 14; }
-      if(this.characterExp >= 164000){ $scope.characterLevel = 15; }
-      if(this.characterExp >= 195000){ $scope.characterLevel = 16; }
-      if(this.characterExp >= 225000){ $scope.characterLevel = 17; }
-      if(this.characterExp >= 265000){ $scope.characterLevel = 18; }
-      if(this.characterExp >= 305000){ $scope.characterLevel = 19; }
-      if(this.characterExp >= 355000){ $scope.characterLevel = 20; }
+        if(this.characterExp >= 0){ $scope.characterLevel = 1; }
+        if(this.characterExp >= 300){ $scope.characterLevel = 2; }
+        if(this.characterExp >= 900){ $scope.characterLevel = 3; }
+        if(this.characterExp >= 2700){ $scope.characterLevel = 4; }
+        if(this.characterExp >= 6500){ $scope.characterLevel = 5; }
+        if(this.characterExp >= 14000){ $scope.characterLevel = 6; }
+        if(this.characterExp >= 23000){ $scope.characterLevel = 7; }
+        if(this.characterExp >= 34000){ $scope.characterLevel = 8; }
+        if(this.characterExp >= 48000){ $scope.characterLevel = 9; }
+        if(this.characterExp >= 64000){ $scope.characterLevel = 10; }
+        if(this.characterExp >= 85000){ $scope.characterLevel = 11; }
+        if(this.characterExp >= 100000){ $scope.characterLevel = 12; }
+        if(this.characterExp >= 120000){ $scope.characterLevel = 13; }
+        if(this.characterExp >= 140000){ $scope.characterLevel = 14; }
+        if(this.characterExp >= 164000){ $scope.characterLevel = 15; }
+        if(this.characterExp >= 195000){ $scope.characterLevel = 16; }
+        if(this.characterExp >= 225000){ $scope.characterLevel = 17; }
+        if(this.characterExp >= 265000){ $scope.characterLevel = 18; }
+        if(this.characterExp >= 305000){ $scope.characterLevel = 19; }
+        if(this.characterExp >= 355000){ $scope.characterLevel = 20; }
     };
 
-  });
+});

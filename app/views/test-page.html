@@ -1,10 +1,8 @@
-<div layout="column" layout-sm="column" flex layout-fill>
+<div ng-controller="SubheaderAppCtrl" layout="column" flex layout-fill>
+  <md-content style="height: 600px;">
     <section>
-        <div id="pageTitle" class="titleBar" layout="row">
-            <h2>Character Details</h2>
-        </div>
-<!--        <md-subheader class="md-primary">Unread Messages</md-subheader>-->
-    
+      <md-subheader class="md-primary">Unread Messages</md-subheader>
+      <md-content>
         <form id="characterForm" name="userForm">
             <div layout layout-sm="column">
 
@@ -83,34 +81,64 @@
                 </md-input-container>
             </div>
         </form>
+        </md-content>
     </section>
-        
-<!--    Personality Section-->
     <section>
-        <div id="personalityTitle" class="titleBar" layout="row">
-                <h2>Personality</h2>
-        </div>
-<!--        <md-subheader class="md-primary">Unread Messages</md-subheader>-->
-        
-            <div class="personalityInfo" layout="row" layout-sm="column">            
-                <md-input-container flex="50" flex-sm="100">
-                    <label class="md-primary">Character Traits</label>
-                    <textarea id="traits" ng-model="personality.traits" columns="1" md-maxlength="150" ng-change="setPersonality('traits')"></textarea>
-                </md-input-container>
-                <md-input-container flex="50" flex-sm="100">
-                    <label class="md-primary">Ideals</label>
-                    <textarea ng-model="personality.ideals" columns="1" md-maxlength="150" ng-change="setPersonality('ideals')"></textarea>
-                </md-input-container>
+      <md-subheader class="md-warn">Late Messages</md-subheader>
+      <md-list layout="column">
+        <md-item ng-repeat="message in messages">
+          <md-item-content>
+            <div class="md-tile-left">
+                <img ng-src="{{message.face}}" class="face" alt="{{message.who}}">
             </div>
-            <div class="personalityInfo" layout="row" layout-sm="column">
-                <md-input-container flex="50" flex-sm="100">
-                    <label class="md-primary">Bonds</label>
-                    <textarea ng-model="personality.bonds" columns="1" md-maxlength="150" ng-change="setPersonality('bonds')"></textarea>
-                </md-input-container>
-                <md-input-container flex="50" flex-sm="100">
-                    <label class="md-primary">Flaws</label>
-                    <textarea ng-model="personality.flaws" columns="1" md-maxlength="150" ng-change="setPersonality('flaws')"></textarea>
-                </md-input-container>
+            <div class="md-tile-content">
+              <h3>{{message.what}}</h3>
+              <h4>{{message.who}}</h4>
+              <p>
+                {{message.notes}}
+              </p>
             </div>
+          </md-item-content>
+        </md-item>
+      </md-list>
     </section>
+    <section>
+      <md-subheader>Read Messages</md-subheader>
+      <md-list layout="column">
+        <md-item ng-repeat="message in messages">
+          <md-item-content>
+            <div class="md-tile-left">
+                <img ng-src="{{message.face}}" class="face" alt="{{message.who}}">
+            </div>
+            <div class="md-tile-content">
+              <h3>{{message.what}}</h3>
+              <h4>{{message.who}}</h4>
+              <p>
+                {{message.notes}}
+              </p>
+            </div>
+          </md-item-content>
+        </md-item>
+      </md-list>
+    </section>
+    <section>
+      <md-subheader class="md-accent">Archived messages</md-subheader>
+      <md-list layout="column">
+        <md-item ng-repeat="message in messages">
+          <md-item-content>
+            <div class="md-tile-left">
+                <img ng-src="{{message.face}}" class="face" alt="{{message.who}}">
+            </div>
+            <div class="md-tile-content">
+              <h3>{{message.what}}</h3>
+              <h4>{{message.who}}</h4>
+              <p>
+                {{message.notes}}
+              </p>
+            </div>
+          </md-item-content>
+        </md-item>
+      </md-list>
+    </section>
+  </md-content>
 </div>

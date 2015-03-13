@@ -171,6 +171,12 @@ md-icon{
 .titleBar .md-button{
   border-radius:0;
 }
+.md-subheader{
+    margin:0!important;
+}
+.md-subheader:not(.md-sticky-no-effect):after{
+    right:0px;
+}
 .closeAppMenu{
   float:right;
 }
@@ -616,4 +622,11 @@ input[type=number]::-webkit-outer-spin-button {
     margin-left:.5em;
     padding-left:0;
 	padding-bottom:1.55em;
+}
+.personalityInfo {
+    margin-top:1em;
+    padding:0em 1em;
+}
+.personalityInfo textarea{
+    font-weight:700;
 }

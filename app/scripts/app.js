@@ -19,7 +19,8 @@ angular
     'ngTouch',
     'ngMaterial',
     'ngMdIcons',
-    'ngCookies'
+    'ngCookies',
+    'duScroll'
   ])
   .config(function($mdThemingProvider) {
     $mdThemingProvider.theme('default')
@@ -64,6 +65,10 @@ angular
         templateUrl: 'views/character-summary.html',
         controller: 'SummaryCtrl'
       })
+        .when('/test-page', {
+        templateUrl: 'views/test-page.html',
+        controller: 'SubheaderAppCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
@@ -103,4 +108,85 @@ angular
       // call $anchorScroll()
       $anchorScroll();
     };
-  });
+  })
+.controller('SubheaderAppCtrl', function($scope) {
+    $scope.messages = [
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+      {
+        face : '/img/list/60.jpeg',
+        what: 'Brunch this weekend?',
+        who: 'Min Li Chan',
+        when: '3:08PM',
+        notes: ' Ill be in your neighborhood doing errands'
+      },
+    ];
+});
