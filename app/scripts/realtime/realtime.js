@@ -1,32 +1,4 @@
-<div id="pageTitle" class="titleBar" layout="row">
-  <h2>Party</h2>
-</div>
-
-
-<!-- Start Realtime when the body has loaded. -->
-<!--<div onLoad='startRealtime()'>-->
-<div ng-init="init()">
-  <h1>sDrive Realtime API :: quickstart</h1>
-
-  <button id="authorizeButton" disabled>You must authorize</button>
-
-  <p>These text areas are on the same page. You can also
-  <a href="#" onclick="window.open(window.location.href);return false;">
-  open them on separate users' browsers</a> and they will remain synchronized.</p>
-
-  <!-- Text areas that will be used as our collaborative controls. -->
-  <textarea id="editor1" rows="15" cols="50" disabled="true"></textarea>
-  <textarea id="editor2" rows="15" cols="50" disabled="true"></textarea>
-  <br />
-
-  <!-- Undo and redo buttons. -->
-  <button id="undoButton" disabled>Undo</button>
-  <button id="redoButton" disabled>Redo</button>
-    <p>{{target}}</p>
-<!--
-  <script type="text/javascript">
-      console.log('value');   
-    /**
+/**
      * This function is called the first time that the Realtime model is created
      * for a file. This function should be used to initialize any values of the
      * model. In this case, we just create the single string model that will be
@@ -116,7 +88,7 @@
       /**
        * The name of newly created Drive files.
        */
-      defaultTitle: "New Realtime Quickstart File",
+      defaultTitle: "Dupe test 1",
 
       /**
        * The MIME type of newly created Drive Files. By default the application
@@ -148,7 +120,3 @@
       var realtimeLoader = new rtclient.RealtimeLoader(realtimeOptions);
       realtimeLoader.start();
     }
-
-  </script>
--->
-</div>

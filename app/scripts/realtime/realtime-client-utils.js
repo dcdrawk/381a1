@@ -122,11 +122,11 @@ rtclient.Authorizer = function(options) {
 rtclient.Authorizer.prototype.start = function(onAuthComplete) {
   var _this = this;
   gapi.load('auth:client,drive-realtime,drive-share', function() {
-            
-      var $fileID = rtclient.params['fileIds'];
-      //console.log($fileID);
-       var s = new gapi.drive.share.ShareClient('516279059329');
-        s.setItemIds([$fileID]);
+//      console.log('value');      
+//      var $fileID = rtclient.params['fileIds'];
+//      //console.log($fileID);
+//       var s = new gapi.drive.share.ShareClient('516279059329');
+//        s.setItemIds([$fileID]);
         
         
     _this.authorize(onAuthComplete);
@@ -234,7 +234,10 @@ rtclient.getFileMetadata = function(fileId, callback) {
     }).execute(callback);
   });
 }
-
+rtclient.retrieveAllFiles = function(callback) {
+  gapi.client.load('drive', 'v2', function() {
+  });
+}
 
 /**
  * Parses the state parameter passed from the Drive user interface after Open
@@ -250,7 +253,31 @@ rtclient.parseState = function(stateParam) {
     return null;
   }
 }
-
+//rtclient.retrieveAllFiles = function(callback) {
+//      gapi.client.load('oauth2', 'v2', function() {
+//  var retrievePageOfFiles = function(request, result) {
+//    request.execute(function(resp) {
+//      result = result.concat(resp.items);
+//      var nextPageToken = resp.nextPageToken;
+//      if (nextPageToken) {
+//        request = gapi.client.drive.files.list({
+//            'max-results': 3,
+//          'pageToken': nextPageToken
+//        });
+//        retrievePageOfFiles(request, result);
+//      } else {
+//        callback(result);
+//      }
+//    });
+//  }
+//  var initialRequest = gapi.client.drive.files.list();
+//  retrievePageOfFiles(initialRequest, []);
+//    });
+//}
+//
+//var $test = rtclient.retrieveAllFiles();
+//
+//console.log($test);
 
 /**
  * Handles authorizing, parsing query parameters, loading and creating Realtime
@@ -294,7 +321,7 @@ rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   }
 
   // Naive URL construction.
-  var newUrl = params.length == 0 ? './' : ('./#' + params.join('&'));
+  var newUrl = params.length == 0 ? './' : ('./#/party#' + params.join('&'));
   // Using HTML URL re-write if available.
   if (window.history && window.history.replaceState) {
     window.history.replaceState("Google Drive Realtime API Playground", "Google Drive Realtime API Playground", newUrl);
@@ -404,3 +431,52 @@ rtclient.RealtimeLoader.prototype.createNewFileAndRedirect = function() {
     }
   });
 }
+
+/**
+ * Retrieve a list of File resources.
+ *
+ * @param {Function} callback Function to call when the request is complete.
+ */
+
+
+//rtclient.retrieveAllFiles = function() {
+//    gapi.client.load('oauth2', 'v2', function() {
+//  var retrievePageOfFiles = function(request, result) {
+//    request.execute(function(resp) {
+//      result = result.concat(resp.items);
+//      var nextPageToken = resp.nextPageToken;
+//      if (nextPageToken) {
+//        request = gapi.client.drive.files.list({
+//            'max-results': 3,
+//          'pageToken': nextPageToken
+//        });
+//        retrievePageOfFiles(request, result);
+//      } else {
+//        callback(result);
+//      }
+//    });
+//  }
+//  var initialRequest = gapi.client.drive.files.list();
+//  retrievePageOfFiles(initialRequest, []);
+//    });
+//}
+//$allFiles = rtclient.retrieveAllFiles();
+//function retrieveAllFiles(callback) {
+//  var retrievePageOfFiles = function(request, result) {
+//    request.execute(function(resp) {
+//      result = result.concat(resp.items);
+//      var nextPageToken = resp.nextPageToken;
+//      if (nextPageToken) {
+//        request = gapi.client.drive.files.list({
+//            'max-results': 3,
+//          'pageToken': nextPageToken
+//        });
+//        retrievePageOfFiles(request, result);
+//      } else {
+//        callback(result);
+//      }
+//    });
+//  }
+//  var initialRequest = gapi.client.drive.files.list();
+//  retrievePageOfFiles(initialRequest, []);
+//}
