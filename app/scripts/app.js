@@ -65,9 +65,9 @@ angular
         templateUrl: 'views/character-summary.html',
         controller: 'SummaryCtrl'
       })
-        .when('/test-page', {
-        templateUrl: 'views/test-page.html',
-        controller: 'SubheaderAppCtrl'
+        .when('/party', {
+        templateUrl: 'views/party.html',
+        controller: 'PartyCtrl'
       })
       .otherwise({
         redirectTo: '/'
@@ -93,7 +93,7 @@ angular
     };
 
   })
-  .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log, $location, $anchorScroll) {
+  .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function() {
       $mdSidenav('left').close()
       .then(function(){
@@ -103,90 +103,89 @@ angular
     $scope.gotoTop = function (){
       // set the location.hash to the id of
       // the element you wish to scroll to.
-      $location.hash('pageTitle');
-
+      //$location.hash('pageTitle');
       // call $anchorScroll()
-      $anchorScroll();
+      //$anchorScroll();
     };
-  })
-.controller('SubheaderAppCtrl', function($scope) {
-    $scope.messages = [
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-      {
-        face : '/img/list/60.jpeg',
-        what: 'Brunch this weekend?',
-        who: 'Min Li Chan',
-        when: '3:08PM',
-        notes: ' Ill be in your neighborhood doing errands'
-      },
-    ];
-});
+  });
+//.controller('SubheaderAppCtrl', function($scope) {
+//    $scope.messages = [
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//      {
+//        face : '/img/list/60.jpeg',
+//        what: 'Brunch this weekend?',
+//        who: 'Min Li Chan',
+//        when: '3:08PM',
+//        notes: ' Ill be in your neighborhood doing errands'
+//      },
+//    ];
+//});

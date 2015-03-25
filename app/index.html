@@ -13,7 +13,7 @@
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-
+<script type="text/javascript" src="http://apis.google.com/js/api.js"></script>
     <!-- Roboto fonts: Normal(400), Medium(500), Bold(700) -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merriweather:700' rel='stylesheet' type='text/css'>
@@ -73,6 +73,10 @@
             <md-button ng-click="go('/character-summary')" class="md-padding md-primary menu-item">
               <img  style="width: 24px; height: 24px;" src="img/icons/details-icon.png">Character Summary
             </md-button>
+              
+            <md-button ng-click="go('/party')" class="md-padding md-primary menu-item">
+              <img  style="width: 24px; height: 24px;" src="img/icons/details-icon.png">Party
+            </md-button>
 
           </md-content>
         </md-sidenav>
@@ -98,7 +102,6 @@
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
     <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-scroll/angular-scroll.js"></script>
     <script src="bower_components/angular-animate/angular-animate.js"></script>
     <script src="bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="bower_components/angular-messages/angular-messages.js"></script>
@@ -106,6 +109,7 @@
     <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
     <script src="bower_components/angular-touch/angular-touch.js"></script>
     <script src="bower_components/angular-aria/angular-aria.js"></script>
+    <script src="bower_components/angular-scroll/angular-scroll.js"></script>
     <script src="bower_components/angular-material/angular-material.js"></script>
     <script src="bower_components/angular-material-icons/angular-material-icons.min.js"></script>
     <!-- endbower -->
@@ -119,6 +123,10 @@
         <script src="scripts/controllers/ability-scores.js"></script>
         <script src="scripts/controllers/to-do.js"></script>
         <script src="scripts/controllers/summary.js"></script>
+        <script src="scripts/controllers/party.js"></script>
+        <script src="scripts/realtime/realtime-client-utils.js"></script>
+        
         <!-- endbuild -->
+      
 </body>
 </html>
