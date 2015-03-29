@@ -95,7 +95,7 @@ rtclient.getOption = function(options, key, defaultValue) {
   if (value == undefined) {
     console.error(key + ' should be present in the options.');
   }
-  console.log(value);
+  //console.log(value);
   return value;
 }
 
@@ -164,7 +164,7 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
       user_id: userId,
       immediate: false
     }, handleAuthResult);
-    console.log(clientId);
+    //console.log(clientId);
   };
 
   // Try with no popups first.
@@ -234,9 +234,51 @@ rtclient.getFileMetadata = function(fileId, callback) {
     }).execute(callback);
   });
 }
+
+
 rtclient.retrieveAllFiles = function(callback) {
-  gapi.client.load('drive', 'v2', function() {
-  });
+    gapi.client.load('drive', 'v2', function() {
+        //var $results = null;
+        var retrievePageOfFiles = function(request, result) {
+            //console.log(request);
+            request.execute(function(resp) {
+                result = result.concat(resp.items);
+                var nextPageToken = resp.nextPageToken;
+                if (nextPageToken) {
+                    request = gapi.client.drive.files.list({
+                        'max-results': 3,
+                        'pageToken': nextPageToken,
+                        'q' : "title = 'Dupe test 1'"
+                    });
+                    retrievePageOfFiles(request, result);
+                } else {
+                    //console.log(result);
+                    callback(result);
+                }
+            });
+        };
+        
+        var initialRequest = gapi.client.drive.files.list();
+        retrievePageOfFiles(initialRequest, []);
+    });
+}
+
+rtclient.testFunction = function($value) {
+    //gapi.client.load('drive', 'v2', function() {
+    var emptyArray = [];
+    if($value.length == 0){
+        console.log('no file exists')
+    } else {
+        console.log($value);
+        console.log('file exists!');
+        rtclient.downloadFile($value[0], rtclient.testFunction2);
+    }
+     //rtclient.downloadFile();
+//    });
+}
+                     
+rtclient.testFunction2 = function($value) {
+    console.log($value);
 }
 
 /**
@@ -417,19 +459,57 @@ rtclient.RealtimeLoader.prototype.load = function() {
  * Creates a new file and redirects to the URL to load it.
  */
 rtclient.RealtimeLoader.prototype.createNewFileAndRedirect = function() {
-  // No fileId or state have been passed. We create a new Realtime file and
-  // redirect to it.
-  var _this = this;
-  rtclient.createRealtimeFile(this.defaultTitle, this.newFileMimeType, function(file) {
-    if (file.id) {
-      _this.redirectTo([file.id], _this.authorizer.userId);
-    }
-    // File failed to be created, log why and do not attempt to redirect.
-    else {
-      console.error('Error creating file.');
-      console.error(file);
-    }
-  });
+    // No fileId or state have been passed. We create a new Realtime file and
+    // redirect to it.
+    var _this = this;
+//    rtclient.testFunction(this.defaultTitle);
+    var $test = rtclient.retrieveAllFiles(rtclient.testFunction);
+    
+//    when( $test = rtclient.retrieveAllFiles()){
+//        console.log($test);
+//    }
+     //setTimeout(function(){  console.log(rtclient.retrieveAllFiles())   }, 4000);
+    
+    
+//    rtclient.createRealtimeFile(this.defaultTitle, this.newFileMimeType, function(file) {
+//        if (file.id) {
+//            _this.redirectTo([file.id], _this.authorizer.userId);
+//        }
+//        // File failed to be created, log why and do not attempt to redirect.
+//        else {
+//              console.error('Error creating file.');
+//              console.error(file);
+//        }
+//    });
+}
+
+/**
+ * Download a file's content.
+ *
+ * @param {File} file Drive File instance.
+ * @param {Function} callback Function to call when the request is complete.
+ */
+rtclient.downloadFile = function(file, callback) {
+    gapi.client.load('drive', 'v2', function() {
+        console.log(file.selfLink);
+        if (file.selfLink) {
+            var accessToken = gapi.auth.getToken().access_token;
+            var xhr = new XMLHttpRequest();
+            xhr.open('GET', file.selfLink);
+            xhr.setRequestHeader('Authorization', 'Bearer ' + accessToken);
+            xhr.onload = function() {
+                console.log(xhr.responseText);
+                callback(xhr.responseText);
+            };
+            xhr.onerror = function() {
+                callback(null);
+            };
+            xhr.send();
+        } else {
+            callback(null);
+        }
+        rtclient.RealtimeLoader();
+    });
 }
 
 /**
@@ -440,27 +520,28 @@ rtclient.RealtimeLoader.prototype.createNewFileAndRedirect = function() {
 
 
 //rtclient.retrieveAllFiles = function() {
-//    gapi.client.load('oauth2', 'v2', function() {
-//  var retrievePageOfFiles = function(request, result) {
-//    request.execute(function(resp) {
-//      result = result.concat(resp.items);
-//      var nextPageToken = resp.nextPageToken;
-//      if (nextPageToken) {
-//        request = gapi.client.drive.files.list({
-//            'max-results': 3,
-//          'pageToken': nextPageToken
+//    gapi.client.load('drive', 'v2', function() {
+//    var retrievePageOfFiles = function(request, result) {
+//        request.execute(function(resp) {
+//            result = result.concat(resp.items);
+//            var nextPageToken = resp.nextPageToken;
+//            if (nextPageToken) {
+//                request = gapi.client.drive.files.list({
+//                    'max-results': 3,
+//                    'pageToken': nextPageToken
+//                });
+//                retrievePageOfFiles(request, result);
+//            } else {
+//                callback(result);
+//            }
 //        });
-//        retrievePageOfFiles(request, result);
-//      } else {
-//        callback(result);
-//      }
-//    });
-//  }
-//  var initialRequest = gapi.client.drive.files.list();
-//  retrievePageOfFiles(initialRequest, []);
+//    };
+//    var initialRequest = gapi.client.drive.files.list();
+//    retrievePageOfFiles(initialRequest, []);
 //    });
 //}
 //$allFiles = rtclient.retrieveAllFiles();
+
 //function retrieveAllFiles(callback) {
 //  var retrievePageOfFiles = function(request, result) {
 //    request.execute(function(resp) {

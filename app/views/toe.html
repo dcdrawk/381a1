@@ -1,0 +1,55 @@
+<div>
+ 
+    <h1>Drive Realtime API :: quickstart</h1>
+    
+    <button id="authorizeButton">You must authorize</button>
+    
+    
+    <div ng-controller="gameController">
+        
+        <div ng-if="gameReady == true">
+            
+            <h3>Tic Tac Toe</h3>
+           
+            <h4>
+                It is {{game.turn}}'s turn.
+            </h4>
+          
+            <div class="game">
+                
+                <div class="tile" ng-repeat="tile in tiles track by $index" ng-click="tileClick($index)">
+                    
+                    <span ng-if="tile == 'o'">o</span>
+                    <span ng-if="tile == 'x'">x</span>
+                    
+                </div>
+                
+            </div>
+            
+            <br />
+            
+            <button ng-click="reset()">Reset Game</button>
+            
+            <h3>Chat</h3>
+            
+            <div ng-repeat="item in chat track by $index">
+                {{item.player}}: {{item.message}}
+            </div>
+            
+            <input ng-model="chatInput" type="text" />
+            
+            <p>{{chatInput}}</p>
+            <button ng-click="chatClick()">Submit</button>
+        
+        </div>
+      
+    </div>
+    
+    
+    
+    
+    
+    <script src="app.js"></script>
+    <script src="drive.js"></script>
+ 
+</div>

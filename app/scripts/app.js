@@ -69,6 +69,10 @@ angular
         templateUrl: 'views/party.html',
         controller: 'PartyCtrl'
       })
+        .when('/toe', {
+        templateUrl: 'views/toe.html',
+        controller: 'PartyCtrl'
+      })
       .otherwise({
         redirectTo: '/'
       });
