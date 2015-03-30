@@ -8,8 +8,8 @@
  *
  * Main module of the application.
  */
-
-angular
+var app = {};
+app.module = angular
   .module('myappApp', [
     'ngAnimate',
     'ngCookies',
@@ -65,7 +65,7 @@ angular
         templateUrl: 'views/character-summary.html',
         controller: 'SummaryCtrl'
       })
-        .when('/party', {
+        .when('/party/:fileId/:filter', {
         templateUrl: 'views/party.html',
         controller: 'PartyCtrl'
       })
@@ -111,7 +111,33 @@ angular
       // call $anchorScroll()
       //$anchorScroll();
     };
+  })
+
+/**
+ * A simple type for todo items.
+ * @constructor
+ */
+app.Todo = function () {
+};
+
+/**
+ * Loads the document. Used to inject the collaborative document
+ * into the main controller.
+ *
+ * @param $route
+ * @param storage
+ * @returns {*}
+ */
+app.loadFile = function ($route, storage) {
+  var id = $route.current.params.fileId;
+  var userId = $route.current.params.user;
+  return storage.requireAuth(true, userId).then(function () {
+    return storage.getDocument(id);
   });
+};
+app.loadFile.$inject = ['$route', 'storage'];
+
+
 //.controller('SubheaderAppCtrl', function($scope) {
 //    $scope.messages = [
 //      {

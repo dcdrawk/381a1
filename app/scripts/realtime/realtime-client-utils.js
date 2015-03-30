@@ -363,7 +363,7 @@ rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   }
 
   // Naive URL construction.
-  var newUrl = params.length == 0 ? './' : ('./#/party#' + params.join('&'));
+  var newUrl = params.length == 0 ? './' : ('./#/party/' + params.join('&'));
   // Using HTML URL re-write if available.
   if (window.history && window.history.replaceState) {
     window.history.replaceState("Google Drive Realtime API Playground", "Google Drive Realtime API Playground", newUrl);
@@ -463,24 +463,24 @@ rtclient.RealtimeLoader.prototype.createNewFileAndRedirect = function() {
     // redirect to it.
     var _this = this;
 //    rtclient.testFunction(this.defaultTitle);
-    var $test = rtclient.retrieveAllFiles(rtclient.testFunction);
+    //var $test = rtclient.retrieveAllFiles(rtclient.testFunction);
     
 //    when( $test = rtclient.retrieveAllFiles()){
 //        console.log($test);
 //    }
-     //setTimeout(function(){  console.log(rtclient.retrieveAllFiles())   }, 4000);
-    
-    
-//    rtclient.createRealtimeFile(this.defaultTitle, this.newFileMimeType, function(file) {
-//        if (file.id) {
-//            _this.redirectTo([file.id], _this.authorizer.userId);
-//        }
-//        // File failed to be created, log why and do not attempt to redirect.
-//        else {
-//              console.error('Error creating file.');
-//              console.error(file);
-//        }
-//    });
+//     setTimeout(function(){  console.log(rtclient.retrieveAllFiles())   }, 4000);
+//    
+//    
+    rtclient.createRealtimeFile(this.defaultTitle, this.newFileMimeType, function(file) {
+        if (file.id) {
+            _this.redirectTo([file.id], _this.authorizer.userId);
+        }
+        // File failed to be created, log why and do not attempt to redirect.
+        else {
+              console.error('Error creating file.');
+              console.error(file);
+        }
+    });
 }
 
 /**
