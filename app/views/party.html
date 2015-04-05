@@ -2,27 +2,124 @@
   <h2>Party</h2>
 </div>
 
+<md-button id="openRealtime" ng-click="init()" class="realtimeBtn md-padding md-primary" ng-class="{'hide': realtimeOpen}">
+	Open Realtime Document
+</md-button>
 
 <!-- Start Realtime when the body has loaded. -->
 <!--<div onLoad='startRealtime()'>-->
-<div ng-init="init()">
-  <h1>sDrive Realtime API :: quickstart</h1>
+<div ng-init="" ng-class="{'hide': !realtimeOpen}">
 
-  <button id="authorizeButton" disabled>You must authorize</button>
+<!--  <button id="authorizeButton" disabled>You must authorize</button>-->
 
+	<md-button id="authorizeButton" class="realtimeBtn md-padding md-primary">
+		You Must Authorize
+	</md-button>
+	
+	<div id="shareControls" class="md-padding">
+<!--
+		<md-button id="testBtn" class="realtimeBtn md-padding md-primary">
+			Test Button
+		</md-button>
+		<md-button id="testBtn2" class="realtimeBtn md-padding md-primary">
+			Test Button 2
+		</md-button>
+-->
+		<h3>Dungeon Master Controls</h3>
+		<md-button id="enableShare" class="realtimeBtn md-padding md-primary">
+			Start Sharing
+		</md-button>
+		<md-button id="disableShare" class="realtimeBtn md-padding md-primary">
+			Stop Sharing
+		</md-button>
+		<div id="shortContainer"><span id="shortURL" class="copyURL"></span></div>
+	</div>
+	
+	
+	
+<!--
   <p>These text areas are on the same page. You can also
   <a href="#" onclick="window.open(window.location.href);return false;">
   open them on separate users' browsers</a> and they will remain synchronized.</p>
+-->
 
   <!-- Text areas that will be used as our collaborative controls. -->
-  <textarea id="editor1" rows="15" cols="50" disabled="true"></textarea>
-  <textarea id="editor2" rows="15" cols="50" disabled="true"></textarea>
-  <br />
+	<div id="advNotes">
+	
+	
+		<h3>Adventure Notes <span id="togNotes">Hide</span></h3>	
+  		<textarea id="notes" rows="15" cols="50" disabled="true"></textarea>
+<!--		<textarea id="testText" rows="15" cols="50" disabled="true"></textarea>-->
+<!--		<div ng-repeat="mapItem in todos.asArray()" id="binding">Test</div>-->
+<!--		<div id="binding">Test {{rootTest}}</div>-->
+<!--
+		<button id="undoButton" disabled>Undo</button>
+  		<button id="redoButton" disabled>Redo</button>
+-->
+		
+<!--	<input type="button" id="shareButton" style="margin: 1em 0" value="Share Document"/>-->
+	</div>
+	<div id="questLog">
+		<h3>Quest Log<span id="togQuests">Hide</span></h3>
+		
+		<div id="questLogContainer">
+			<md-button id="newQuest" class="realtimeBtn md-padding md-primary">
+				New Quest
+			</md-button>
+
+			<div id="questForm">
+				<input id="questName" placeholder="Quest Name" class="questInfo md-input" ngRequired="true">
+				<textarea id="questDetails" placeholder="Quest Details" class="questInfo" ngRequired="true"></textarea>
+
+				<md-button id="addQuest" class="realtimeBtn  md-primary md-raised" ng-disabled="true">
+					Add Quest
+				</md-button>
+				<md-button id="clearQuests" class="realtimeBtn md-padding md-primary">
+					Clear Quests
+				</md-button>
+			</div>
+
+
+
+			<div id="quests">
+
+			</div>
+		</div>
+<!--
+		<md-input-container flex>
+		  <label class="placeholderLabel">Quest Name</label>
+		  <input class="md-input">
+		</md-input-container>
+-->
+<!--		For some reason, md-input-container messes up the realtimedoc -->
+		
+<!--		<form name="addQuest">-->
+		
+<!--
+			<input id="questName" placeholder="Quest Name" class="questInfo md-input" ngRequired="true">
+			<textarea id="questDetails" placeholder="Quest Details" class="questInfo" ngRequired="true"></textarea>
+
+			<md-button id="addQuest" class="realtimeBtn md-padding md-primary" disabled>
+				Add Quest
+			</md-button>
+			<md-button id="clearQuests" class="realtimeBtn md-padding md-primary">
+				Clear Quests
+			</md-button>
+-->
+			
+<!--		</form>-->
+<!--
+		<md-button id="removeBtn" class="removeQuest realtimeBtn md-padding md-primary">
+			Remove Quests
+		</md-button>
+-->
+		
+	</div>
+<!--  <textarea id="editor2" rows="15" cols="50" disabled="true"></textarea>-->
+<!--  <br />-->
 
   <!-- Undo and redo buttons. -->
-  <button id="undoButton" disabled>Undo</button>
-  <button id="redoButton" disabled>Redo</button>
-    <p>{{target}}</p>
+
 <!--
   <script type="text/javascript">
       console.log('value');   

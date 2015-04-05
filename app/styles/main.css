@@ -278,6 +278,9 @@ md-input-container .md-placeholder{
     font-size:1.1em;
 }
 
+.md-padding{
+	padding:1em;
+}
 /*Setting up messages and warning dialogue boxes*/
 .customInput{
     width:90%;
@@ -294,7 +297,7 @@ md-input-container .md-placeholder{
     display:inline!important;
 }
 .hide{
-  display:none;
+  display:none!important;
 }
 
 .message{
@@ -512,6 +515,133 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+/* REALTIME STYLES */
+/*
+#openRealtime{
+	margin:2em auto;
+	display:block;
+}
+*/
+#openRealtime{
+	margin-left:1em;
+	margin:1em;
+}
+.realtimeBtn{
+/*	margin:2em auto;*/
+	display:inline-block;
+}
+#authorizeButton{
+	display:none;
+}
+#enableShare{
+	display:inline-block;
+}
+#disableShare{
+	display:none;
+}
+#enableShare, #disableShare{
+	margin-right:2em;
+}
+#shareControls{
+	display:none;
+	padding:0 1em;
+	transition:width .5s ease;
+}
+#advNotes, #questLog{
+	padding:0 1em;
+}
+#advNotes textarea{
+	font-weight: 400;
+	padding: 1em;
+	background-color: rgba(255, 255, 255, 0.55);
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	width:100%;
+	max-width:100%;
+	margin-bottom:.5em;
+	margin-top: 1px;
+	height:auto;
+	transition:height .5s ease;
+}
+
+#togNotes, #togQuests{
+	margin:0 1em!important;
+}
+
+#shortContainer{
+	display:inline-block;
+}
+#shortURL{
+	margin:0em 1em;
+	padding:.5em;
+	display:inline-block;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	border-radius: 5px;
+	background-color: #E8E8E8;
+	box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.44);
+}
+.questInfo{
+	padding:.5em;
+	background: none;
+	border: 0;
+	border-bottom: 1px solid #CFD2D3;
+	font-weight: 400;
+	max-width:100%;
+	margin-bottom:1em;
+}
+#questName{
+	width:50%;
+	font-size:1.25em;
+	font-weight:500;
+}
+#questDetails{
+	width:100%;
+}
+.questDetail, .questControls{
+	display:inline-block;
+}
+.questDetail{
+	width:70%;
+	margin-bottom:.5em;
+}
+.questDetail p{
+	margin:.25em 0;
+}
+.questControls{
+	width:30%;
+/*	  vertical-align: top;*/
+}
+.removeQuest, .completeQuest, #togNotes, #togQuests{
+	padding:.5em;
+	border-radius:3px;
+	color:rgb(69,90,100);
+	background-color:rgba(158,158,158,0);
+	font-weight:500;
+	transition: background .5s ease;
+	cursor: pointer;
+	text-align: center;
+	margin:0;
+	margin-bottom:.5em;
+}
+#clearQuests{
+	display:none;
+}
+.removeQuest:hover, .completeQuest:hover, #togNotes:hover, #togQuests:hover{
+	background-color:rgba(158,158,158,0.2);
+}
+.questContainer{
+	margin-bottom:1em;
+  	border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+}
+#newQuest{
+	display:block;
+}
+#questForm{
+	display:none;
+}
+.complete{
+	text-decoration: line-through;
+	color:#999;
+}
 
 
 .buttondemoBasicUsage {
@@ -612,9 +742,28 @@ input[type=number]::-webkit-outer-spin-button {
     border-bottom:2px solid #90A4AE;
     border-right:none;
   }
+	#questName{
+		width:100%;
+	}
     .md-select-menu-container{
         left:0px!important;
     }
+	
+	.questDetail, .questControls{
+		display:inline-block;
+/*		width:100%;*/
+	}
+	#disableShare, #enableShare{
+		margin:0;
+		padding:.5em;
+	}
+	#shortURL{
+		margin:0;
+	}
+	.removeQuest{
+/*		width:25%;*/
+		padding:.25em;
+	}
 }
 
 .customInputContainer {

@@ -98,10 +98,12 @@
     <script src="bower_components/json3/lib/json3.js"></script>
     <![endif]-->
     <!-- endbuild -->
-
+<script src="//apis.google.com/js/client:plusone.js"></script>
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="../bower_components/angular/angular.js"></script>
+<!--	  <script src="../bower_components/jquery/dist/jquery.min.js"></script>-->
+<!--    <script src="scripts/realtime/angular.js"></script>-->
+  	<script src="../bower_components/angular/angular.js"></script>
     <script src="../bower_components/angular-animate/angular-animate.js"></script>
     <script src="../bower_components/angular-cookies/angular-cookies.js"></script>
     <script src="../bower_components/angular-messages/angular-messages.js"></script>
@@ -116,7 +118,7 @@
     <!-- endbuild -->
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
+        <script src="scripts/app_old.js"></script>
         <script src="scripts/controllers/main.js"></script>
         <script src="scripts/controllers/details_new.js"></script>
         <script src="scripts/controllers/proficiency.js"></script>
@@ -126,9 +128,22 @@
         <script src="scripts/controllers/party.js"></script>
         <script src="scripts/realtime/realtime-client-utils.js"></script>
         <script src="scripts/realtime/realtime.js"></script>
+	  	<script src="scripts/realtime/angular-storage.js"></script>
 <!--      <script src="scripts/realtime/drive.js"></script>-->
       <script src="scripts/controllers/toe.js"></script>
         <!-- endbuild -->
-      
+    <script src="scripts/services/realtimeDoc.js"></script>
+<!--
+	      <script src="scripts/services/storage.js"></script>
+    <script src="scripts/directives/on-blur.js"></script>
+    <script src="scripts/directives/collaborative.js"></script>
+    <script src="scripts/directives/focus.js"></script>
+-->
+
+<!--
+    <script src="scripts/controllers/install.js"></script>
+    <script src="scripts/controllers/create.js"></script>
+    <script src="scripts/controllers/todos.js"></script>
+-->
 </body>
 </html>

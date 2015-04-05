@@ -1,16 +1,30 @@
+/**
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS,
+ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ * See the License for the specific language governing permissions and
+ * limitations under the License.
+ */
+
 'use strict';
 
-/**
- * @ngdoc overview
- * @name myappApp
- * @description
- * # myappApp
- *
- * Main module of the application.
- */
+var CONFIG = {
+  clientId: '516279059329-ucgvf9nubkm942qoc0iqgo838f3mfv6a.apps.googleusercontent.com',
+  scopes: [
+    'https://www.googleapis.com/auth/drive.file',
+    'https://www.googleapis.com/auth/drive.install'
+  ]
+};
+
 var app = {};
-app.module = angular
-  .module('myappApp', [
+
+app.module = angular.module('myappApp', [
     'ngAnimate',
     'ngCookies',
     'ngMessages',
@@ -20,65 +34,84 @@ app.module = angular
     'ngMaterial',
     'ngMdIcons',
     'ngCookies',
-    'duScroll'
-  ])
-  .config(function($mdThemingProvider) {
-    $mdThemingProvider.theme('default')
-    .primaryPalette('blue-grey', {
-      'default': '700', // by default use shade 700 from the cyan palette for primary intentions
-      'hue-1': '100', // use shade 100 for the <code>md-hue-1</code> class
-      'hue-2': '200', // use shade 200 for the <code>md-hue-2</code> class
-      'hue-3': 'A100' // use shade A100 for the <code>md-hue-3</code> class
-    })
-    // If you specify less than all of the keys, it will inherit from the
-    // default shades
-    .accentPalette  ('amber', {
-      'default': '400' // use shade 600 for default, and keep all other shades the same
-    })
-    .warnPalette('red', {
-      'default': '600' // use shade 400 for default, and keep all other shades the same
-    });
-  })
-  .config(function ($routeProvider) {
+    'duScroll',
+	'config'
+  ]);
+
+/**
+ * A simple type for todo items.
+ * @constructor
+ */
+app.Todo = function () {
+};
+
+/**
+ * Initializer for constructing via the realtime API
+ *
+ * @param title
+ */
+app.Todo.prototype.initialize = function (title) {
+  var model = gapi.drive.realtime.custom.getModel(this);
+  this.title = model.createString(title);
+  this.completed = false;
+  this.setup();
+};
+
+/**
+ * Adds a "text" property to collaborative strings for ng-model compatibility
+ * after a model is created or loaded.
+ */
+app.Todo.prototype.setup = function() {
+  Object.defineProperty(this.title, 'text', {
+    set: this.title.setText,
+    get: this.title.getText
+  });
+};
+
+/**
+ * Loads the document. Used to inject the collaborative document
+ * into the main controller.
+ *
+ * @param $route
+ * @param storage
+ * @returns {*}
+ */
+app.loadFile = function ($route, storage) {
+  var id = $route.current.params.fileId;
+  var userId = $route.current.params.user;
+  return storage.requireAuth(true, userId).then(function () {
+    return storage.getDocument(id);
+  });
+};
+//app.loadFile.$inject = ['$route', 'storage'];
+
+/**
+ * Initialize our application routes
+ */
+app.module.config(function ($routeProvider) {
     $routeProvider
-      .when('/', {
+      .when('/todos/:fileId/:filter', {
         templateUrl: 'views/main.html',
-        controller: 'MainCtrl'
+        controller: 'MainCtrl',
+        resolve: {
+          realtimeDocument: app.loadFile
+        }
       })
-      .when('/character-details', {
-        templateUrl: 'views/character-details.html',
-        controller: 'DetailsCtrl'
+      .when('/create', {
+        templateUrl: 'views/loading.html',
+        controller: 'CreateCtrl'
       })
-      .when('/proficiency', {
-        templateUrl: 'views/proficiency.html#profTitle',
-        controller: 'ProfCtrl'
-      })
-      .when('/ability-scores', {
-        templateUrl: 'views/ability-scores.html',
-        controller: 'AScoreCtrl'
-      })
-      .when('/to-do', {
-        templateUrl: 'views/to-do.html',
-        controller: 'ToDoCtrl'
-      })
-      .when('/character-summary', {
-        templateUrl: 'views/character-summary.html',
-        controller: 'SummaryCtrl'
-      })
-        .when('/party/:fileId/:filter', {
-        templateUrl: 'views/party.html',
-        controller: 'PartyCtrl'
-      })
-        .when('/toe', {
-        templateUrl: 'views/toe.html',
-        controller: 'PartyCtrl'
+      .when('/install', {
+        templateUrl: 'views/install.html',
+        controller: 'InstallCtrl'
       })
       .otherwise({
-        redirectTo: '/'
+        redirectTo: '/install'
       });
+  }
+);
 
-  })
-  .controller('TestCtrl', function($scope) {
+ app.module.controller('TestCtrl', function($scope) {
     $scope.title1 = 'Button';
     $scope.title4 = 'Warn';
     $scope.isDisabled = true;
@@ -113,109 +146,43 @@ app.module = angular
     };
   })
 
-/**
- * A simple type for todo items.
- * @constructor
- */
-app.Todo = function () {
-};
+app.module.value('config', CONFIG);
 
 /**
- * Loads the document. Used to inject the collaborative document
- * into the main controller.
- *
- * @param $route
- * @param storage
- * @returns {*}
+ * Set up handlers for various authorization issues that may arise if the access token
+ * is revoked or expired.
  */
-app.loadFile = function ($route, storage) {
-  var id = $route.current.params.fileId;
-  var userId = $route.current.params.user;
-  return storage.requireAuth(true, userId).then(function () {
-    return storage.getDocument(id);
+app.module.run(['$rootScope', '$location', 'storage', function ($rootScope, $location, storage) {
+  // Error loading the document, likely due revoked access. Redirect back to home/install page
+  $rootScope.$on('$routeChangeError', function () {
+    $location.url('/install?target=' + encodeURIComponent($location.url()));
   });
-};
-app.loadFile.$inject = ['$route', 'storage'];
 
+  // Token expired, refresh
+  $rootScope.$on('todos.token_refresh_required', function () {
+    storage.requireAuth(true).then(function () {
+      // no-op
+    }, function () {
+      $location.url('/install?target=' + encodeURIComponent($location.url()));
+    });
+  });
+}]);
 
-//.controller('SubheaderAppCtrl', function($scope) {
-//    $scope.messages = [
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//      {
-//        face : '/img/list/60.jpeg',
-//        what: 'Brunch this weekend?',
-//        who: 'Min Li Chan',
-//        when: '3:08PM',
-//        notes: ' Ill be in your neighborhood doing errands'
-//      },
-//    ];
-//});
+/**
+ * Bootstrap the app
+ */
+gapi.load('auth:client:drive-share:drive-realtime', function () {
+  gapi.auth.init();
+
+  // Register our Todo class
+  app.Todo.prototype.title = gapi.drive.realtime.custom.collaborativeField('title');
+  app.Todo.prototype.completed = gapi.drive.realtime.custom.collaborativeField('completed');
+
+  gapi.drive.realtime.custom.registerType(app.Todo, 'todo');
+  gapi.drive.realtime.custom.setInitializer(app.Todo, app.Todo.prototype.initialize);
+  gapi.drive.realtime.custom.setOnLoaded(app.Todo, app.Todo.prototype.setup);
+
+  $(document).ready(function () {
+    angular.bootstrap(document, ['myappApp']);
+  });
+});

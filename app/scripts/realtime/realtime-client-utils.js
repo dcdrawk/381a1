@@ -131,6 +131,8 @@ rtclient.Authorizer.prototype.start = function(onAuthComplete) {
         
     _this.authorize(onAuthComplete);
   });
+//	gapi.client.setApiKey('516279059329-ucgvf9nubkm942qoc0iqgo838f3mfv6a'); //get your ownn Browser API KEY
+//	gapi.client.load('urlshortener', 'v1',function(){});
 }
 
 
@@ -146,9 +148,11 @@ rtclient.Authorizer.prototype.authorize = function(onAuthComplete) {
   var handleAuthResult = function(authResult) {
     if (authResult && !authResult.error) {
       _this.authButton.disabled = true;
+	 	_this.authButton.style.display = 'none';
       _this.fetchUserId(onAuthComplete);
     } else {
       _this.authButton.disabled = false;
+		_this.authButton.style.display = 'block';
       _this.authButton.onclick = authorizeWithPopup;
     }
   };
@@ -235,6 +239,8 @@ rtclient.getFileMetadata = function(fileId, callback) {
   });
 }
 
+//
+//console.log($test);
 
 rtclient.retrieveAllFiles = function(callback) {
     gapi.client.load('drive', 'v2', function() {
@@ -278,7 +284,8 @@ rtclient.testFunction = function($value) {
 }
                      
 rtclient.testFunction2 = function($value) {
-    console.log($value);
+    //console.log($value);
+	return 'SILLY';
 }
 
 /**
@@ -335,6 +342,9 @@ rtclient.parseState = function(stateParam) {
  *
  *    1. "defaultTitle", the title of newly created Realtime files.
  */
+
+var RTCLIENT;
+
 rtclient.RealtimeLoader = function(options) {
   // Initialize configuration variables.
   this.onFileLoaded = rtclient.getOption(options, 'onFileLoaded');
@@ -345,6 +355,8 @@ rtclient.RealtimeLoader = function(options) {
   this.autoCreate = rtclient.getOption(options, 'autoCreate', false); // This tells us if need to we automatically create a file after auth.
   this.defaultTitle = rtclient.getOption(options, 'defaultTitle', 'New Realtime File');
   this.authorizer = new rtclient.Authorizer(options);
+	
+	RTCLIENT = this;
 }
 
 
@@ -363,7 +375,7 @@ rtclient.RealtimeLoader.prototype.redirectTo = function(fileIds, userId) {
   }
 
   // Naive URL construction.
-  var newUrl = params.length == 0 ? './' : ('./#/party/' + params.join('&'));
+  var newUrl = params.length == 0 ? './' : ('./#/party/&' + params.join('&'));
   // Using HTML URL re-write if available.
   if (window.history && window.history.replaceState) {
     window.history.replaceState("Google Drive Realtime API Playground", "Google Drive Realtime API Playground", newUrl);
@@ -400,14 +412,24 @@ rtclient.RealtimeLoader.prototype.start = function() {
  * Handles errors thrown by the Realtime API.
  */
 rtclient.RealtimeLoader.prototype.handleErrors = function(e) {
+	console.log(e);
+	if (e.type == 'not_found') {
+		RTCLIENT.createNewFileAndRedirect();
+	}
+	
+	
   if(e.type == gapi.drive.realtime.ErrorType.TOKEN_REFRESH_REQUIRED) {
     authorizer.authorize();
   } else if(e.type == gapi.drive.realtime.ErrorType.CLIENT_ERROR) {
     alert("An Error happened: " + e.message);
     window.location.href= "/";
   } else if(e.type == gapi.drive.realtime.ErrorType.NOT_FOUND) {
-    alert("The file was not found. It does not exist or you do not have read access to the file.");
-    window.location.href= "/";
+	  RTCLIENT.createNewFileAndRedirect();
+    //alert("The file was not found. It does not exist or you do not have read access to the file.");
+    //window.location.href= "/";
+  } else if(e.type == gapi.drive.realtime.ErrorType.FORBIDDEN) {
+  	console.log('NO WRITE PERMISSIONS');
+	  notes.disabled = true;
   }
 };
 
@@ -427,12 +449,29 @@ rtclient.RealtimeLoader.prototype.load = function() {
   // Creating the error callback.
   var authorizer = this.authorizer;
 
-
+	var file = localStorage.getItem('rtFileId');
+	if (file) {
+		fileIds = [file];
+		console.log(fileIds);
+		
+		rtclient.retrievePermissions(fileIds);
+		
+	} else {
+		var urlId = parseQuery(window.location.href);
+		if(urlId.fileIds){
+			console.log('THERE IS A FILE ID!');
+			
+		rtclient.retrievePermissions(fileIds);
+			
+		}
+	}
+	
   // We have file IDs in the query parameters, so we will use them to load a file.
   if (fileIds) {
     for (var index in fileIds) {
       gapi.drive.realtime.load(fileIds[index], this.onFileLoaded, this.initializeModel, this.handleErrors);
     }
+	  this.redirectTo(fileIds, userId);
     return;
   }
 
@@ -440,6 +479,7 @@ rtclient.RealtimeLoader.prototype.load = function() {
   // it and redirect to the fileId contained.
   else if (state) {
     var stateObj = rtclient.parseState(state);
+	  //console.log('state');
     // If opening a file from Drive.
     if (stateObj.action == "open") {
       fileIds = stateObj.ids;
@@ -473,6 +513,10 @@ rtclient.RealtimeLoader.prototype.createNewFileAndRedirect = function() {
 //    
     rtclient.createRealtimeFile(this.defaultTitle, this.newFileMimeType, function(file) {
         if (file.id) {
+			
+			
+			localStorage.setItem('rtFileId', file.id);
+			rtclient.changePermissions(file.id, null, 'anyone', 'reader');
             _this.redirectTo([file.id], _this.authorizer.userId);
         }
         // File failed to be created, log why and do not attempt to redirect.
@@ -561,3 +605,182 @@ rtclient.downloadFile = function(file, callback) {
 //  var initialRequest = gapi.client.drive.files.list();
 //  retrievePageOfFiles(initialRequest, []);
 //}
+function parseQuery(qstr)
+{
+  var query = {};
+  var a = qstr.split('&');
+  for (var i in a)
+  {
+    var b = a[i].split('=');
+    query[decodeURIComponent(b[0])] = decodeURIComponent(b[1]);
+  }
+
+  return query;
+}
+
+/**
+ * Insert a new permission.
+ *
+ * @param {String} fileId ID of the file to insert permission for.
+ * @param {String} value User or group e-mail address, domain name or
+ *                       {@code null} "default" type.
+ * @param {String} type The value "user", "group", "domain" or "default".
+ * @param {String} role The value "owner", "writer" or "reader".
+ */
+rtclient.changePermissions = function(fileId, value, type, role) {
+	gapi.client.load('drive', 'v2', function() {
+		var body = {
+			'value': value,
+				'type': type,
+			'role': role
+		};
+		var request = gapi.client.drive.permissions.insert({
+			'fileId': fileId,
+			'resource': body
+		});	
+		request.execute(function(resp) { 
+			rtclient.retrievePermissions(fileId);
+		});
+	});
+	
+	
+	//adding functionality to show or hide the share buttons
+	var enableShare = document.getElementById('enableShare');	
+	var disableShare = document.getElementById('disableShare');
+//	console.log('THIS IS A TEST');
+	//if the enableshare button is showing
+//	if(enableShare.style.display='block'){
+//		console.log('THE BUTTON IS SHOWING!');
+//	}
+}
+
+/**
+ * Retrieve a list of permissions.
+ *
+ * @param {String} fileId ID of the file to retrieve permissions for.
+ * @param {Function} callback Function to call when the request is complete.
+ */
+rtclient.retrievePermissions = function(fileId) {
+	gapi.client.load('drive', 'v2', function() {
+		var request = gapi.client.drive.permissions.list({
+			'fileId': fileId
+		});
+		request.execute(function(resp) {
+			console.log('HELLO');
+			//console.log(resp.items[0].id);
+			var ownerId = resp.items[0].id;
+			
+			//var aboutTimeout = window.setTimeout(rtclient.printAbout(), 2000);
+			//console.log(about);
+			console.log(resp);
+			if(resp.items[1]){
+				var sharedWith = resp.items[1].role;
+					var enableShare = document.getElementById('enableShare');
+					var disableShare = document.getElementById('disableShare');
+					var notes = document.getElementById('notes');
+
+					var about = rtclient.printAbout(ownerId, sharedWith);
+			}
+			
+			
+//			if(sharedWith == 'writer'){
+//				console.log('this doc is open for anyone to write');
+//				enableShare.style.display = 'none';
+//				disableShare.style.display = 'block';
+//			} else if (sharedWith == 'reader'){
+//				notes.disabled = true;
+//				enableShare.style.display = 'block';
+//				disableShare.style.display = 'none';
+//			}
+		});
+	});
+}
+
+/**
+ * Print information about the current user along with the Drive API
+ * settings.
+ */
+rtclient.printAbout = function (ownerId, sharedWith) {
+	gapi.client.load('drive', 'v2', function() {
+		var request = gapi.client.drive.about.get();
+		request.execute(function(resp) {
+			//console.log(resp);
+			var shareControls = document.getElementById('shareControls');
+			var userPermId = resp.user.permissionId;
+			
+			//if the user viewing the document is the owner
+			if(userPermId == ownerId){
+				shareControls.style.display = 'block';
+				//shareControls.style.width = '200px';
+				notes.disabled = false;
+				if(sharedWith == 'writer'){
+					console.log('this doc is open for anyone to write');
+					enableShare.style.display = 'none';
+					disableShare.style.display = 'inline-block';
+				} else if (sharedWith == 'reader'){
+					enableShare.style.display = 'inline-block';
+					disableShare.style.display = 'none';
+				}
+				var pubKey = 'AIzaSyCde-rPHpjfEEqmR93btsjT8fh6onckLow';
+				var currentURL = window.location.href;
+				var contents = {"longUrl": currentURL}
+				gapi.client.load('urlshortener', 'v1').then(
+					rtclient.urlShortener('https://www.googleapis.com/urlshortener/v1/url?key='+pubKey, contents)
+				);
+				//if the viewer is not the owner
+			} else {
+				shareControls.style.display = 'none';
+				
+//				if(sharedWith == 'writer'){
+//					notes.disabled = false;
+//					console.log('this doc is open for anyone to write');
+//					enableShare.style.display = 'none';
+//					disableShare.style.display = 'inline-block';
+//				} else if (sharedWith == 'reader'){
+//					notes.disabled = true;
+//					enableShare.style.display = 'inline-block';
+//					disableShare.style.display = 'none';
+//				}
+			}
+			//return resp.user.emailAddress;
+//			console.log('Root folder ID: ' + resp.rootFolderId);
+//			console.log('Total quota (bytes): ' + resp.quotaBytesTotal);
+//			console.log('Used quota (bytes): ' + resp.quotaBytesUsed);
+		});
+	});
+}
+
+/**
+ * URL Shortener.
+ *
+ * @param {String} fileId ID of the file to retrieve permissions for.
+ * @param {Function} callback Function to call when the request is complete.
+ */
+rtclient.urlShortener = function(url, content) {
+//		gapi.client.setApiKey('516279059329'); //get your ownn Browser API KEY
+//	gapi.client.load('urlshortener', 'v1',function(){});
+	var urlText = document.getElementById('shortURL');
+	
+	//gapi.client.load('drive', 'v2', function() {
+		var xmlHttp = null;
+		var json = JSON.stringify(content);
+		xmlHttp = new XMLHttpRequest();
+	
+		xmlHttp.open( "POST", url, true );
+		xmlHttp.setRequestHeader("Content-type","application/json");
+		xmlHttp.send(json);
+		//console.log (json);
+		//console.log (xmlHttp.responseText);
+		//return xmlHttp.responseText;
+		xmlHttp.onreadystatechange = function() {
+       	 	if(xmlHttp.responseText){
+				var respArray = JSON.parse(xmlHttp.responseText);
+				console.log(respArray.id);
+				urlText.innerHTML = respArray.id;
+			}
+		}
+		//urlText = xmlHttp.responseText;
+	//});
+}
+
+//rtclient.urlShortener('https://www.googleapis.com/urlshortener/v1/url', contents);
