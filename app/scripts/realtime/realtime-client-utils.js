@@ -448,8 +448,16 @@ rtclient.RealtimeLoader.prototype.load = function() {
 
   // Creating the error callback.
   var authorizer = this.authorizer;
-
-	var file = localStorage.getItem('rtFileId');
+    
+    var urlId = parseQuery(window.location.href);    
+	
+    //console.log(urlId);
+    if(urlId.fileIds){
+        console.log('THERE IS A FILE ID!');
+        localStorage.setItem('rtFileId', urlId.fileIds);
+    }
+    var file = localStorage.getItem('rtFileId');
+    console.log(file);
 	if (file) {
 		fileIds = [file];
 		console.log(fileIds);

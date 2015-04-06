@@ -136,10 +136,10 @@ app.module = angular
 //        .when('/toe', {
 //        templateUrl: 'views/toe.html',
 //        controller: 'PartyCtrl'
-//      })
+//      
       .otherwise({
         redirectTo: '/'
-      })
+      });
 	
 //		//adding from the todos example
 //	  .when('/todos/:fileId/:filter', {
@@ -176,11 +176,45 @@ app.module = angular
         $log.debug('toggle left is done');
       });
     };
+    
+    $scope.openLeft = function() {
+      $mdSidenav('left').open()
+      .then(function(){
+          $log.debug('open left is done');
+      });
+    };
+    
+    $scope.closeLeft = function() {
+      $mdSidenav('left').close()
+      .then(function(){
+          $log.debug('close left is done');
+      });
+    };
     $scope.go = function ( path ) {
       $location.path( path );
       $mdSidenav('left').close();
     };
+    var myElement = document.getElementById('doc-content');
+    var leftNav = document.getElementById('leftNav');
+    
+    var mc = new Hammer(myElement);
+    var ln = new Hammer(leftNav);
 
+    var pan = new Hammer.Pan({threshold: 200});
+    var pan2 = new Hammer.Pan({threshold: 200});
+    mc.add([pan]);
+    ln.add([pan2]);
+    
+    ln.on('panleft', function(ev) {
+        window.getSelection().removeAllRanges();
+        $scope.closeLeft();
+    });
+    
+    mc.on('panright', function(ev) {
+        window.getSelection().removeAllRanges();        
+        $scope.openLeft();
+    });
+    
   })
   .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function() {
@@ -196,7 +230,7 @@ app.module = angular
       // call $anchorScroll()
       //$anchorScroll();
     };
-  })
+  });
 
 
 ///**

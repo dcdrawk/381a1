@@ -128,7 +128,8 @@ app.module.config(function ($routeProvider) {
       $location.path( path );
       $mdSidenav('left').close();
     };
-
+     
+     
   })
   .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {
     $scope.close = function() {
@@ -186,3 +187,17 @@ gapi.load('auth:client:drive-share:drive-realtime', function () {
     angular.bootstrap(document, ['myappApp']);
   });
 });
+
+
+    var myElement = document.getElementById('doc-content');
+
+    var mc = new Hammer(myElement);
+    console.log(myElement);
+
+    var pan = new Hammer.Pan({threshold: 200});
+
+    mc.add([pan]);
+
+    mc.on("panright", function(ev) {
+        $scope.toggleLeft();
+    });

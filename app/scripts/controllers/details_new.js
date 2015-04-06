@@ -263,7 +263,7 @@ angular.module('myappApp')
        $scope.characterLevel = ''; 
     }
     
-    if(typeof $scope.characterLevel == 'NaN' || typeof $scope.characterLevel == 'null'){
+    if(typeof $scope.characterLevel === 'NaN' || typeof $scope.characterLevel === 'null'){
        $scope.characterLevel = ''; 
     }
 $log.debug($scope.characterLevel);
@@ -321,7 +321,7 @@ $log.debug($scope.characterLevel);
         if($scope.characterLevel >= 9 && $scope.characterLevel <= 12){$scope.profBonus = 4;}
         if($scope.characterLevel >= 12 && $scope.characterLevel <= 16){$scope.profBonus = 5;}
         if($scope.characterLevel >= 17){$scope.profBonus = 6;}
-        if($scope.characterLevel == null){
+        if($scope.characterLevel === null){
             //$scope.characterLevel = false;
             $scope.profBonus = 0;
         }
@@ -458,6 +458,6 @@ $log.debug($scope.characterLevel);
           $scope.savingThrows = 'Intelligence, Wisdom';
           $scope.skillsProf = 'Choose two from Arcana, History, Insight, Investigation, Medicine, and Religion';
         }
-    }
+    };
         $scope.setProficiency();
 });

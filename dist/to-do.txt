@@ -1,0 +1,62 @@
+Character Info
+	Details
+		Name
+		Race / Subrace
+		Background
+		Alignment
+		Experience
+		Level
+		
+	Personality
+		Traits
+		Ideals
+		Bonds
+		Flaws
+		
+	Proficiency
+		Proficiency Bonus
+		Armor
+		Weapons
+		Tools
+		Saving Throws
+		Skills
+		
+Stats
+	Ability Scores
+		Strength
+		Dexterity
+		Constitution
+		Intelligence
+		Wisdom
+		Charisma
+		
+	Skills
+		Acrobatics (Dex)
+		Animal Handling (Wis)
+		Arcana (Int)
+		Athletics (Str)
+		Deception (Cha)
+		History (int)
+		Insight (Wis)
+		Intimidation (Cha)
+		Investigation (Int)
+		Medicine (Wis)
+		Nature (Int)
+		Perception (Wis)
+		Performance (Cha)
+		Persuasion (Cha)
+		Religion (Int)
+		Sleight of Hand (Dex)
+		Stealth (Dex)
+		Survival (Wis)
+		
+	Feats
+	Combat Stats
+	
+Attacks & Spells
+	Weapons
+	Spells
+	
+Inventory
+	Equipment
+	Currency
