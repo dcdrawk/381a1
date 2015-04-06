@@ -1,15 +1,15 @@
 'use strict';
 
 angular.module('myappApp')
-  .controller('ProfCtrl', function ($scope, $cookies, $mdDialog, $log) {
+  .controller('ProfCtrl', function ($scope, $cookies, $mdDialog, $log, $cookieStore) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-    var myClass = $cookies.class;
+    var myClass = $scope.class;
     var myLevel = $cookies.level;
-
+    
 
     $scope.isHidden = false;
     $scope.isMessage = true;
@@ -75,6 +75,13 @@ angular.module('myappApp')
         bold : $scope.levelMsg + ' ' + myClass + '.',//More detailed warning if class check also fails
       }];
     }
+    if(myClass === 'Select a Class'){
+      $scope.armorProf = '';
+      $scope.weapProf = '';
+      $scope.toolProf = '';
+      $scope.savingThrows = '';
+      $scope.skillsProf = '';
+    }
     if(myClass === 'Cleric'){
       $scope.armorProf = 'Light and medium armor, shields';
       $scope.weapProf = 'All simple weapons';
@@ -98,7 +105,6 @@ angular.module('myappApp')
       $scope.savingThrows = 'Dexterity, Intelligence';
       $scope.skillsProf = 'Choose four from Acrobatics, Athletics, Deception, Insight, Intimidation, Investigation, Perception, Performance, Persuasion, Sleight of Hand, and Stealth';
     }
-
     if(myClass === 'Wizard'){
       $scope.armorProf = 'None';
       $scope.weapProf = 'Daggers, darts, slings, quarterstaffs, light crossbows.';

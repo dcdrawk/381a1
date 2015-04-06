@@ -1,0 +1,144 @@
+<div ng-controller="SubheaderAppCtrl" layout="column" flex layout-fill>
+  <md-content style="height: 600px;">
+    <section>
+      <md-subheader class="md-primary">Unread Messages</md-subheader>
+      <md-content>
+        <form id="characterForm" name="userForm">
+            <div layout layout-sm="column">
+
+                <md-input-container flex>
+                  <label class="placeholderLabel">Character Name</label>
+                  <input class="md-input" ng-model="details.name" ng-change="setName()">
+                </md-input-container>
+
+
+                <div class="selectBox" flex>
+                    <label class="md-primary">Race</label>
+                    <md-select ng-class="{'show' : customRace == false, 'hide' : customRace}" ng-model="selectedRace" ng-change="updateSubrace(); setRace(); setSubrace()">
+                        <md-select-label>{{selectedRace}}</md-select-label>
+                        <md-option ng-repeat="item in races track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
+
+                    <md-input-container class="customInputContainer" layout="row" ng-class="{'show' : customRace, 'hide' : customRace == false}" flex>
+                        <input type="text" class="customInput inline" placeholder="Custom Race" class="md-input" ng-model="details.race" ng-change="setRace()" ng-blur="setRace()" flex-sm="80" flex="70" flex-order="1">
+                        <div class="clearCustom" flex="20" flex-order="2">
+                            <md-button type="reset" class="md-primary" ng-click="clearRace()" aria-label="Close Menu">
+                            <img style="width: 24px; height: 24px;" src="img/icons/clear-grey.png">
+                        </md-button>
+                        </div>
+                    </md-input-container>
+                </div>
+          
+          
+                <div class="selectBox" flex>
+                    <label class="md-primary">Subrace</label>
+                    <md-select ng-model="selectedSubrace" ng-change="setSubrace();">
+                        <md-select-label>{{selectedSubrace}}</md-select-label>
+                        <md-option ng-repeat="item in subraces track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
+                </div>
+          
+            </div>
+        
+        
+
+            <div layout layout-sm="column">          
+                <div class="selectBox" flex>
+                    <label class="md-primary">Class</label>
+                    <md-select ng-model="selectedClass" ng-change="setClass();">
+                        <md-select-label>{{selectedClass}}</md-select-label>
+                        <md-option ng-repeat="item in characterClasses track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
+                </div>
+
+                <div class="selectBox" flex>
+                    <label class="md-primary">Background</label>
+                    <md-select ng-model="selectedBackground" ng-change="setBackground()">
+                        <md-select-label>{{selectedBackground}}</md-select-label>
+                        <md-option ng-repeat="item in backgrounds track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
+                </div>
+
+                <div class="selectBox" flex>
+                    <label class="md-primary">Alignment</label>
+                    <md-select ng-model="selectedAlignment" ng-change="setAlignment()">
+                        <md-select-label>{{selectedAlignment}}</md-select-label>
+                        <md-option ng-repeat="item in alignment track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
+                </div>
+            </div>
+        
+        
+
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label class="placeholderLabel">Experience Points</label>
+                    <input type="number" name="exp" ng-model="characterExp" ng-change="calculateLevel(); setExp()">
+                </md-input-container>
+                <md-input-container flex>
+                    <label class="placeholderLabel">Level</label>
+                    <input type="number" ng-model="characterLevel" ng-change="setLevel()" >
+                </md-input-container>
+            </div>
+        </form>
+        </md-content>
+    </section>
+    <section>
+      <md-subheader class="md-warn">Late Messages</md-subheader>
+      <md-list layout="column">
+        <md-item ng-repeat="message in messages">
+          <md-item-content>
+            <div class="md-tile-left">
+                <img ng-src="{{message.face}}" class="face" alt="{{message.who}}">
+            </div>
+            <div class="md-tile-content">
+              <h3>{{message.what}}</h3>
+              <h4>{{message.who}}</h4>
+              <p>
+                {{message.notes}}
+              </p>
+            </div>
+          </md-item-content>
+        </md-item>
+      </md-list>
+    </section>
+    <section>
+      <md-subheader>Read Messages</md-subheader>
+      <md-list layout="column">
+        <md-item ng-repeat="message in messages">
+          <md-item-content>
+            <div class="md-tile-left">
+                <img ng-src="{{message.face}}" class="face" alt="{{message.who}}">
+            </div>
+            <div class="md-tile-content">
+              <h3>{{message.what}}</h3>
+              <h4>{{message.who}}</h4>
+              <p>
+                {{message.notes}}
+              </p>
+            </div>
+          </md-item-content>
+        </md-item>
+      </md-list>
+    </section>
+    <section>
+      <md-subheader class="md-accent">Archived messages</md-subheader>
+      <md-list layout="column">
+        <md-item ng-repeat="message in messages">
+          <md-item-content>
+            <div class="md-tile-left">
+                <img ng-src="{{message.face}}" class="face" alt="{{message.who}}">
+            </div>
+            <div class="md-tile-content">
+              <h3>{{message.what}}</h3>
+              <h4>{{message.who}}</h4>
+              <p>
+                {{message.notes}}
+              </p>
+            </div>
+          </md-item-content>
+        </md-item>
+      </md-list>
+    </section>
+  </md-content>
+</div>

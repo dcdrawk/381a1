@@ -95,7 +95,6 @@ h1{
 .md-button{
   padding:10px;
   margin-right:5px;
-  margin-bottom:5px;
 }
 .titleBar .md-button{
   margin-bottom:0;
@@ -113,6 +112,7 @@ a.md-button{
 }
 md-sidenav .md-button{
   margin:0;
+    color:rgb(69, 90, 100);
 }
 md-sidenav .md-toolbar-tools{
   padding-right:0;
@@ -140,6 +140,7 @@ md-toolbar{
 
 md-content.md-default-theme{
   background:#ECEFF1;
+	display:inline;
 }
 
 .marketing h2{
@@ -162,12 +163,19 @@ md-icon{
   color: #FFF;
   background: #FFA000;
   text-shadow: 1px 1px 1px rgba(153, 67, 0, 0.73);
+	width:100%!important;
 }
 .titleBar h2{
   margin-right:1em;
 }
 .titleBar .md-button{
   border-radius:0;
+}
+.md-subheader{
+    margin:0!important;
+}
+.md-subheader:not(.md-sticky-no-effect):after{
+    right:0px;
 }
 .closeAppMenu{
   float:right;
@@ -190,9 +198,22 @@ md-icon{
 }
 
 .selectBox{
-  padding-top:25px;
+  padding-top:0px;
 }
 
+.selectBox label{
+  padding-left:.5em;
+}
+
+md-select-menu{
+    font-weight: 700;
+	width: 90%;
+	margin: 0px auto 0px auto;
+}
+.md-select-menu-container{
+	align-content: center;
+/*	left:0px!important;*/
+}
 label{
   padding:0;
 }
@@ -201,6 +222,18 @@ label{
   position:absolute;
   top:-25px;
 }
+
+md-input-label{
+    padding-left: .5em;
+    padding-right: .5em;
+}
+md-input-container{
+    padding-left:.5em;
+    padding-right:0em;
+    padding-top: 0;
+    top: 2px;
+}
+
 
 #bottomMenu a.md-button, #bottomMenu .md-button{
   background-color: #B0BEC5;
@@ -227,10 +260,44 @@ md-input-container .placeholderLabel{
   transform: translate3d(0, 42px, 0) scale(1);
   color: rgba(0,0,0,0.5);
 }
-/*Setting up messages and warning dialogue boxes*/
 
+md-input-container.md-input-focused label:not(.md-no-float), md-input-container.md-input-has-value label:not(.md-no-float){
+     transform: translate3d(0, -2px, 0) scale(1);
+ }
+
+md-input-container label:not(.md-no-float){
+     transform: translate3d(0, 34px, 0) scale(1);
+}
+
+md-input-container.md-input-focused .md-placeholder{
+    transform: translate3d(0, 10px, 0);
+}
+md-input-container .md-placeholder{
+    transform: translate3d(0, 10px, 0);
+    opacity:1;
+    font-size:1.1em;
+}
+
+.md-padding{
+	padding:1em;
+}
+/*Setting up messages and warning dialogue boxes*/
+.customInput{
+    width:90%;
+}
+.clearCustom{
+    margin:0;
+    display:inline;
+}
+.clearCustom .md-button{
+    margin:0 .5em 0 0;
+    float: right;
+}
+.inline{
+    display:inline!important;
+}
 .hide{
-  display:none;
+  display:none!important;
 }
 
 .message{
@@ -276,7 +343,7 @@ md-input-container .placeholderLabel{
 .abilityRow .title, .abilityRow .modifier{
   padding-top:8px;
 }
-#abilityScores md-input-container{
+#abilityScores md-input-container, #abilityScores .abScore{
   margin-top: -6px;
   padding-bottom:0;
 }
@@ -284,15 +351,20 @@ md-input-container .placeholderLabel{
   background:#fff;
 }
 
-#abilityScores md-input-container input{
+#abilityScores md-input-container input, #abilityScores .abScore input{
   width: 44px;
   height: 44px;
   margin: auto;
   text-align: center;
   border: 1px solid rgb(255,202,40);
   background: #FFF8E1;
+    font-weight: 700;
 }
 
+.abScore .md-placeholder{
+    transform: none;
+    -webkit-transform:none;
+}
 /*proficiency styles*/
 .disabled{
   opacity:.5;
@@ -317,6 +389,7 @@ md-input-container .placeholderLabel{
 md-dialog p{
   line-height:1.5;
 }
+
 md-dialog md-content{
   padding:1em;
 }
@@ -387,13 +460,16 @@ md-input-container select.md-input, md-input-container input{
 
 md-input-container label, .selectBox label{
   font-weight:500;
-
 }
 
 md-input-container input, md-input-container select{
   font-size:1.1em;
   font-weight:600;
 }
+customInputContainer{
+    top:2px
+}
+
 
 .selectBox label{
   color:rgba(0,0,0,0.54)!important;
@@ -413,6 +489,22 @@ md-input-container select.md-input::-ms-expand {
     display: none;
 }
 
+md-select{
+    margin-top:0;
+    width: 100%;
+    padding: 0 .5em;
+    font-size: 1.1em;
+    padding-bottom: 26px;
+}
+.md-select-label .md-select-icon{
+    position:absolute;
+    right: 5px;
+}
+md-select-label{
+    font-weight:700;
+    top:2px;
+    height:44px;
+}
 /*-End of select container styles-*/
 
 /*Needed to remove spinners from number inputs
@@ -423,8 +515,144 @@ input[type=number]::-webkit-outer-spin-button {
   margin: 0;
 }
 
+/* REALTIME STYLES */
+/*
+#openRealtime{
+	margin:2em auto;
+	display:block;
+}
+*/
+#openRealtime{
+	margin-left:1em;
+	margin:1em;
+}
+.realtimeBtn{
+/*	margin:2em auto;*/
+	display:inline-block;
+}
+#authorizeButton{
+	display:none;
+}
+#enableShare{
+	display:inline-block;
+}
+#disableShare{
+	display:none;
+}
+#enableShare, #disableShare{
+	margin-right:2em;
+}
+#shareControls{
+	display:none;
+	padding:0 1em;
+	transition:width .5s ease;
+}
+#advNotes, #questLog{
+	padding:0 1em;
+}
+#advNotes textarea{
+	font-weight: 400;
+	padding: 1em;
+	background-color: rgba(255, 255, 255, 0.55);
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	width:100%;
+	max-width:100%;
+	margin-bottom:.5em;
+	margin-top: 1px;
+	height:auto;
+	transition:height .5s ease;
+}
 
+#togNotes, #togQuests{
+	margin:0 1em!important;
+}
 
+#shortContainer{
+	display:inline-block;
+}
+#shortURL{
+	margin:0em 1em;
+	padding:.5em;
+	display:inline-block;
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	border-radius: 5px;
+	background-color: #E8E8E8;
+	box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.44);
+}
+.questInfo{
+	padding:.5em;
+	background: none;
+	border: 0;
+	border-bottom: 1px solid #CFD2D3;
+	font-weight: 400;
+	max-width:100%;
+	margin-bottom:1em;
+}
+#questName{
+	width:50%;
+	font-size:1.25em;
+	font-weight:500;
+}
+#questDetails{
+	width:100%;
+}
+.questDetail, .questControls{
+	display:inline-block;
+}
+.questDetail{
+	width:70%;
+	margin-bottom:.5em;
+}
+.questDetail p{
+	margin:.25em 0;
+}
+.questControls{
+	width:30%;
+/*	  vertical-align: top;*/
+}
+.removeQuest, .completeQuest, #togNotes, #togQuests{
+	padding:.5em;
+	border-radius:3px;
+	color:rgb(69,90,100);
+	background-color:rgba(158,158,158,0);
+	font-weight:500;
+	transition: background .5s ease;
+	cursor: pointer;
+	text-align: center;
+	margin:0;
+	margin-bottom:.5em;
+}
+#clearQuests{
+	display:none;
+}
+.removeQuest:hover, .completeQuest:hover, #togNotes:hover, #togQuests:hover{
+	background-color:rgba(158,158,158,0.2);
+}
+.questContainer{
+	margin-bottom:1em;
+  	border-bottom: 1px solid rgba(0, 0, 0, 0.16);
+}
+#newQuest{
+	display:block;
+}
+#questForm{
+	display:none;
+}
+.complete{
+	text-decoration: line-through;
+	color:#999;
+}
+
+/*
+.noselect {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+*/
 .buttondemoBasicUsage {
 /** From vulcanized demo **/ }
   .buttondemoBasicUsage section {
@@ -523,5 +751,50 @@ input[type=number]::-webkit-outer-spin-button {
     border-bottom:2px solid #90A4AE;
     border-right:none;
   }
+	#questName{
+		width:100%;
+	}
+    .md-select-menu-container{
+        left:0px!important;
+    }
+	
+	.questDetail, .questControls{
+		display:inline-block;
+/*		width:100%;*/
+	}
+	#disableShare, #enableShare{
+		margin:0;
+		padding:.5em;
+	}
+	#shortURL{
+		margin:0;
+	}
+	.removeQuest{
+/*		width:25%;*/
+		padding:.25em;
+	}
+}
 
+.customInputContainer {
+    top:2px;
+    margin-left:.5em;
+    padding-left:0;
+	padding-bottom:1.55em;
+}
+.personalityInfo {
+    padding:0em 1em;
+}
+.margin-top{
+    margin-top:1em;
+}
+textarea{
+    font-weight:700;
+}
+
+.languages {
+    margin-bottom:1em;
+    padding-left:0;
+}
+.languages .md-char-counter{
+    margin-right:1em;
 }

@@ -8,13 +8,13 @@
     <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
     <!-- build:css(.) styles/vendor.css -->
     <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.css" />
-    <link rel="stylesheet" href="bower_components/angular-material/angular-material.css" />
+<!--    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.css" />-->
+    <link rel="stylesheet" href="scripts/components/angular-material.css" />
     <!-- endbower -->
     <!-- endbuild -->
     <!-- build:css(.tmp) styles/main.css -->
     <link rel="stylesheet" href="styles/main.css">
-
+    <script type="text/javascript" src="https://apis.google.com/js/api.js"></script>
     <!-- Roboto fonts: Normal(400), Medium(500), Bold(700) -->
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,500,700' rel='stylesheet' type='text/css'>
     <link href='http://fonts.googleapis.com/css?family=Merriweather:700' rel='stylesheet' type='text/css'>
@@ -22,7 +22,7 @@
 
 
   </head>
-  <body ng-app="myappApp" layout="row" layout-fill role="main">
+  <body ng-app="myappApp" layout="row" layout-fill role="main" class="noselect">
     <!--[if lt IE 7]>
       <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="http://browsehappy.com/">upgrade your browser</a> to improve your experience.</p>
     <![endif]-->
@@ -31,13 +31,13 @@
       <md-toolbar id="mainMenu" class="md-primary">
         <div class="md-toolbar-tools">
           <md-button class="md-primary appMenu" ng-click="toggleLeft()" aria-label="Menu">
-            <md-icon icon="img/icons/ic_menu_white_24dp.png" style="width: 24px; height: 24px;"></md-icon>
+            <img src="img/icons/ic_menu_white_24dp.png" style="width: 24px; height: 24px;">
           </md-button>
           <span class="md-flex">ScrollBinder</span>
         </div>
 
       </md-toolbar>
-      <section layout="row" flex>
+      <section id="leftNav" layout="row" flex>
         <md-sidenav class="md-sidenav-left md-whiteframe-z2" md-is-open="false" md-component-id="left">
           <md-toolbar>
             <div class="md-toolbar-tools">
@@ -63,16 +63,32 @@
               <img  style="width: 24px; height: 24px;" src="img/icons/person-icon.png">Character Details
             </md-button>
 
+<!--
             <md-button ng-click="gotoTop(); go('/proficiency')" class="md-padding md-primary menu-item">
               <img  style="width: 24px; height: 24px;" src="img/icons/lightbulb-icon.png">Proficiency
             </md-button>
+-->
 
             <md-button ng-click="gotoTop(); go('/ability-scores')" class="md-padding md-primary menu-item">
-              <img  style="width: 24px; height: 24px;" src="img/icons/dice.png">Ability Scores
+              <img  style="width: 24px; height: 24px;" src="img/icons/dice.png">Stats
+            </md-button>
+              
+            <md-button ng-click="gotoTop(); go('/ability-scores')" class="md-padding md-primary menu-item">
+              <img  style="width: 24px; height: 24px;" src="img/icons/dice.png">Spells
+            </md-button>
+              
+          <md-button ng-click="gotoTop(); go('/ability-scores')" class="md-padding md-primary menu-item">
+              <img  style="width: 24px; height: 24px;" src="img/icons/dice.png">Inventory
             </md-button>
 
+<!--
             <md-button ng-click="go('/character-summary')" class="md-padding md-primary menu-item">
               <img  style="width: 24px; height: 24px;" src="img/icons/details-icon.png">Character Summary
+            </md-button>
+-->
+              
+            <md-button ng-click="go('/party')" class="md-padding md-primary menu-item">
+              <img  style="width: 24px; height: 24px;" src="img/icons/details-icon.png">Party
             </md-button>
 
           </md-content>
@@ -95,33 +111,76 @@
     <script src="bower_components/json3/lib/json3.js"></script>
     <![endif]-->
     <!-- endbuild -->
+<script src="//apis.google.com/js/client:plusone.js"></script>
+      
+      <script src="scripts/components/hammer.js"></script>
+      <script src="scripts/components/angular.js"></script>
+      <script src="scripts/components/angular-animate.js"></script>
+      <script src="scripts/components/angular-cookies.js"></script>
+      <script src="scripts/components/angular-messages.js"></script>
+<!--      <script src="../bower_components/angular-route/angular-route.js"></script>-->
+      <script src="scripts/components/angular-route.js"></script>
+      <script src="scripts/components/angular-sanitize.js"></script>
+      <script src="scripts/components/angular-touch.js"></script>
+      <script src="scripts/components/angular-aria.js"></script>
+      <script src="scripts/components/angular-scroll.js"></script>
+      <script src="scripts/components/angular-material.js"></script>
+      <script src="scripts/components/angular-material-icons.js"></script>
+      <script src="scripts/components/hammer.js"></script>
 
+      
+      
+      
     <!-- build:js(.) scripts/vendor.js -->
     <!-- bower:js -->
-    <script src="bower_components/jquery/dist/jquery.js"></script>
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/bootstrap/dist/js/bootstrap.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-cookies/angular-cookies.js"></script>
-    <script src="bower_components/angular-messages/angular-messages.js"></script>
-    <script src="bower_components/angular-route/angular-route.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-touch/angular-touch.js"></script>
-    <script src="bower_components/angular-aria/angular-aria.js"></script>
-    <script src="bower_components/hammerjs/hammer.js"></script>
-    <script src="bower_components/angular-material/angular-material.js"></script>
-    <script src="bower_components/angular-material-icons/angular-material-icons.js"></script>
+<!--      <script src="../bower_components/hammerjs/hammer.js"></script>-->
+<!--    <script src="../bower_components/angular/angular.js"></script>-->
+<!--    <script src="../bower_components/angular-animate/angular-animate.js"></script>-->
+<!--    <script src="../bower_components/angular-cookies/angular-cookies.js"></script>-->
+<!--      <script src="scripts/components/angular-cookies.js"></script>-->
+<!--    <script src="../bower_components/angular-messages/angular-messages.js"></script>-->
+<!--      <script src="scripts/components/angular-messages.js"></script>-->
+<!--    <script src="../bower_components/angular-sanitize/angular-sanitize.js"></script>-->
+<!--    <script src="../bower_components/angular-route/angular-route.js"></script>-->
+<!--    <script src="../bower_components/angular-touch/angular-touch.js"></script>-->
+<!--    <script src="../bower_components/angular-aria/angular-aria.js"></script>-->
+<!--    <script src="../bower_components/angular-scroll/angular-scroll.js"></script>-->
+<!--    <script src="../bower_components/angular-material/angular-material.js"></script>-->
+<!--    <script src="../bower_components/angular-material-icons/angular-material-icons.min.js"></script>-->
+<!--      <script src="scripts/components/angular-messages.js"</script>-->
     <!-- endbower -->
     <!-- endbuild -->
+      
 
+      
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
-        <script src="scripts/app.js"></script>
+        <script src="scripts/app_old.js"></script>
         <script src="scripts/controllers/main.js"></script>
-        <script src="scripts/controllers/details.js"></script>
+        <script src="scripts/controllers/details_new.js"></script>
         <script src="scripts/controllers/proficiency.js"></script>
         <script src="scripts/controllers/ability-scores.js"></script>
-        <script src="scripts/controllers/to-do.js"></script>
+<!--        <script src="scripts/controllers/to-do.js"></script>-->
         <script src="scripts/controllers/summary.js"></script>
+        <script src="scripts/controllers/party.js"></script>
+        <script src="scripts/realtime/realtime-client-utils.js"></script>
+        <script src="scripts/realtime/realtime.js"></script>
+	  	<script src="scripts/realtime/angular-storage.js"></script>
+      <script src="scripts/hammerScript.js"></script>
+<!--      <script src="scripts/realtime/drive.js"></script>-->
+<!--      <script src="scripts/controllers/toe.js"></script>-->
         <!-- endbuild -->
+<!--    <script src="scripts/services/realtimeDoc.js"></script>-->
+<!--
+	      <script src="scripts/services/storage.js"></script>
+    <script src="scripts/directives/on-blur.js"></script>
+    <script src="scripts/directives/collaborative.js"></script>
+    <script src="scripts/directives/focus.js"></script>
+-->
+
+<!--
+    <script src="scripts/controllers/install.js"></script>
+    <script src="scripts/controllers/create.js"></script>
+    <script src="scripts/controllers/todos.js"></script>
+-->
 </body>
 </html>

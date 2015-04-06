@@ -1,63 +1,166 @@
+<div layout="column" layout-sm="column" flex layout-fill>
+    <section>
+        <div id="pageTitle" class="titleBar" layout="row">
+            <h2>Character Details</h2>
+        </div>
+<!--        <md-subheader class="md-primary">Unread Messages</md-subheader>-->
+    
+        <form id="characterForm" name="userForm">
+            <div layout layout-sm="column">
 
-<div>
-  <md-content>
+                <md-input-container flex>
+                  <label class="placeholderLabel">Character Name</label>
+                  <input class="md-input" ng-model="details.name" ng-change="setName()">
+                </md-input-container>
 
-    <div id="pageTitle" class="titleBar" layout="row">
-      <h2>Character Details</h2>
-      <!-- <md-button flex="10" flex-sm="20" class="md-primary" ng-click="showAlert($event)" aria-label="Proficiency Info">
-        <md-icon icon="img/icons/help-white.png" style="width: 24px; height: 24px;"></md-icon>
-      </md-button> -->
-    </div>
 
-    <form id="characterForm" name="userForm">
-      <div layout layout-sm="column">
+                <div class="selectBox" flex>
+                    <label class="md-primary">Race</label>
+                    <md-select ng-class="{'show' : customRace == false, 'hide' : customRace}" ng-model="selectedRace" ng-change="updateSubrace(); setRace(); setSubrace()">
+                        <md-select-label>{{selectedRace}}</md-select-label>
+                        <md-option ng-repeat="item in races track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
 
-        <md-input-container flex>
-          <label class="placeholderLabel">Character Name</label>
-          <input ng-model="details.name" ng-change="setName()">
-        </md-input-container>
+                    <md-input-container class="customInputContainer" layout="row" ng-class="{'show' : customRace, 'hide' : customRace == false}" flex>
+                        <input type="text" class="customInput inline" placeholder="Custom Race" class="md-input" ng-model="details.race" ng-change="setRace()" ng-blur="setRace()" flex-sm="80" flex="70" flex-order="1">
+                        <div class="clearCustom" flex="20" flex-order="2">
+                            <md-button type="reset" class="md-primary" ng-click="clearRace()" aria-label="Close Menu">
+                            <img style="width: 24px; height: 24px;" src="img/icons/clear-grey.png">
+                        </md-button>
+                        </div>
+                    </md-input-container>
+                </div>
+          
+          
+                <div class="selectBox" flex>
+                    <label class="md-primary">Subrace</label>
+                    <md-select ng-model="selectedSubrace" ng-change="setSubrace();">
+                        <md-select-label>{{selectedSubrace}}</md-select-label>
+                        <md-option ng-repeat="item in subraces track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
+                </div>
+          
+            </div>
+        
+        
 
-        <md-input-container class="selectBox" flex>
-          <label class="md-primary select-label">Race</label>
-          <select class="md-input" ng-model="selectedRace" ng-options="item for item in races track by item" ng-change="updateSubrace(); setRace(); setSubrace()">
-          </select>
-        </md-input-container>
+            <div layout layout-sm="column">          
+                <div class="selectBox" flex>
+                    <label class="md-primary">Class</label>
+                    <md-select ng-model="details.class" ng-change="setClass();">
+                        <md-select-label>{{details.class}}</md-select-label>
+                        <md-option ng-repeat="item in characterClasses track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
+                </div>
 
-        <md-input-container class="selectBox" flex>
-          <label class="md-primary select-label">Subrace</label>
-          <select id="subrace" class="md-input" ng-model="selectedSubrace" ng-options="item for item in subraces track by item" ng-change="setSubrace()">
-          </select>
-        </md-input-container>
-      </div>
+                <div class="selectBox" flex>
+                    <label class="md-primary">Background</label>
+                    <md-select ng-model="selectedBackground" ng-change="setBackground()">
+                        <md-select-label>{{selectedBackground}}</md-select-label>
+                        <md-option ng-repeat="item in backgrounds track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
+                </div>
 
-      <div layout layout-sm="column">
-        <md-input-container class="selectBox" flex>
-          <label class="md-primary select-label">Class</label>
-          <select class="md-input" ng-model="selectedClass" ng-options="item for item in characterClasses" ng-change="setClass()">
-          </select>
-        </md-input-container>
-        <md-input-container class="selectBox" flex>
-          <label class="md-primary select-label">Background</label>
-          <select class="md-input" ng-model="selectedBackground" ng-options="item for item in backgrounds" ng-change="setBackground()">
-          </select>
-        </md-input-container>
-        <md-input-container class="selectBox" flex>
-          <label class="md-primary select-label">Alignment</label>
-          <select class="md-input" ng-model="selectedAlignment" ng-options="item for item in alignment" ng-change="setAlignment()">
-          </select>
-        </md-input-container>
-      </div>
+                <div class="selectBox" flex>
+                    <label class="md-primary">Alignment</label>
+                    <md-select ng-model="selectedAlignment" ng-change="setAlignment()">
+                        <md-select-label>{{selectedAlignment}}</md-select-label>
+                        <md-option ng-repeat="item in alignment track by item" ng-value="item">{{item}}</md-option>
+                    </md-select>
+                </div>
+            </div>
+        
+        
 
-      <div layout layout-sm="column">
-        <md-input-container flex>
-          <label class="placeholderLabel">Experience Points</label>
-          <input type="number" name="exp" ng-model="characterExp" ng-change="calculateLevel(); setExp()">
-        </md-input-container>
-        <md-input-container flex>
-          <label class="placeholderLabel">Level</label>
-          <input type="number" ng-model="characterLevel" ng-change="setLevel()" >
-        </md-input-container>
-      </div>
-    </form>
-  </md-content>
+            <div layout layout-sm="column">
+                <md-input-container flex>
+                    <label class="placeholderLabel">Experience Points</label>
+                    <input type="number" name="exp" ng-model="characterExp" ng-change="calculateLevel(); setExp()">
+                </md-input-container>
+                <md-input-container flex>
+                    <label class="placeholderLabel">Level</label>
+                    <input type="number" ng-model="characterLevel" ng-change="setLevel()" >
+                </md-input-container>
+            </div>
+        </form>
+    </section>
+        
+<!--    Personality Section-->
+    <section>
+        <div id="personalityTitle" class="titleBar" layout="row">
+            <h2>Personality</h2>
+        </div>
+<!--        <md-subheader class="md-primary">Unread Messages</md-subheader>-->
+        
+            <div class="personalityInfo margin-top" layout="row" layout-sm="column">            
+                <md-input-container flex="50" flex-sm="100">
+                    <label class="md-primary">Character Traits</label>
+                    <textarea id="traits" ng-model="personality.traits" columns="1" ng-change="setPersonality('traits')"></textarea>
+                </md-input-container>
+                <md-input-container flex="50" flex-sm="100">
+                    <label class="md-primary">Ideals</label>
+                    <textarea ng-model="personality.ideals" columns="1" ng-change="setPersonality('ideals')"></textarea>
+                </md-input-container>
+            </div>
+            <div class="personalityInfo" layout="row" layout-sm="column">
+                <md-input-container flex="50" flex-sm="100">
+                    <label class="md-primary">Bonds</label>
+                    <textarea ng-model="personality.bonds" columns="1" ng-change="setPersonality('bonds')"></textarea>
+                </md-input-container>
+                <md-input-container flex="50" flex-sm="100">
+                    <label class="md-primary">Flaws</label>
+                    <textarea ng-model="personality.flaws" columns="1" ng-change="setPersonality('flaws')"></textarea>
+                </md-input-container>
+            </div>
+    </section>
+    
+<!--    <section ng-controller="ProfCtrl">-->
+        
+    <section>
+        <div id="personalityTitle" class="titleBar" layout="row">
+            <h2>Proficiency</h2>
+        </div>
+        <!-- Message to user -->
+<!--
+          <div layout-sm="column">
+            <span id="viewMessage" ng-class="{'hide' : isHidden}" ng-model="warningMessage" ng-init="getRace()">
+              <span ng-click="go('/character-details')" ng-model="warningMessage" ng-class="{'warning' : isWarning}" ng-repeat="item in warningMessage">{{item.msg1}}<strong>{{item.bold}}</strong>{{item.msg2}}</span>
+              <span ng-model="detectClass"  ng-class="{'message' : isMessage}" ng-repeat="item2 in detectClass">{{item2.msg1}}<strong>{{item2.bold}}</strong></span>
+            </span>
+          </div>-->
+
+          <section id="profTable" ng-controller="ProfCtrl" ng-class="{'disabled' : isDisabled}">
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : characterLevel == false}" ng-model="profBonus">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Proficiency Bonus:</p></div><div flex="75" flex-md="70" flex-sm="100"><p><strong>+{{profBonus}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="armorProf">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Armor:</p></div><div flex="75" flex-md="70" flex-sm="100"><p><strong>{{armorProf}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="weapProf">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Weapons:</p></div><div flex="75" flex-md="70" flex-sm="100"><p><strong>{{weapProf}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="toolProf">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Tools:</p></div><div flex="75" flex-md="70" flex-sm="100"><strong><p>{{toolProf}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="savingThrows">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Saving Throws:</p></div><div flex="75" flex-md="70" flex-sm="100"><strong><p>{{savingThrows}}</strong></p></div>
+            </div>
+
+            <div class="profStat" layout="row" layout-sm="column" ng-class="{'disabled' : details.class == '', 'disabled' : details.class == 'Select a Class'}" ng-model="skillsProf">
+              <div flex="25" flex-md="30" flex-sm="100"><p>Skills:</p></div><div flex="75" flex-md="70" flex-sm="100"><strong><p>{{skillsProf}}</strong></p></div>
+            </div>
+            <div class="profStat" layout="row" layout-sm="column">
+            <md-input-container class="languages" flex="100">
+                    <label class="md-primary">Languages</label>
+                    <textarea ng-model="proficiency.languages" columns="1" ng-change="setLanguages()"></textarea>
+            </md-input-container>
+            </div>
+          </section>
+        
+    </section>
 </div>

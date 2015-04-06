@@ -1,0 +1,251 @@
+<div id="pageTitle" class="titleBar" layout="row">
+  <h2>Party</h2>
+</div>
+
+<md-button id="openRealtime" ng-click="init()" class="realtimeBtn md-padding md-primary" ng-class="{'hide': realtimeOpen}">
+	Open Realtime Document
+</md-button>
+
+<!-- Start Realtime when the body has loaded. -->
+<!--<div onLoad='startRealtime()'>-->
+<div ng-init="" ng-class="{'hide': !realtimeOpen}">
+
+<!--  <button id="authorizeButton" disabled>You must authorize</button>-->
+
+	<md-button id="authorizeButton" class="realtimeBtn md-padding md-primary">
+		You Must Authorize
+	</md-button>
+	
+	<div id="shareControls" class="md-padding">
+<!--
+		<md-button id="testBtn" class="realtimeBtn md-padding md-primary">
+			Test Button
+		</md-button>
+		<md-button id="testBtn2" class="realtimeBtn md-padding md-primary">
+			Test Button 2
+		</md-button>
+-->
+		<h3>Dungeon Master Controls</h3>
+		<md-button id="enableShare" class="realtimeBtn md-padding md-primary">
+			Start Sharing
+		</md-button>
+		<md-button id="disableShare" class="realtimeBtn md-padding md-primary">
+			Stop Sharing
+		</md-button>
+		<div id="shortContainer"><span id="shortURL" class="copyURL"></span></div>
+	</div>
+	
+	
+	
+<!--
+  <p>These text areas are on the same page. You can also
+  <a href="#" onclick="window.open(window.location.href);return false;">
+  open them on separate users' browsers</a> and they will remain synchronized.</p>
+-->
+
+  <!-- Text areas that will be used as our collaborative controls. -->
+	<div id="advNotes">
+	
+	
+		<h3>Adventure Notes <span id="togNotes">Hide</span></h3>	
+  		<textarea id="notes" rows="15" cols="50" disabled="true"></textarea>
+<!--		<textarea id="testText" rows="15" cols="50" disabled="true"></textarea>-->
+<!--		<div ng-repeat="mapItem in todos.asArray()" id="binding">Test</div>-->
+<!--		<div id="binding">Test {{rootTest}}</div>-->
+<!--
+		<button id="undoButton" disabled>Undo</button>
+  		<button id="redoButton" disabled>Redo</button>
+-->
+		
+<!--	<input type="button" id="shareButton" style="margin: 1em 0" value="Share Document"/>-->
+	</div>
+	<div id="questLog">
+		<h3>Quest Log<span id="togQuests">Hide</span></h3>
+		
+		<div id="questLogContainer">
+			<md-button id="newQuest" class="realtimeBtn md-padding md-primary">
+				New Quest
+			</md-button>
+
+			<div id="questForm">
+				<input id="questName" placeholder="Quest Name" class="questInfo md-input" ngRequired="true">
+				<textarea id="questDetails" placeholder="Quest Details" class="questInfo" ngRequired="true"></textarea>
+
+				<md-button id="addQuest" class="realtimeBtn  md-primary md-raised" ng-disabled="true">
+					Add Quest
+				</md-button>
+				<md-button id="clearQuests" class="realtimeBtn md-padding md-primary">
+					Clear Quests
+				</md-button>
+			</div>
+
+
+
+			<div id="quests">
+
+			</div>
+		</div>
+<!--
+		<md-input-container flex>
+		  <label class="placeholderLabel">Quest Name</label>
+		  <input class="md-input">
+		</md-input-container>
+-->
+<!--		For some reason, md-input-container messes up the realtimedoc -->
+		
+<!--		<form name="addQuest">-->
+		
+<!--
+			<input id="questName" placeholder="Quest Name" class="questInfo md-input" ngRequired="true">
+			<textarea id="questDetails" placeholder="Quest Details" class="questInfo" ngRequired="true"></textarea>
+
+			<md-button id="addQuest" class="realtimeBtn md-padding md-primary" disabled>
+				Add Quest
+			</md-button>
+			<md-button id="clearQuests" class="realtimeBtn md-padding md-primary">
+				Clear Quests
+			</md-button>
+-->
+			
+<!--		</form>-->
+<!--
+		<md-button id="removeBtn" class="removeQuest realtimeBtn md-padding md-primary">
+			Remove Quests
+		</md-button>
+-->
+		
+	</div>
+<!--  <textarea id="editor2" rows="15" cols="50" disabled="true"></textarea>-->
+<!--  <br />-->
+
+  <!-- Undo and redo buttons. -->
+
+<!--
+  <script type="text/javascript">
+      console.log('value');   
+    /**
+     * This function is called the first time that the Realtime model is created
+     * for a file. This function should be used to initialize any values of the
+     * model. In this case, we just create the single string model that will be
+     * used to control our text box. The string has a starting value of 'Hello
+     * Realtime World!', and is named 'text'.
+     * @param model {gapi.drive.realtime.Model} the Realtime root model object.
+     */
+    function initializeModel(model) {
+      var string = model.createString('Hello Realtime World!');
+      model.getRoot().set('text', string);
+    }
+
+    /**
+     * This function is called when the Realtime file has been loaded. It should
+     * be used to initialize any user interface components and event handlers
+     * depending on the Realtime model. In this case, create a text control binder
+     * and bind it to our string model that we created in initializeModel.
+     * @param doc {gapi.drive.realtime.Document} the Realtime document.
+     */
+    function onFileLoaded(doc) {
+      var string = doc.getModel().getRoot().get('text');
+
+      // Keeping one box updated with a String binder.
+      var textArea1 = document.getElementById('editor1');
+      gapi.drive.realtime.databinding.bindString(string, textArea1);
+
+      // Keeping one box updated with a custom EventListener.
+      var textArea2 = document.getElementById('editor2');
+      var updateTextArea2 = function(e) {
+        textArea2.value = string;
+      };
+      string.addEventListener(gapi.drive.realtime.EventType.TEXT_INSERTED, updateTextArea2);
+      string.addEventListener(gapi.drive.realtime.EventType.TEXT_DELETED, updateTextArea2);
+      textArea2.onkeyup = function() {
+        string.setText(textArea2.value);
+      };
+      updateTextArea2();
+
+      // Enabling UI Elements.
+      textArea1.disabled = false;
+      textArea2.disabled = false;
+
+      // Add logic for undo button.
+      var model = doc.getModel();
+      var undoButton = document.getElementById('undoButton');
+      var redoButton = document.getElementById('redoButton');
+
+      undoButton.onclick = function(e) {
+        model.undo();
+      };
+      redoButton.onclick = function(e) {
+        model.redo();
+      };
+
+      // Add event handler for UndoRedoStateChanged events.
+      var onUndoRedoStateChanged = function(e) {
+        undoButton.disabled = !e.canUndo;
+        redoButton.disabled = !e.canRedo;
+      };
+      model.addEventListener(gapi.drive.realtime.EventType.UNDO_REDO_STATE_CHANGED, onUndoRedoStateChanged);
+    }
+
+    /**
+     * Options for the Realtime loader.
+     */
+    var realtimeOptions = {
+      /**
+       * Client ID from the console.
+       */
+      clientId: '516279059329-ucgvf9nubkm942qoc0iqgo838f3mfv6a.apps.googleusercontent.com',
+
+      /**
+       * The ID of the button to click to authorize. Must be a DOM element ID.
+       */
+      authButtonElementId: 'authorizeButton',
+
+      /**
+       * Function to be called when a Realtime model is first created.
+       */
+      initializeModel: initializeModel,
+
+      /**
+       * Autocreate files right after auth automatically.
+       */
+      autoCreate: true,
+
+      /**
+       * The name of newly created Drive files.
+       */
+      defaultTitle: "New Realtime Quickstart File",
+
+      /**
+       * The MIME type of newly created Drive Files. By default the application
+       * specific MIME type will be used:
+       *     application/vnd.google-apps.drive-sdk.
+       */
+      newFileMimeType: null, // Using default.
+
+      /**
+       * Function to be called every time a Realtime file is loaded.
+       */
+      onFileLoaded: onFileLoaded,
+
+      /**
+       * Function to be called to inityalize custom Collaborative Objects types.
+       */
+      registerTypes: null, // No action.
+
+      /**
+       * Function to be called after authorization and before loading files.
+       */
+      afterAuth: null // No action.
+    }
+
+    /**
+     * Start the Realtime loader with the options.
+     */
+    function startRealtime() {
+      var realtimeLoader = new rtclient.RealtimeLoader(realtimeOptions);
+      realtimeLoader.start();
+    }
+
+  </script>
+-->
+</div>

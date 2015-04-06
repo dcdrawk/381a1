@@ -1,0 +1,82 @@
+
+<div>
+  <md-content md-theme="default">  
+    <div id="pageTitle" class="titleBar" layout="row">
+      <h2>Character Details</h2>
+      <!-- <md-button flex="10" flex-sm="20" class="md-primary" ng-click="showAlert($event)" aria-label="Proficiency Info">
+        <md-icon icon="img/icons/help-white.png" style="width: 24px; height: 24px;"></md-icon>
+      </md-button> -->
+    </div>
+
+    <form id="characterForm" name="userForm">
+      <div layout layout-sm="column">
+
+        <md-input-container flex>
+          <label class="placeholderLabel">Character Name</label>
+          <input class="md-input" ng-model="details.name" ng-change="setName()">
+        </md-input-container>
+
+
+       <div class="selectBox" flex>
+            <label class="md-primary">Race</label>
+            <md-select ng-model="selectedRace" placeholder="Select a Race" ng-change="updateSubrace(); setRace(); setSubrace()">
+                <md-select-label>{{selectedRace}}</md-select-label>
+                <md-option ng-repeat="item in races track by item" ng-value="item">{{item}}</md-option>
+            </md-select>
+      </div>
+          
+          
+         <div class="selectBox" flex>
+            <label class="md-primary">Subrace</label>
+            <md-select ng-model="selectedSubrace" ng-change="setSubrace();">
+                <md-select-label>{{selectedSubrace}}</md-select-label>
+                <md-option ng-repeat="item in subraces track by item" ng-value="item">{{item}}</md-option>
+            </md-select>
+        </div>
+          
+      </div>
+        
+        
+
+      <div layout layout-sm="column">
+          
+       <div class="selectBox" flex>
+            <label class="md-primary">Class</label>
+            <md-select ng-model="selectedClass" ng-change="setClass();">
+                <md-select-label>{{selectedClass}}</md-select-label>
+                <md-option ng-repeat="item in characterClasses track by item" ng-value="item">{{item}}</md-option>
+            </md-select>
+        </div>
+             
+        <div class="selectBox" flex>
+            <label class="md-primary">Background</label>
+            <md-select ng-model="selectedBackground" ng-change="setBackground()">
+                <md-select-label>{{selectedBackground}}</md-select-label>
+                <md-option ng-repeat="item in backgrounds track by item" ng-value="item">{{item}}</md-option>
+            </md-select>
+        </div>
+          
+        <div class="selectBox" flex>
+            <label class="md-primary">Alignment</label>
+            <md-select ng-model="selectedAlignment" ng-change="setAlignment()">
+                <md-select-label>{{selectedAlignment}}</md-select-label>
+                <md-option ng-repeat="item in alignment track by item" ng-value="item">{{item}}</md-option>
+            </md-select>
+        </div>
+      </div>
+        
+        
+
+      <div layout layout-sm="column">
+        <md-input-container flex>
+          <label class="placeholderLabel">Experience Points</label>
+          <input type="number" name="exp" ng-model="characterExp" ng-change="calculateLevel(); setExp()">
+        </md-input-container>
+        <md-input-container flex>
+          <label class="placeholderLabel">Level</label>
+          <input type="number" ng-model="characterLevel" ng-change="setLevel()" >
+        </md-input-container>
+      </div>
+    </form>
+  </md-content>
+</div>
