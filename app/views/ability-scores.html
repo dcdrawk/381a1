@@ -1,9 +1,10 @@
-<md-content>
-
+<!--<md-content>-->
+<section>
   <div id="pageTitle" class="titleBar" layout="row">
     <h2>Ability Scores</h2>
     <md-button flex="10" flex-sm="20" class="md-primary" ng-click="showAlert($event)" aria-label="Proficiency Info">
-      <md-icon icon="img/icons/help-white.png" style="width: 24px; height: 24px;"></md-icon>
+<!--      <md-icon icon="img/icons/help-white.png" style="width: 24px; height: 24px;"></md-icon>-->
+        <img  style="width: 24px; height: 24px;" src="img/icons/help-white.png">
     </md-button>
   </div>
 
@@ -91,4 +92,327 @@
     </div>
 
   </div>
-</md-content>
+</section>  
+
+<!--    Skills Section-->
+<section ng-init="getProfBonus()">
+    <div id="skillsTitle" class="titleBar" layout="row">
+        <h2>Skills</h2>
+    </div>
+    
+    <div id="skillsContainer">
+        <div class="skillGroup">
+            <h3>Strength</h3>
+            <div class="skill">
+                <table>
+                    <tr class="tHead">
+                        <th>NAME</th>
+                        <th>TRAINING</th>
+                        <th>BONUS</th>
+                        <th>MODIFIER</th>                    
+                    </tr>
+                    
+                    <tr>
+                        <td>Athletics</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('ath')" ng-model="trained[0]['ath']">
+                            </md-checkbox>
+                        </td>
+                        <td>
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['ath']['bonus']" ng-change="setBonus('ath', skillBonus[0]['ath']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['ath']}}</strong></div>                        
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="skillGroup">
+            <h3>Dexterity</h3>
+            <div class="skill">
+                <table>
+                    <tr class="tHead">
+                        <th>NAME</th>
+                        <th>TRAINING</th>
+                        <th>BONUS</th>
+                        <th>MODIFIER</th>                    
+                    </tr>
+                    
+                    <tr>
+                        <td>Acrobatics</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('acr')" ng-model="trained[0]['acr']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['acr']['bonus']" ng-change="setBonus('acr', skillBonus[0]['acr']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['acr']}}</strong></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Sleight of Hand</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('soh')" ng-model="trained[0]['soh']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['soh']['bonus']" ng-change="setBonus('soh', skillBonus[0]['soh']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['soh']}}</strong></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Stealth</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('stl')" ng-model="trained[0]['stl']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['stl']['bonus']" ng-change="setBonus('stl', skillBonus[0]['stl']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['stl']}}</strong></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    
+        <div class="skillGroup">
+            <h3>Intelligence</h3>
+            <div class="skill">
+                <table>
+                    <tr class="tHead">
+                        <th>NAME</th>
+                        <th>TRAINING</th>
+                        <th>BONUS</th>
+                        <th>MODIFIER</th>                    
+                    </tr>
+                    
+                    <tr>
+                        <td>Arcana</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('arc')" ng-model="trained[0]['arc']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['arc']['bonus']" ng-change="setBonus('arc', skillBonus[0]['arc']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['arc']}}</strong></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>History</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('his')" ng-model="trained[0]['his']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['his']['bonus']" ng-change="setBonus('his', skillBonus[0]['his']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['his']}}</strong></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Investig.</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('inv')" ng-model="trained[0]['inv']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['inv']['bonus']" ng-change="setBonus('inv', skillBonus[0]['inv']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['inv']}}</strong></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Nature</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('nat')" ng-model="trained[0]['nat']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['nat']['bonus']" ng-change="setBonus('nat', skillBonus[0]['nat']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['nat']}}</strong></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Religion</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('rel')" ng-model="trained[0]['rel']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['rel']['bonus']" ng-change="setBonus('rel', skillBonus[0]['rel']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['rel']}}</strong></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="skillGroup">
+            <h3>Wisdom</h3>
+            <div class="skill">
+                <table>
+                    <tr class="tHead">
+                        <th>NAME</th>
+                        <th>TRAINING</th>
+                        <th>BONUS</th>
+                        <th>MODIFIER</th>                    
+                    </tr>
+                    
+                    <tr>
+                        <td>Animal Handling</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('anh')" ng-model="trained[0]['anh']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['anh']['bonus']" ng-change="setBonus('anh', skillBonus[0]['anh']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['anh']}}</strong></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Insight</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('ins')" ng-model="trained[0]['ins']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['ins']['bonus']" ng-change="setBonus('ins', skillBonus[0]['ins']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['ins']}}</strong></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Medicine</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('med')" ng-model="trained[0]['med']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['med']['bonus']" ng-change="setBonus('med', skillBonus[0]['med']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['med']}}</strong></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Percept.</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('perc')" ng-model="trained[0]['perc']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['perc']['bonus']" ng-change="setBonus('perc', skillBonus[0]['perc']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['perc']}}</strong></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Survival</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('sur')" ng-model="trained[0]['sur']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['sur']['bonus']" ng-change="setBonus('sur', skillBonus[0]['sur']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['sur']}}</strong></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <div class="skillGroup">
+            <h3>Charisma</h3>
+            <div class="skill">
+                <table>
+                    <tr class="tHead">
+                        <th>NAME</th>
+                        <th>TRAINING</th>
+                        <th>BONUS</th>
+                        <th>MODIFIER</th>                    
+                    </tr>
+                    
+                    <tr>
+                        <td>Deception</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('dec')" ng-model="trained[0]['dec']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['dec']['bonus']" ng-change="setBonus('dec', skillBonus[0]['dec']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['dec']}}</strong></div>
+                        </td>
+                    </tr>
+                    
+                    <tr>
+                        <td>Intimid.</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('int')" ng-model="trained[0]['int']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['int']['bonus']" ng-change="setBonus('int', skillBonus[0]['int']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['int']}}</strong></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Perf.</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('perf')" ng-model="trained[0]['perf']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['perf']['bonus']" ng-change="setBonus('perf', skillBonus[0]['perf']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['perf']}}</strong></div>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Pers.</td>
+                        <td>
+                            <md-checkbox aria-label="be quiet aria" class="md-primary" ng-change="setTrained('pers')" ng-model="trained[0]['rel']">
+                            </md-checkbox>
+                        </td>
+                        <td>                            
+                            <input class="skillInput" tabindex="5" type="number" placeholder="0" onfocus="this.placeholder = ''" onblur="this.placeholder = '0'" min="0" max="30" ng-model="skillBonus[0]['pers']['bonus']" ng-change="setBonus('pers', skillBonus[0]['pers']['bonus'])">
+                        </td>
+                        <td>
+                            <div class="modifier" flex="33"><strong>{{skillMod[0]['pers']}}</strong></div>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+<!--</md-content>-->

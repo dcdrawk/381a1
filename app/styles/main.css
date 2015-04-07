@@ -120,9 +120,18 @@ md-sidenav .md-toolbar-tools{
 
 md-sidenav .menu-item img{
   margin-right:10px;
+    vertical-align:top;
+}
+#leftNav .menu-item img{
+    margin-left:0;
+    transition:margin .25s ease;
+}
+#leftNav .menu-item:hover img{
+    margin-left:.5em;
+    
 }
 md-sidenav .menu-item span{
-  vertical-align:bottom;
+  vertical-align:baseline;
 }
 
 md-toolbar{
@@ -281,6 +290,14 @@ md-input-container .md-placeholder{
 .md-padding{
 	padding:1em;
 }
+
+md-checkbox .md-label{
+    display:none;   
+}
+
+md-checkbox .md-container{
+  vertical-align: super;
+}
 /*Setting up messages and warning dialogue boxes*/
 .customInput{
     width:90%;
@@ -347,24 +364,56 @@ md-input-container .md-placeholder{
   margin-top: -6px;
   padding-bottom:0;
 }
-#abilityScores .abilityRow:nth-child(odd), .profStat:nth-child(odd), .abilityMod:nth-child(odd){
-  background:#fff;
+#abilityScores .abilityRow:nth-child(odd), .profStat:nth-child(odd), .abilityMod:nth-child(odd), #abilityScores .heading{
+  background:rgba(255, 255, 255, 0.75);
 }
 
-#abilityScores md-input-container input, #abilityScores .abScore input{
+#abilityScores md-input-container input, #abilityScores .abScore input, .skillInput{
   width: 44px;
   height: 44px;
   margin: auto;
   text-align: center;
-  border: 1px solid rgb(255,202,40);
-  background: #FFF8E1;
+  border: 1px solid rgba(255, 202, 40, 0.56);
+  background: rgba(255, 248, 225, 0.7);
     font-weight: 700;
+    border-radius: 5px;
 }
 
 .abScore .md-placeholder{
     transform: none;
     -webkit-transform:none;
 }
+
+#skillsContainer h3{
+    padding:1em;
+    margin: 0;
+    background-color: rgba(255, 255, 255, 0.5);
+}
+.skill table, .skill table th, .skill table td{
+/*    border:1px solid #000;   */
+}
+.skill table{
+    width:100%;
+    border-collapse: collapse;
+}
+.skill table th{
+    width:25%;
+    max-width:25%;
+    font-size:.8em;
+    font-weight:500;
+    padding-top: 3px;
+}
+.skill table td{
+    text-align: center;
+    padding:.5em;
+    max-width:25%;
+}
+.skill table .tHead{
+    background-color: #455A64;
+    color: #fff; 
+}
+
+
 /*proficiency styles*/
 .disabled{
   opacity:.5;
@@ -385,6 +434,36 @@ md-input-container .md-placeholder{
   text-align:center;
 }
 
+/*SPELLS*/
+.autocompletedemoBasicUsage md-content {
+  min-height: 500px; 
+}
+
+md-autocomplete{
+    margin-bottom:1em;
+}
+
+.removeSpell{
+    margin-top:0em;
+    float:right;
+    padding:.25em .5em;
+}
+.spell{
+    border-bottom:1px solid rgba(0, 0, 0, 0.25);
+}
+.spell p{
+    margin:.5em 0;
+}
+.spell .subtext{
+    font-size:.8em;
+    color:rgba(0, 0, 0, 0.75);
+}
+.spellName{
+    
+}
+#spellForm{
+    margin-bottom:1em;
+}
 /*pop-up dialog styles*/
 md-dialog p{
   line-height:1.5;

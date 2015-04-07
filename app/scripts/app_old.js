@@ -114,9 +114,9 @@ app.module = angular
         templateUrl: 'views/ability-scores.html',
         controller: 'AScoreCtrl'
       })
-      .when('/to-do', {
-        templateUrl: 'views/to-do.html',
-        controller: 'ToDoCtrl'
+      .when('/spells', {
+        templateUrl: 'views/spells.html',
+        controller: 'SpellsCtrl'
       })
       .when('/character-summary', {
         templateUrl: 'views/character-summary.html',
@@ -194,26 +194,26 @@ app.module = angular
       $location.path( path );
       $mdSidenav('left').close();
     };
-    var myElement = document.getElementById('doc-content');
-    var leftNav = document.getElementById('leftNav');
-    
-    var mc = new Hammer(myElement);
-    var ln = new Hammer(leftNav);
-
-    var pan = new Hammer.Pan({threshold: 200});
-    var pan2 = new Hammer.Pan({threshold: 200});
-    mc.add([pan]);
-    ln.add([pan2]);
-    
-    ln.on('panleft', function(ev) {
-        window.getSelection().removeAllRanges();
-        $scope.closeLeft();
-    });
-    
-    mc.on('panright', function(ev) {
-        window.getSelection().removeAllRanges();        
-        $scope.openLeft();
-    });
+//    var myElement = document.getElementById('doc-content');
+//    var leftNav = document.getElementById('leftNav');
+//    
+//    var mc = new Hammer(myElement);
+//    var ln = new Hammer(leftNav);
+//
+//    var pan = new Hammer.Pan({threshold: 200});
+//    var pan2 = new Hammer.Pan({threshold: 200});
+//    mc.add([pan]);
+//    ln.add([pan2]);
+//    
+//    ln.on('panleft', function(ev) {
+//        window.getSelection().removeAllRanges();
+//        $scope.closeLeft();
+//    });
+//    
+//    mc.on('panright', function(ev) {
+//        window.getSelection().removeAllRanges();        
+//        $scope.openLeft();
+//    });
     
   })
   .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {

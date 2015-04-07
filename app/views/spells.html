@@ -1,0 +1,72 @@
+<!--<md-content>-->
+<section>
+  <div id="pageTitle" class="titleBar" layout="row">
+    <h2>Spells & Abilities</h2>
+    </div>
+    
+    
+<!--    The auto complete code/functionality is based on https://material.angularjs.org/#/demo/material.components.autocomplete-->
+    <div class="autocompletedemoBasicUsage" ng-app="autocompleteDemo" ng-controller="SpellsCtrl as ctrl" layout="column">
+        <md-content class="md-padding" layout="column">
+            <form id="spellForm" ng-submit="$event.preventDefault()">
+<!--      <p>Use <code>&lt;md-autocomplete&gt;</code> to search for matches from local or remote data sources.</p>-->
+              <md-autocomplete
+                  ng-disabled="ctrl.isDisabled"
+                  md-no-cache="ctrl.noCache"
+                  md-selected-item="ctrl.selectedItem"
+                  md-search-text-change="ctrl.searchTextChange(ctrl.searchText)"
+                  md-search-text="ctrl.searchText"
+                  md-selected-item-change="ctrl.selectedItemChange(item)"
+                  md-items="item in ctrl.querySearch(ctrl.searchText)"
+                  md-item-text="item.display"
+                  placeholder="Add a new spell or attack...">
+                <span md-highlight-text="ctrl.searchText" md-highlight-flags="^i">{{item.display}}</span>
+              </md-autocomplete>
+<!--
+      <br/>
+      <md-checkbox ng-model="ctrl.simulateQuery">Simulate query for results?</md-checkbox>
+      <md-checkbox ng-model="ctrl.noCache">Disable caching of queries?</md-checkbox>
+      <md-checkbox ng-model="ctrl.isDisabled">Disable the input?</md-checkbox>
+      <p style="padding-left: 15px;">By default, <code>&lt;md-autocomplete&gt;</code> will cache results when performing a query.  After the initial call is performed, it will use the cached results to eliminate unnecessary server requests or lookup logic. This can be disabled above.</p>
+-->
+                <md-button ng-click="getSpellInfo(ctrl.searchText)" class="md-primary md-raised" flex flex-sm="100"><span>Add Spell</span></md-button>
+            </form>
+            <p><strong>Order By:</strong> <md-button ng-click="reverse=!reverse;order('name', reverse)" class="md-primary"><span>Name</span></md-button>
+                
+            <md-button ng-click="reverse=!reverse;order('level', reverse)" class="md-primary"><span>Level</span></md-button></p>
+            <div class="spells">
+                <div layout="row" ng-repeat="item in mySpells | orderBy:'testOrder'" class="spell" id="{{item.id}}">
+                    <div class="spellDetails" flex="100">
+                        <p class="spellName"><strong>{{item.name}}</strong><md-button ng-click="removeSpell(item.name)" class="removeSpell md-primary"><span>Remove</span></md-button></p>
+                        <p class="subtext">{{item.class}}, Level {{item.level}}</p>
+                        <p>{{item.description}}</p>
+                    </div>  
+<!--
+                    <div class="deleteSpell" flex="20">
+                        <md-button ng-click="removeSpell(item.name)" class="removeSpell md-primary md-raised"><span>Remove</span></md-button>
+                    </div>
+-->
+                </div>    
+            </div>  
+        </md-content>
+
+    </div>
+<!--
+    <form ng-submit="$event.preventDefault()">
+        
+        <md-autocomplete    
+            ng-disabled="isDisabled"
+            md-no-cache="noCache"
+            md-selected-item="selectedItem"
+            md-search-text-change="searchTextChange(searchText)"
+            md-search-text="searchText"
+            md-selected-item-change="selectedItemChange(item)"
+            md-items="item in querySearch(searchText)"
+            md-item-text="display"
+            placeholder="What is your favorite US state?">
+            <span md-highlight-text="searchText" md-highlight-flags="^i">{{item.display}}</span>
+        </md-autocomplete>
+    </form>
+-->
+</section>
+<!--</md-content>-->

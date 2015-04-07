@@ -56,11 +56,11 @@
           <md-content ng-controller="LeftCtrl">
 
             <md-button ng-click="go('/')" class="md-padding md-primary menu-item">
-              <img  style="width: 24px; height: 24px;" src="img/icons/home-icon.png">Home
+              <img  style="width: 24px; height: 24px;" src="img/icons/home-grey.png">Home
             </md-button>
 
             <md-button ng-click=" gotoTop(); go('/character-details')" class="md-padding md-primary menu-item">
-              <img  style="width: 24px; height: 24px;" src="img/icons/person-icon.png">Character Details
+              <img  style="width: 24px; height: 24px;" src="img/icons/person-grey.png">Character Details
             </md-button>
 
 <!--
@@ -70,16 +70,18 @@
 -->
 
             <md-button ng-click="gotoTop(); go('/ability-scores')" class="md-padding md-primary menu-item">
-              <img  style="width: 24px; height: 24px;" src="img/icons/dice.png">Stats
+              <img  style="width: 24px; height: 24px;" src="img/icons/stats-grey.png">Stats
             </md-button>
               
-            <md-button ng-click="gotoTop(); go('/ability-scores')" class="md-padding md-primary menu-item">
-              <img  style="width: 24px; height: 24px;" src="img/icons/dice.png">Spells
+            <md-button ng-click="gotoTop(); go('/spells')" class="md-padding md-primary menu-item">
+              <img  style="width: 24px; height: 24px;" src="img/icons/spells-grey.png">Spells & Abilities
             </md-button>
               
+<!--
           <md-button ng-click="gotoTop(); go('/ability-scores')" class="md-padding md-primary menu-item">
-              <img  style="width: 24px; height: 24px;" src="img/icons/dice.png">Inventory
+              <img  style="width: 24px; height: 24px;" src="img/icons/inventory-grey.png">Inventory
             </md-button>
+-->
 
 <!--
             <md-button ng-click="go('/character-summary')" class="md-padding md-primary menu-item">
@@ -88,7 +90,7 @@
 -->
               
             <md-button ng-click="go('/party')" class="md-padding md-primary menu-item">
-              <img  style="width: 24px; height: 24px;" src="img/icons/details-icon.png">Party
+              <img  style="width: 24px; height: 24px;" src="img/icons/party-grey.png">Party
             </md-button>
 
           </md-content>
@@ -161,6 +163,7 @@
         <script src="scripts/controllers/ability-scores.js"></script>
 <!--        <script src="scripts/controllers/to-do.js"></script>-->
         <script src="scripts/controllers/summary.js"></script>
+        <script src="scripts/controllers/spells.js"></script>
         <script src="scripts/controllers/party.js"></script>
         <script src="scripts/realtime/realtime-client-utils.js"></script>
         <script src="scripts/realtime/realtime.js"></script>

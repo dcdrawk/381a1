@@ -8,20 +8,138 @@
  * Controller of the myappApp
  */
 angular.module('myappApp')
-  .controller('AScoreCtrl', function ($scope, $cookies, $log, $mdDialog) {
+  .controller('AScoreCtrl', function ($scope, $cookies, $log, $mdDialog, $cookieStore) {
     $scope.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
       'Karma'
     ];
-    var myRace = $cookies.race;
-    var mySubrace = $cookies.subrace;
-    var myStr = $cookies.str;
-    var myDex = $cookies.dex;
-    var myCon = $cookies.con;
-    var myInt = $cookies.int;
-    var myWis = $cookies.wis;
-    var myCha = $cookies.cha;
+    var detailsArray = $cookieStore.get('charDetails');
+    var scoreArray = $cookieStore.get('scoreArray');
+    var modifierArray = $cookieStore.get('modifierArray');
+    var SkillBonuses = $cookieStore.get('SkillBonuses');
+    var SkillMod = $cookieStore.get('SkillMod');
+    
+    //var modifierArray = $cookieStore.get('modifierArray');
+    var defaultObj = {
+        trained: false,
+        bonus: ''
+    }
+    //  setting up the cookies
+    if(typeof detailsArray === 'undefined'){        
+        $scope.details = {
+            race: '',
+            subrace: '',
+        };
+        $cookieStore.put('detailsArray', $scope.details);
+        detailsArray = $cookieStore.get('detailsArray');
+    }
+    if(typeof scoreArray === 'undefined'){        
+        $scope.details = {
+            str: '',
+            dex: '',
+            con: '',
+            int: '',
+            wis: '',
+            cha: '',
+        };
+        $cookieStore.put('scoreArray', $scope.details);
+        scoreArray = $cookieStore.get('scoreArray');
+    }
+    
+    if(typeof modifierArray === 'undefined'){        
+        $scope.details = {
+            str: '',
+            dex: '',
+            con: '',
+            int: '',
+            wis: '',
+            cha: '',
+        };
+        $cookieStore.put('modifierArray', $scope.details);
+        modifierArray = $cookieStore.get('modifierArray');
+    }
+    
+    if(typeof SkillBonuses === 'undefined'){        
+        $scope.details = [{
+            ath: defaultObj,
+            
+            acr: defaultObj,
+            soh: defaultObj,
+            stl: defaultObj,
+            
+            arc: defaultObj,
+            his: defaultObj,
+            inv: defaultObj,
+            nat: defaultObj,
+            rel: defaultObj,
+            
+            anh: defaultObj,
+            ins: defaultObj,
+            med: defaultObj,
+            perc: defaultObj,
+            sur: defaultObj,
+            
+            dec: defaultObj,
+            int: defaultObj,
+            perf: defaultObj,
+            pers: defaultObj
+        }];
+        $cookieStore.put('SkillBonuses', $scope.details);
+        SkillBonuses = $cookieStore.get('SkillBonuses');
+    }
+    
+    if(typeof SkillMod === 'undefined'){        
+        $scope.details = {
+            ath: '',
+            
+            acr: '',
+            soh: '',
+            stl: '',
+            
+            arc: '',
+            his: '',
+            inv: '',
+            nat: '',
+            rel: '',
+            
+            anh: '',
+            ins: '',
+            med: '',
+            perc: '',
+            sur: '',
+            
+            dec: '',
+            int: '',
+            perf: '',
+            pers: ''
+        };
+        $cookieStore.put('SkillMod', $scope.details);
+        SkillMod = $cookieStore.get('SkillMod');
+    }
+    
+    var myRace = detailsArray.race;
+    var mySubrace = detailsArray.subrace;
+    var profBonus = $cookies.profBonus;
+    console.log('HERE IS THE PROF BONUS');
+    console.log($cookies.profBonus);
+    if(!$cookies.profBonus){
+        profBonus = 0;
+    }
+    
+//    var myStr = $cookies.str;
+//    var myDex = $cookies.dex;
+//    var myCon = $cookies.con;
+//    var myInt = $cookies.int;
+//    var myWis = $cookies.wis;
+//    var myCha = $cookies.cha;
+    
+    var myStr = scoreArray.str;
+    var myDex = scoreArray.dex;
+    var myCon = scoreArray.con;
+    var myInt = scoreArray.int;
+    var myWis = scoreArray.wis;
+    var myCha = scoreArray.cha;
 
     //Booleans to set warning/message classes
     $scope.isHidden = false;
@@ -42,8 +160,220 @@ angular.module('myappApp')
       wis : myWis,
       cha : myCha,
     }];
+    
+//    $scope.abilityScores = [{//sets the bonus message and value
+//      str : myStr,
+//      dex : myDex,
+//      con : myCon,
+//      int : myInt,
+//      wis : myWis,
+//      cha : myCha,
+//    }];
+//    
+    
+    $scope.getProfBonus = function() {
+        var profBonus = $cookies.profBonus;
 
+        if(!$cookies.profBonus){
+            profBonus = 0;
+        }    
+    }
+    //console.log(SkillBonuses);
+    $scope.skillBonus = [{//sets the bonus message and value
+        ath: SkillBonuses[0]['ath'],
 
+        acr: SkillBonuses[0]['acr'],
+        soh: SkillBonuses[0]['soh'],
+        stl: SkillBonuses[0]['stl'],
+
+        arc: SkillBonuses[0]['arc'],
+        his: SkillBonuses[0]['his'],
+        inv: SkillBonuses[0]['inv'],
+        nat: SkillBonuses[0]['nat'],
+        rel: SkillBonuses[0]['rel'],
+
+        anh: SkillBonuses[0]['anh'],
+        ins: SkillBonuses[0]['ins'],
+        med: SkillBonuses[0]['med'],
+        perc: SkillBonuses[0]['perc'],
+        sur: SkillBonuses[0]['sur'],
+
+        dec: SkillBonuses[0]['dec'],
+        int: SkillBonuses[0]['int'],
+        perf: SkillBonuses[0]['perf'],
+        pers: SkillBonuses[0]['pers']
+//        ath: SkillBonuses.ath,
+//
+//        acr: SkillBonuses.acr,
+//        soh: SkillBonuses.soh,
+//        stl: SkillBonuses.stl,
+//
+//        arc: SkillBonuses.arc,
+//        his: SkillBonuses.his,
+//        inv: SkillBonuses.inv,
+//        nat: SkillBonuses.nat,
+//        rel: SkillBonuses.rel,
+//
+//        anh: SkillBonuses.anh,
+//        ins: SkillBonuses.ins,
+//        med: SkillBonuses.med,
+//        perc: SkillBonuses.perc,
+//        sur: SkillBonuses.sur,
+//
+//        dec: SkillBonuses.dec,
+//        int: SkillBonuses.int,
+//        perf: SkillBonuses.perf,
+//        pers: SkillBonuses.pers
+    }];
+    
+    $scope.trained = [{//sets the bonus message and value
+        ath: $scope.skillBonus[0]['ath']['trained'],
+
+        acr: $scope.skillBonus[0]['acr']['trained'],
+        soh: $scope.skillBonus[0]['soh']['trained'],
+        stl: $scope.skillBonus[0]['stl']['trained'],
+
+        arc: $scope.skillBonus[0]['arc']['trained'],
+        his: $scope.skillBonus[0]['his']['trained'],
+        inv: $scope.skillBonus[0]['inv']['trained'],
+        nat: $scope.skillBonus[0]['nat']['trained'],
+        rel: $scope.skillBonus[0]['rel']['trained'],
+
+        anh: $scope.skillBonus[0]['anh']['trained'],
+        ins: $scope.skillBonus[0]['ins']['trained'],
+        med: $scope.skillBonus[0]['med']['trained'],
+        perc: $scope.skillBonus[0]['perc']['trained'],
+        sur: $scope.skillBonus[0]['sur']['trained'],
+
+        dec: $scope.skillBonus[0]['dec']['trained'],
+        int: $scope.skillBonus[0]['int']['trained'],
+        perf: $scope.skillBonus[0]['perf']['trained'],
+        pers: $scope.skillBonus[0]['pers']['trained']
+    }];
+    
+    //console.log('TRAINED IN' + $scope.trained[0]['acr']);
+    $scope.setTrained = function(skill) {
+//        var testCon = $scope.skillBonus.skill;
+        //console.log(skill);
+        var trained = $scope.skillBonus[0][skill]['trained'];
+        
+        console.log($scope.skillBonus);
+        console.log($cookieStore.get('SkillBonuses'));
+        
+        if(!trained){
+            $scope.skillBonus[0][skill]['trained'] = true;            
+            //var trainSkill = $scope.skillBonus[0][skill]['trained'];
+            $cookieStore.put('SkillBonuses', $scope.skillBonus);
+            $scope.SkillBonus = $cookieStore.get('SkillBonuses');
+            
+        } else if(trained){
+            $scope.skillBonus[0][skill]['trained'] = false;            
+            $cookieStore.put('SkillBonuses', $scope.skillBonus);
+            $scope.SkillBonus = $cookieStore.get('SkillBonuses');
+        }        
+        //console.log($scope.strMod);
+        //$scope.setSkillBonus(skill);
+        $scope.skillMod[0][skill] = $scope.setSkillBonus(skill);
+        //$scope.setSkillBonus[0][skill].trained = 
+    }
+    
+    
+    console.log('ARC SKILL BONUS: ' + $scope.skillBonus[0]['arc']['bonus']);
+    
+    $scope.setBonus = function(skill, value) {
+        console.log('SKILL: ' + skill + ' VALUE:' + value);
+        $scope.skillBonus[0][skill]['bonus'] = value;
+        
+        $cookieStore.put('SkillBonuses', $scope.skillBonus);
+        $scope.SkillBonus = $cookieStore.get('SkillBonuses');
+
+        $scope.skillMod[0][skill] = $scope.setSkillBonus(skill);
+//        console.log('SKILL MOD: ' + $scope.skillMod[0][skill]);
+    } 
+    
+    
+    $scope.setSkillBonus = function(skill) {
+   //     console.log(skill);
+     //   console.log(profBonus);
+      // console.log( $scope.skillBonus[0]);
+        var trained = $scope.skillBonus[0][skill]['trained'];
+//        var test = skill;
+//        var trained = $scope.skillBonus.skill.trained;
+        var bonus = $scope.skillBonus[0][skill]['bonus'];
+//        
+//        console.log('BONUS: ' + bonus)
+        if(!bonus){
+            bonus = 0;
+        }
+//        
+        var modTotal = 0 + bonus;
+       console.log(modTotal + ' ' + bonus);
+        
+        if(!profBonus){
+            profBonus = 0;
+        }
+        
+        if(trained){
+            modTotal+=parseInt(profBonus);
+            $scope.trained[skill] = true;
+        }
+        //console.log('MOD TOTAL: ' + modTotal);
+        
+        //add the ability modifier to the skill modifier
+        if(skill == 'ath'){
+            if(modifierArray.str){
+                modTotal += modifierArray.str;
+            }
+        }
+        if(skill == 'acr' || skill == 'soh' || skill == 'stl'){
+            if(modifierArray.dex){
+                modTotal += modifierArray.dex;
+            }            
+        }
+        
+        if(skill == 'arc' || skill == 'his' || skill == 'inv' || skill == 'nat' || skill == 'rel'){
+            if(modifierArray.int){
+                modTotal += modifierArray.int;
+            }
+        }
+        if(skill == 'anh' || skill == 'ins' || skill == 'med' || skill == 'perc' || skill == 'sur'){
+            if(modifierArray.wis){
+                modTotal += modifierArray.wis;
+            }
+        }
+        if(skill == 'dec' || skill == 'int' || skill == 'perf' || skill == 'pers'){
+            if(modifierArray.cha){
+                modTotal += modifierArray.cha;
+            }
+        }
+        
+        console.log('MOD TOTAL: ' + modTotal);
+        return modTotal;
+    }
+    $scope.skillMod = [{//sets the bonus message and value
+        ath: $scope.setSkillBonus('ath'),
+
+        acr: $scope.setSkillBonus('acr'),
+        soh: $scope.setSkillBonus('soh'),
+        stl: $scope.setSkillBonus('stl'),
+
+        arc: $scope.setSkillBonus('arc'),
+        his: $scope.setSkillBonus('his'),
+        inv: $scope.setSkillBonus('inv'),
+        nat: $scope.setSkillBonus('nat'),
+        rel: $scope.setSkillBonus('rel'),
+
+        anh: $scope.setSkillBonus('anh'),
+        ins: $scope.setSkillBonus('ins'),
+        med: $scope.setSkillBonus('med'),
+        perc: $scope.setSkillBonus('perc'),
+        sur: $scope.setSkillBonus('sur'),
+
+        dec: $scope.setSkillBonus('dec'),
+        int: $scope.setSkillBonus('int'),
+        perf: $scope.setSkillBonus('perf'),
+        pers: $scope.setSkillBonus('pers')
+    }];
 
 
     $scope.getRace = function() {
@@ -132,7 +462,10 @@ angular.module('myappApp')
         }
       }
     }; //End of getRace();
-
+    
+    
+    
+    
     //sets up ability scores and modifiers if they exist
     $scope.abilityScores.str = parseFloat(myStr);
     $scope.abilityScores.dex = parseFloat(myDex);
@@ -166,34 +499,77 @@ angular.module('myappApp')
     //Using the function above, these set the cookies for each ability
     $scope.setStr = function() {
       $scope.strMod = $scope.setModifier(this.abilityScores.str);
-      $cookies.strMod = $scope.setModifier(this.abilityScores.str);
-      $cookies.str = $scope.abilityScores.str;
+        scoreArray.str = $scope.abilityScores.str;
+        $cookieStore.put('scoreArray', scoreArray);
+        
+        modifierArray.str = $scope.setModifier(this.abilityScores.str);
+        $cookieStore.put('modifierArray', modifierArray);
+        
+        $scope.skillMod[0]['ath'] = $scope.setSkillBonus('ath');
     };
     $scope.setDex = function() {
-      $scope.dexMod = $scope.setModifier(this.abilityScores.dex);
-      $cookies.dexMod = $scope.setModifier(this.abilityScores.dex);
-      $cookies.dex = $scope.abilityScores.dex;
+        
+        $scope.dexMod = $scope.setModifier(this.abilityScores.dex);
+        scoreArray.dex = $scope.abilityScores.dex;
+        $cookieStore.put('scoreArray', scoreArray);
+        
+        modifierArray.dex = $scope.setModifier(this.abilityScores.dex);
+        $cookieStore.put('modifierArray', modifierArray);
+        
+        $scope.skillMod[0]['acr'] = $scope.setSkillBonus('acr');
+        $scope.skillMod[0]['soh'] = $scope.setSkillBonus('soh');
+        $scope.skillMod[0]['stl'] = $scope.setSkillBonus('stl');
     };
     $scope.setCon = function() {
       $scope.conMod = $scope.setModifier(this.abilityScores.con);
-      $cookies.conMod = $scope.setModifier(this.abilityScores.con);
-      $cookies.con = $scope.abilityScores.con;
+      scoreArray.con = $scope.abilityScores.con;
+        $cookieStore.put('scoreArray', scoreArray);
+        
+        modifierArray.con = $scope.setModifier(this.abilityScores.con);
+        $cookieStore.put('modifierArray', modifierArray);   
     };
     $scope.setInt = function() {
       $scope.intMod = $scope.setModifier(this.abilityScores.int);
-      $cookies.intMod = $scope.setModifier(this.abilityScores.int);
-      $cookies.int = $scope.abilityScores.int;
+      scoreArray.int = $scope.abilityScores.int;
+        $cookieStore.put('scoreArray', scoreArray);
+        
+        modifierArray.int = $scope.setModifier(this.abilityScores.int);
+        $cookieStore.put('modifierArray', modifierArray);
+        
+        $scope.skillMod[0]['arc'] = $scope.setSkillBonus('arc');
+        $scope.skillMod[0]['his'] = $scope.setSkillBonus('his');
+        $scope.skillMod[0]['inv'] = $scope.setSkillBonus('inv');
+        $scope.skillMod[0]['nat'] = $scope.setSkillBonus('nat');
+        $scope.skillMod[0]['rel'] = $scope.setSkillBonus('rel');
     };
     $scope.setWis = function() {
       $scope.wisMod = $scope.setModifier(this.abilityScores.wis);
-      $cookies.wisMod = $scope.setModifier(this.abilityScores.wis);
-      $cookies.wis = $scope.abilityScores.wis;
+      scoreArray.wis = $scope.abilityScores.wis;
+        $cookieStore.put('scoreArray', scoreArray);
+        
+        modifierArray.wis = $scope.setModifier(this.abilityScores.wis);
+        $cookieStore.put('modifierArray', modifierArray);
+        
+        $scope.skillMod[0]['anh'] = $scope.setSkillBonus('anh');
+        $scope.skillMod[0]['ins'] = $scope.setSkillBonus('ins');
+        $scope.skillMod[0]['med'] = $scope.setSkillBonus('med');
+        $scope.skillMod[0]['perc'] = $scope.setSkillBonus('perc');
+        $scope.skillMod[0]['sur'] = $scope.setSkillBonus('sur');
     };
     $scope.setCha = function() {
       $scope.chaMod = $scope.setModifier(this.abilityScores.cha);
-      $cookies.chaMod = $scope.setModifier(this.abilityScores.cha);
-      $cookies.cha = $scope.abilityScores.cha;
+      scoreArray.cha = $scope.abilityScores.cha;
+        $cookieStore.put('scoreArray', scoreArray);
+        
+        modifierArray.cha = $scope.setModifier(this.abilityScores.cha);
+        $cookieStore.put('modifierArray', modifierArray);
+        
+        $scope.skillMod[0]['dec'] = $scope.setSkillBonus('dec');
+        $scope.skillMod[0]['int'] = $scope.setSkillBonus('int');
+        $scope.skillMod[0]['perf'] = $scope.setSkillBonus('perf');
+        $scope.skillMod[0]['pers'] = $scope.setSkillBonus('pers');
     };
+    
 
     //Code from https://material.angularjs.org/#/demo/material.components.dialog
     //Use to help build alter dialogues, we would like to use them to explain this to the user.

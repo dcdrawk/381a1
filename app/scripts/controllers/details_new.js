@@ -30,7 +30,7 @@ angular.module('myappApp')
     var detailsArray = $cookieStore.get('charDetails');
     var personalityArray = $cookieStore.get('personality');
     var proficiencyArray = $cookieStore.get('proficiency');
-    $log.debug(proficiencyArray);
+//    $log.debug(proficiencyArray);
 //
 //  setting up the cookies
     if(typeof detailsArray === 'undefined'){        
@@ -310,6 +310,7 @@ $log.debug($scope.characterLevel);
         if($scope.characterLevel >= 9 && $scope.characterLevel <= 12){$scope.profBonus = 4;}
         if($scope.characterLevel >= 12 && $scope.characterLevel <= 16){$scope.profBonus = 5;}
         if($scope.characterLevel >= 17){$scope.profBonus = 6;}
+        $cookies.profBonus = $scope.profBonus;
     };
 
     $scope.setLevel = function() {
@@ -325,6 +326,7 @@ $log.debug($scope.characterLevel);
             //$scope.characterLevel = false;
             $scope.profBonus = 0;
         }
+        $cookies.profBonus = $scope.profBonus;
     };
     
     $scope.clearRace = function() {
@@ -459,5 +461,5 @@ $log.debug($scope.characterLevel);
           $scope.skillsProf = 'Choose two from Arcana, History, Insight, Investigation, Medicine, and Religion';
         }
     };
-        $scope.setProficiency();
+    $scope.setProficiency();
 });

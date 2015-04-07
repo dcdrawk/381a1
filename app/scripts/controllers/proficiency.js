@@ -52,6 +52,7 @@ angular.module('myappApp')
     if(myLevel >= 9 && myLevel <= 12){$scope.profBonus = 4;}
     if(myLevel >= 12 && myLevel <= 16){$scope.profBonus = 5;}
     if(myLevel >= 17){$scope.profBonus = 6;}
+    
     $cookies.profBonus = $scope.profBonus;
 
       // $scope.detectClass = [{//sets the text for the warning
