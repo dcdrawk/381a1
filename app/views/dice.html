@@ -1,0 +1,613 @@
+<div>
+		<!--	<div id="container"></div>-->
+
+		
+<!--
+		<script src="scripts/dice/three.min.js"></script>
+		<script src="scripts/dice/tween.min.js"></script>
+
+		<script src="scripts/dice/jquery.min.js"></script>
+		<script src="scripts/dice/hammer.js"></script>
+		<script src="scripts/dice/hammerScript.js"></script>
+		
+
+		<script src="scripts/dice/THREEx.KeyboardState.js"></script>
+		<script type="text/javascript" src="scripts/dice/physi.js"></script>
+		<script src="scripts/dice/bullet.min.js"></script>
+-->
+		<script defer="defer">
+
+			Physijs.scripts.worker = 'scripts/dice/physijs_worker.js';
+      		Physijs.scripts.ammo = 'ammo.js';
+			
+      		var camera, scene, renderer;
+      		var objects = [], plane;
+      		var diceOnField = [1, 2];
+			
+			var lastPos = 0;
+			
+			////some code for raycasting, didn't work out
+			//var raycaster = new THREE.Raycaster();
+      		//var mouse = new THREE.Vector2(),
+      		//offset = new THREE.Vector3(),
+      		//INTERSECTED, SELECTED;
+
+      		var keyboard = new THREEx.KeyboardState();
+			
+			//multiplier for the amount of rotation the dice get
+			var rotationMultiplier = 1.5;
+
+			var diceValue = [];
+			var diceTotal = 0;
+      		var width = window.innerWidth,
+				height = window.innerHeight;
+      		var i = 0;
+			
+			//Textures for each die face
+			var materials = [
+				new THREE.MeshLambertMaterial({ ambient: 0xffffff, map: THREE.ImageUtils.loadTexture( 'img/dice1.jpg' ) }),
+				new THREE.MeshLambertMaterial({ ambient: 0xffffff, map: THREE.ImageUtils.loadTexture( 'img/dice6.jpg' ) }),
+				new THREE.MeshLambertMaterial({ ambient: 0xffffff, map: THREE.ImageUtils.loadTexture( 'img/dice2.jpg' ) }),
+				new THREE.MeshLambertMaterial({ ambient: 0xffffff, map: THREE.ImageUtils.loadTexture( 'img/dice5.jpg' ) }),
+				new THREE.MeshLambertMaterial({ ambient: 0xffffff, map: THREE.ImageUtils.loadTexture( 'img/dice3.jpg' ) }),
+				new THREE.MeshLambertMaterial({ ambient: 0xffffff, map: THREE.ImageUtils.loadTexture( 'img/dice4.jpg' ) })
+			];
+			
+			
+			//Textures for each die face
+			var d4materials = [
+				new THREE.MeshLambertMaterial({ ambient: 0xffffff, shading: 'hard', map: THREE.ImageUtils.loadTexture( 'img/d4-texture.jpg' ) })
+			];
+			
+
+			var friction = 1; // high friction
+      		var restitution = .1; // low restitution
+			
+			//load a wood texture for the ground
+			var texture = new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture('img/texture/wood.jpg') } );
+      		
+			var material = Physijs.createMaterial(
+				new THREE.MeshLambertMaterial( { map: THREE.ImageUtils.loadTexture('img/texture/wood.jpg') } ),
+				friction, restitution
+      		);
+			
+			var diceMat = Physijs.createMaterial(
+				new THREE.MeshPhongMaterial( { color: 0xeeeeee, wireframe: false, vertexColors: 0x000000, shading:'hard' } ),
+				friction, restitution
+      		);
+			
+//			var d4Mat = Physijs.createMaterial(
+//				new THREE.MeshPhongMaterial( { map: THREE.ImageUtils.loadTexture(create_d4_materials), color: 0xeeeeee, wireframe: false, vertexColors: 0x000000, shading:'hard' } ),
+//				friction, restitution
+//      		);
+
+			var d6Mat = Physijs.createMaterial(
+				new THREE.MeshFaceMaterial(materials),
+				friction, restitution
+			);
+			var wallMat = Physijs.createMaterial(
+				new THREE.MeshBasicMaterial( { color: 0xffffff, transparent: true, opacity: 0 , wireframe:false} ),
+				friction, restitution
+			);
+			var screenMat = Physijs.createMaterial(
+				new THREE.MeshBasicMaterial( { color: 0xffffff, transparent: true, opacity: 0.0} ),
+				friction, restitution
+			);
+
+			
+		
+			
+//			create_d4_materials = function(size, margin) {
+//				function create_d4_text(text, color, back_color) {
+//					var canvas = document.createElement("canvas");
+//					var context = canvas.getContext("2d");
+//					canvas.width = size + margin;
+//					canvas.height = size + margin;
+//					context.font = size + "pt Arial";
+//					context.fillStyle = back_color;
+//					context.fillRect(0, 0, canvas.width, canvas.height);
+//					context.textAlign = "center";
+//					context.textBaseline = "middle";
+//					context.fillStyle = color;
+//					context.translate(0, size / 10);
+//					for (var i in text) {
+//						context.fillText(text[i], canvas.width / 2,
+//								canvas.height / 2 - size - margin / 10);
+//						context.translate(canvas.width / 2, canvas.height / 2);
+//						context.rotate(Math.PI * 2 / 3);
+//						context.translate(-canvas.width / 2, -canvas.height / 2);
+//					}
+//					var texture = new THREE.Texture(canvas);
+//					texture.needsUpdate = true;
+//					return texture;
+//				}
+//			}
+			
+			//create a cube geometry for the dice
+      		var d6Geo = new THREE.CubeGeometry(80, 80, 80, 3, 3, 3);
+			
+			var d4Mat = Physijs.createMaterial(
+				//new THREE.MeshFaceMaterial( create_d4_materials(80, 5) ),
+				new THREE.MeshFaceMaterial( d4materials ),
+				
+				friction, restitution
+      		);
+			var d4Geo = new THREE.TetrahedronGeometry( 80, 0 );
+			handleCollision = function( collided_with, linearVelocity, angularVelocity ) {
+				console.log('collision!' + linearVelocity );
+			}
+			
+			var d8Geo = new THREE.OctahedronGeometry( 80, 0 );
+			var d12Geo = new THREE.DodecahedronGeometry( 80, 0 );
+			var d20Geo = new THREE.IcosahedronGeometry(70, 0);
+			//var d10Geo = new THREE.DecahedronGeometry(70, 0);
+			var d4map = [
+				new THREE.Vector2(.333, 1),
+				new THREE.Vector2(1, 1),
+				new THREE.Vector2(0, 0.5),
+				new THREE.Vector2(0.666, 0.5),
+				new THREE.Vector2(0.333, 0),
+				new THREE.Vector2(1, 0)
+			];
+			
+			d4Geo.faceVertexUvs[0][0] = [ d4map[0], d4map[2], d4map[3] ];
+			//d4Geo.faceVertexUvs[0][1] = [ bricks[0], bricks[1], bricks[2] ];
+			//d4Geo.faceVertexUvs[0][1] = [ bricks[1], bricks[0], bricks[2] ];
+			d4Geo.faceVertexUvs[0][1] = [ d4map[4], d4map[5], d4map[3] ];
+			d4Geo.faceVertexUvs[0][2] = [ d4map[4], d4map[3], d4map[2] ];
+			d4Geo.faceVertexUvs[0][3] = [ d4map[1], d4map[0], d4map[3] ];
+			
+			
+//			d4Geo.faceVertexUvs[0][3] = [ d4map[4], d4map[3], d4map[2] ];
+//			var verticesOfCube = [ -1,-1,-1, 1,-1,-1, 1, 1,-1, -1, 1,-1, -1,-1, 1, 1,-1, 1, 1, 1, 1, -1, 1, 1, ];
+//			var indicesOfFaces = [ 2,1,0, 0,3,2, 0,4,7, 7,3,0, 0,1,5, 5,4,0, 1,2,6, 6,5,1, 2,3,7, 7,6,2, 4,5,6, 6,7,4 ];
+//			var newTest = new THREE.PolyhedronGeometry( verticesOfCube, indicesOfFaces, 40, 0 );
+			
+			//ground geometry
+			var groundGeo = new THREE.CubeGeometry(600, 5, 600, 0, 0, 0);
+			
+			//blast these invisible walls!
+			var wallGeo = new THREE.CubeGeometry(800, 5, 400, 0, 0, 0);
+			
+			//different size for the ones on the sides
+			var sideWallGeo = new THREE.CubeGeometry(400, 5, 800, 0, 0, 0);
+			
+			//create all the dice from scratch, so they 'exist' in the void
+			die1 = new Physijs.ConvexMesh( d6Geo, d6Mat, 400 );
+			//die2 = new Physijs.ConvexMesh( geometry, testMat, 400 );
+//			die3 = new Physijs.ConvexMesh( geometry, testMat, 400 );
+//			die4 = new Physijs.ConvexMesh( geometry, testMat, 400 );
+//			die5 = new Physijs.ConvexMesh( geometry, testMat, 400 );
+//			die6 = new Physijs.ConvexMesh( geometry, testMat, 400 );
+			die1.name = 'd6';
+			//die2.geometry.dynamic = true;
+			//create the ground and wall physics meshes mass set to 0
+			ground = new Physijs.BoxMesh( groundGeo, material, 0 );
+			testblock = new Physijs.BoxMesh( wallGeo, wallMat, 0 );
+			wallTop= new Physijs.BoxMesh( wallGeo, wallMat, 0 );
+			wallBottom = new Physijs.BoxMesh( wallGeo, wallMat, 0 );
+			wallLeft = new Physijs.BoxMesh( sideWallGeo, wallMat, 0 );
+			wallRight = new Physijs.BoxMesh( sideWallGeo, wallMat, 0 );
+			wallScreen = new Physijs.BoxMesh( groundGeo, wallMat, 0 );
+			
+			//create initial dice array with the object inside
+			diceArray = [];
+			d4Array = [];
+			d6Array = [die1];
+			
+			// this function is executed on each animation frame
+			function animate(){
+				scene.simulate(); // run physics
+
+				// render
+				renderer.render(scene, camera);
+				renderer.setClearColor( 0x000000, 0);
+				
+				// request new frame
+				requestAnimationFrame(function(){
+					animate();
+				});
+		  		
+				//go through the active dice on the scene if they have come to a rest
+				//if diceArray[i].position.y < 42.5, then that means that it is at 'resting height'
+				
+				//add the arrays together
+				diceArray = d4Array.concat(d6Array);
+//				if ( diceArray.length = 0){
+//					setAll(diceTotal, 0);
+//				}
+				for(i = 0; i < diceArray.length; i++){					
+					
+					if(diceArray[i].getLinearVelocity().y < .5 && diceArray[i].getLinearVelocity().x <.5 && diceArray[i].getLinearVelocity().z < .5){
+						var rotation_matrix = new THREE.Matrix4().extractRotation(eval(diceArray[i]).matrix);
+						
+						if(diceArray[i].name == 'd4'){
+							if(rotation_matrix.elements[1]  < 0 &&  rotation_matrix.elements[5] < 0 && rotation_matrix.elements[9] > 0 ){
+								 diceValue[i] = 1;
+							}
+							if(rotation_matrix.elements[1]  < 0 &&  rotation_matrix.elements[5] > 0 && rotation_matrix.elements[9] < 0 ){
+								 diceValue[i] = 2;
+							}
+							if(rotation_matrix.elements[1]  > 0 &&  rotation_matrix.elements[5] > 0 && rotation_matrix.elements[9] > 0 ){
+								 diceValue[i] = 3;
+							}
+							if(rotation_matrix.elements[1]  > 0 &&  rotation_matrix.elements[5] < 0 && rotation_matrix.elements[9] < 0 ){
+								 diceValue[i] = 4;
+							}
+						}
+						if(diceArray[i].name == 'd6'){
+							//if the dice roll is 1
+							if(rotation_matrix.elements[1]  == 1){
+								 diceValue[i] = 1;
+							}
+							//if the dice roll is 2
+							if(rotation_matrix.elements[5] == 1){
+								 diceValue[i] = 2;					
+							}
+							//if dice roll is a 3
+							if(rotation_matrix.elements[9] == 1){
+								 diceValue[i] = 3;
+							}
+							//if the dice roll is 4
+							if(rotation_matrix.elements[9]  == -1){
+								 diceValue[i] = 4;
+							}
+							//if the dice roll is 5
+							if(rotation_matrix.elements[5] == -1){
+								 diceValue[i] = 5;					
+							}
+							//if the dice roll is 6
+							if(rotation_matrix.elements[1] == -1){
+								 diceValue[i] = 6;
+							}
+						}
+						//sum the values in the array
+						
+						diceTotal = diceValue.reduce(add, 0);
+						//change the total text
+						document.getElementById('total').textContent = diceTotal; 
+					}//else {
+						//if the dice are in 'roll mode' then display a ? until a die has come to a rest
+//						document.getElementById('total').textContent = '?'; 
+//					}
+				}
+				//update the tween
+				TWEEN.update();
+				if( keyboard.pressed("Q") ){
+				  var rotation_matrix = new THREE.Matrix4().extractRotation(die1.matrix);
+					console.log(rotation_matrix);
+				}
+			}
+			
+			//simple adding function to total the dice array
+			function add(a, b) {
+				return a + b;
+			}
+		
+			//set all function I got from stackoverflow
+			function setAll(a, v) {
+				var i, n = a.length;
+				for (i = 0; i < n; ++i) {
+					a[i] = v;
+				}
+			}
+			
+			// renderer
+			var renderer = new THREE.WebGLRenderer( { clearColor: 0xff0000, alpha:true, fog:false } );
+			renderer.setSize(window.innerWidth, window.innerHeight);
+			renderer.shadowMapEnabled = true;
+			//renderer.setClearColorHex( 0x000000, 1 );
+			document.body.appendChild(renderer.domElement);
+			// camera
+			var camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 1, 1500);
+			
+			//set the position so that it is looking down from above
+			camera.position.y = 700;
+			camera.rotation.x = Math.PI * -0.5;
+			camera.position.z = 00;
+			camera.position.x = 000;
+			
+			// scene
+			scene = new Physijs.Scene;
+			scene.addEventListener( 'update', myUpdateHandler );
+			//set the gravity
+			scene.setGravity(new THREE.Vector3( 0, -300, 0 ));
+
+			//shuffle the dice around a bit
+			die1.translateY(45);
+//			die2.translateY(45);
+//			die3.translateY(45);
+//			die4.translateY(45);
+//			die5.translateY(45);
+//			die6.translateY(45);
+//			die2.translateZ(200);
+//			die3.translateZ(-200);
+//			die4.translateX(-200);
+//			die5.translateX(200);
+//			die6.translateX(200);
+//			die6.translateZ(200);
+			
+			// //set up the top wall
+			wallTop.translateZ(-300);
+			wallTop.translateY(200);
+			wallTop.rotateX(Math.PI * -0.5);
+			
+			//set up the bottom wall
+			wallBottom.translateZ(300);
+			wallBottom.translateY(200);
+			wallBottom.rotateX(Math.PI * -0.5);
+			
+			//set up the left wall
+			wallLeft.translateX(300);
+			wallLeft.translateY(200);
+			wallLeft.rotateZ(Math.PI * -0.5);
+			
+			//set up the right wall
+			wallRight.translateX(-300);
+			wallRight.translateY(200);
+			wallRight.rotateZ(Math.PI * -0.5);
+
+			//set up the 'screen' wall
+			wallScreen.translateY(400)
+
+			//add the ground and walls
+			scene.add(ground);
+			scene.add(wallScreen);
+			scene.add(wallTop);
+			scene.add(wallBottom);
+			scene.add(wallLeft);
+			scene.add(wallRight);
+			scene.add(die1);
+			
+			// add subtle ambient lighting
+			var ambientLight = new THREE.AmbientLight(0x777777);
+			scene.add(ambientLight);
+
+		
+			//found this awesome light code at http://jsfiddle.net/4Txgp/13/
+			var light;
+
+			light = new THREE.DirectionalLight(0x777777, 1.75);
+			light.position.set(100, 300, 100);
+			light.position.multiplyScalar(1.3);
+
+			light.castShadow = true;
+			light.shadowCameraVisible = false;
+
+			light.shadowMapWidth = 512;
+			light.shadowMapHeight = 512;
+
+			var d = 500;
+
+			light.shadowCameraLeft = -d;
+			light.shadowCameraRight = d;
+			light.shadowCameraTop = d;
+			light.shadowCameraBottom = -d;
+
+			light.shadowCameraFar = 1000;
+			light.shadowDarkness = 0.2;
+
+			scene.add(light);
+			
+			//set up the shadows for the dice
+			die1.castShadow = true;
+//			//die2.castShadow = true;
+//			die3.castShadow = true;
+//			die4.castShadow = true;
+//			die5.castShadow = true;
+//			die6.castShadow = true;
+			ground.receiveShadow = true;
+			
+//			//tween values initialized, they are given 
+			var start = { value : 0 };
+			var start2 = { value : 0 };
+			var start3 = { value : 0 };
+			var start4 = { value : 0 };
+			var end = { value : 0 };
+
+      		animate();
+			function myUpdateHandler(){
+
+      		}
+			//window resize function, I don't know if it works >.>
+      		function onWindowResize() {
+				camera.aspect = window.innerWidth / window.innerHeight;
+				camera.updateProjectionMatrix();
+				renderer.setSize( window.innerWidth, window.innerHeight );
+			}
+			function onPinchStart( event, scale ){
+				document.getElementById('pop-down').play();
+				console.log(scale);
+				
+			}
+			
+			function onDocumentPinch( event, scale ) {
+				event.preventDefault();
+				if(scale <= 1){
+					
+					//play the sound, and adjust the volume based on the scale of the pinch
+					document.getElementById('pop-up').volume = 1-scale;
+					document.getElementById('pop-up').play();
+					//document.getElementById('pop-up').style.width = ;
+					//subtract by 1.25 to buff up the scale a bit
+					scale = 1.25-scale;
+
+					var plusOrMinus = Math.random() < 0.5 ? -1 : 1;	
+					var plusOrMinus2 = Math.random() < 0.5 ? -1 : 1;
+					var plusOrMinus3 = Math.random() < 0.5 ? -1 : 1;
+
+					start.value = (5*scale) * plusOrMinus;
+					start2.value = (5*scale) * plusOrMinus2;
+					start3.value = (5*scale) * plusOrMinus3;
+
+					//reset the total of the dice, prevents 'ghost numbers' from old rolls being added
+					setAll(diceTotal, 0);
+
+					
+					//document.getElementById('total').textContent = '?';
+					for (i = 0; i < d6Array.length; i++){
+						plusOrMinus = Math.random() < 0.5 ? -1 : 1
+						randomVal = (1+(Math.random()*2))*plusOrMinus;
+						testRotation = new THREE.Vector3((start.value*rotationMultiplier)*randomVal  , (start2.value*rotationMultiplier)*randomVal, (start3.value*rotationMultiplier)*randomVal);
+						console.log(start.value + " ");
+						d6Array[i].setAngularVelocity(testRotation);
+						//var force_vector = new THREE.Vector3(-500, -10000, -500);
+						//diceArray[i].applyCentralImpulse(force_vector);
+					}
+					
+					for (i = 0; i < d4Array.length; i++){
+						plusOrMinus = Math.random() < 0.5 ? -1 : 1
+						randomVal = (1+(Math.random()*2))*plusOrMinus;
+						testRotation = new THREE.Vector3((start.value*rotationMultiplier)*randomVal  , (start2.value*rotationMultiplier)*randomVal, (start3.value*rotationMultiplier)*randomVal);
+						console.log(start.value + " ");
+						d4Array[i].setAngularVelocity(testRotation);
+						//var force_vector = new THREE.Vector3(-500, -10000, -500);
+						//diceArray[i].applyCentralImpulse(force_vector);
+					}
+					
+				}
+			}
+			
+			$('#add-d6').click( function() {
+				if(d6Array.length < 5){
+					plusOrMinus = Math.random() < 0.5 ? -1 : 1
+					plusOrMinus2 = Math.random() < 0.5 ? -1 : 1
+					var diceNumber = (d6Array.length)+1;
+					diceNumber = new Physijs.ConvexMesh( d6Geo, d6Mat, 400 );
+					diceNumber.geometry = d6Geo;
+					diceNumber.material = d6Mat;
+					diceNumber.translateY(60);
+					diceNumber.translateZ((Math.random()*250)*plusOrMinus);
+					diceNumber.translateX((Math.random()*250)*plusOrMinus2);
+					diceNumber.castShadow = true;
+					diceNumber.name = 'd6';
+					diceNumber.verticesNeedUpdate = true;
+					//diceArray.push(diceNumber);
+					d6Array.push(diceNumber);
+		  			scene.add(diceNumber);
+			  		console.log('die added!');
+					
+				}	
+			});
+			$('#add-d4').click( function() {
+				if(d4Array.length < 5){
+					plusOrMinus = Math.random() < 0.5 ? -1 : 1
+					plusOrMinus2 = Math.random() < 0.5 ? -1 : 1
+					//console.log('jdisoajdiaodjaoida');
+					var diceNumber = (d4Array.length)+1;
+					diceNumber = new Physijs.ConvexMesh( d4Geo, d4Mat, 400 );
+					diceNumber.geometry = d4Geo;
+					diceNumber.material = d4Mat;
+					diceNumber.verticies = d4Geo;
+					diceNumber.castShadow = true;
+					diceNumber.name = 'd4';
+					diceNumber.geometry.verticesNeedUpdate = true;
+					//diceArray.push(diceNumber);
+					d4Array.push(diceNumber);
+					diceNumber.translateY(60);
+					diceNumber.translateZ((Math.random()*250)*plusOrMinus);
+					diceNumber.translateX((Math.random()*250)*plusOrMinus2);
+					diceNumber.rotation.x = 50;
+					diceNumber.rotation.z = -100;
+		  			scene.add(diceNumber);
+			  		console.log('die added!');
+				}	
+			});
+			$('#removeD4').click( function() {
+				var i = 0;
+				//console.log(d4Array.length);	
+				if(d4Array.length > 0){
+					//var diceNumber = eval('die' + (eval(diceArray.length)));
+//					var diceNumber = diceArray[diceArray.length-1];
+//					console.log(diceNumber);
+//					scene.remove(diceNumber);
+//					diceArray.pop();
+//					diceValue.pop();
+					var diceNumber = d4Array[d4Array.length-1];
+					console.log(diceNumber);
+					scene.remove(diceNumber);
+					d4Array.pop();
+					diceValue.pop();
+					
+				}
+			});
+			$('#removeD6').click( function() {
+				var i = 0;
+				console.log(d6Array.length);	
+				if(d6Array.length > 0){
+					//var diceNumber = eval('die' + (eval(diceArray.length)));
+//					var diceNumber = diceArray[diceArray.length-1];
+//					console.log(diceNumber);
+//					scene.remove(diceNumber);
+//					diceArray.pop();
+//					diceValue.pop();
+					var diceNumber = d6Array[d6Array.length-1];
+					console.log(diceNumber);
+					scene.remove(diceNumber);
+					d6Array.pop();
+					diceValue.pop();
+					
+				}
+			});
+			
+			//device motion source: http://w3c.github.io/deviceorientation/spec-source-orientation.html
+			window.addEventListener("devicemotion", function(event) {					
+				  // Process event.acceleration, event.accelerationIncludingGravity,
+				  // event.rotationRate and event.interval				
+				if ((lastPos-event.acceleration.y) > .5 && event.acceleration.y < -3){
+					onPinchStart( event, .5 );
+				}
+				if ((lastPos-event.acceleration.y) < 0 && event.acceleration.y > 2){
+					onDocumentPinch( event, .5 );
+				}
+				lastPos = event.accelerationIncludingGravity.y;
+			  }, true);
+			
+			window.addEventListener('load', function() { 
+			var element = document.getElementById('hammerPad');
+			var hammertime = Hammer(element).on("tap", function(event) {
+				console.log('hello!');
+			})
+
+		}, false);
+		</script>
+		<div id="pinchOutput">
+			
+		</div>
+		<div id="controls" ng-controller="MainCtrl" class="noselect">
+			<div id="drawerTitle">Dice Drawer</div>
+			
+			<div layout="row">
+				<div flex="33" class="drawerBtn">D6</div>
+				<div flex="33" id="add-d6" class="add drawerBtn">+</div>
+				<div flex="33" id="removeD6" class="remove md-raised drawerBtn">-</div>
+			</div>
+
+			<div layout="row">
+				<div flex="33" class="drawerBtn">D4</div>
+				<div flex="33" id="add-d4" class="add drawerBtn">+</div>
+				<div flex="33" id="removeD4" class="remove md-raised drawerBtn">-</div>
+			</div>			
+			
+			
+			
+		</div>
+	
+<!--		<div id="total"></div>-->
+	
+		<script>
+		if (document.addEventListener) {
+		  document.addEventListener('touchmove', function(e){
+			e.preventDefault();
+		  });
+		}
+	  </script>
+		<script src="scripts/dice/hammerScript.js"></script>
+		<!--Audio files for the pop sounds-->
+		<audio id="pop-up" controls>
+			<source src="sounds/pop-up.ogg" type="audio/ogg">
+		</audio>
+		<audio id="pop-down" controls>
+			<source src="sounds/pop-down.ogg" type="audio/ogg">
+		</audio>
+	</div>

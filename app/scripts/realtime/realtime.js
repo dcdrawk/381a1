@@ -131,8 +131,8 @@
 		}
 
 		addQuest.onclick = function() {
-			mapKeys = map.keys();
-			console.log(mapKeys);
+			mapKeys = map.keys();            
+            //creates a new quest object
 			var newQuest = {
 				id : mapKeys.length,
 				description : questDetails.value,
@@ -140,14 +140,16 @@
 			}
 			map.set(questName.value, newQuest);
 			console.log('Add Quest ' + questName.value);
+            
+            //reset the input values
 			questDetails.value = '';
 			questName.value = '';
 			addQuest.disabled = true;
 			
 			newQuestBtn.style.display = 'block';
-			questForm.style.display = 'none';
-			
+			questForm.style.display = 'none';			
 		};
+        
 		clearQuests.onclick = function() {
 			map.clear();
 		}

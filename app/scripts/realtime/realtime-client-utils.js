@@ -712,15 +712,15 @@ rtclient.printAbout = function (ownerId, sharedWith) {
 	gapi.client.load('drive', 'v2', function() {
 		var request = gapi.client.drive.about.get();
 		request.execute(function(resp) {
-			//console.log(resp);
 			var shareControls = document.getElementById('shareControls');
 			var userPermId = resp.user.permissionId;
-			
+            
 			//if the user viewing the document is the owner
 			if(userPermId == ownerId){
 				shareControls.style.display = 'block';
-				//shareControls.style.width = '200px';
 				notes.disabled = false;
+                
+                //checks the write persmissions of the document
 				if(sharedWith == 'writer'){
 					console.log('this doc is open for anyone to write');
 					enableShare.style.display = 'none';
@@ -729,31 +729,18 @@ rtclient.printAbout = function (ownerId, sharedWith) {
 					enableShare.style.display = 'inline-block';
 					disableShare.style.display = 'none';
 				}
+                //URL Shortener Code
 				var pubKey = 'AIzaSyCde-rPHpjfEEqmR93btsjT8fh6onckLow';
 				var currentURL = window.location.href;
 				var contents = {"longUrl": currentURL}
 				gapi.client.load('urlshortener', 'v1').then(
 					rtclient.urlShortener('https://www.googleapis.com/urlshortener/v1/url?key='+pubKey, contents)
 				);
-				//if the viewer is not the owner
+                
+            //if the viewer is not the owner
 			} else {
 				shareControls.style.display = 'none';
-				
-//				if(sharedWith == 'writer'){
-//					notes.disabled = false;
-//					console.log('this doc is open for anyone to write');
-//					enableShare.style.display = 'none';
-//					disableShare.style.display = 'inline-block';
-//				} else if (sharedWith == 'reader'){
-//					notes.disabled = true;
-//					enableShare.style.display = 'inline-block';
-//					disableShare.style.display = 'none';
-//				}
 			}
-			//return resp.user.emailAddress;
-//			console.log('Root folder ID: ' + resp.rootFolderId);
-//			console.log('Total quota (bytes): ' + resp.quotaBytesTotal);
-//			console.log('Used quota (bytes): ' + resp.quotaBytesUsed);
 		});
 	});
 }
@@ -765,30 +752,26 @@ rtclient.printAbout = function (ownerId, sharedWith) {
  * @param {Function} callback Function to call when the request is complete.
  */
 rtclient.urlShortener = function(url, content) {
-//		gapi.client.setApiKey('516279059329'); //get your ownn Browser API KEY
-//	gapi.client.load('urlshortener', 'v1',function(){});
+
 	var urlText = document.getElementById('shortURL');
 	
-	//gapi.client.load('drive', 'v2', function() {
-		var xmlHttp = null;
-		var json = JSON.stringify(content);
-		xmlHttp = new XMLHttpRequest();
-	
-		xmlHttp.open( "POST", url, true );
-		xmlHttp.setRequestHeader("Content-type","application/json");
-		xmlHttp.send(json);
-		//console.log (json);
-		//console.log (xmlHttp.responseText);
-		//return xmlHttp.responseText;
-		xmlHttp.onreadystatechange = function() {
-       	 	if(xmlHttp.responseText){
-				var respArray = JSON.parse(xmlHttp.responseText);
-				console.log(respArray.id);
-				urlText.innerHTML = respArray.id;
-			}
-		}
-		//urlText = xmlHttp.responseText;
-	//});
+    //set up the request
+    var xmlHttp = null;
+    var json = JSON.stringify(content);
+    xmlHttp = new XMLHttpRequest();
+    
+    //Post the Request
+    xmlHttp.open( "POST", url, true );
+    xmlHttp.setRequestHeader("Content-type","application/json");
+    xmlHttp.send(json);
+
+    xmlHttp.onreadystatechange = function() {
+        if(xmlHttp.responseText){
+            var respArray = JSON.parse(xmlHttp.responseText);
+            console.log(respArray.id);
+            urlText.innerHTML = respArray.id;
+        }
+    }
 }
 
 //rtclient.urlShortener('https://www.googleapis.com/urlshortener/v1/url', contents);

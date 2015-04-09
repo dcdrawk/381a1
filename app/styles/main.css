@@ -629,6 +629,9 @@ input[type=number]::-webkit-outer-spin-button {
 #advNotes, #questLog{
 	padding:0 1em;
 }
+#questLog{
+    margin-bottom:1em;
+}
 #advNotes textarea{
 	font-weight: 400;
 	padding: 1em;
@@ -657,6 +660,13 @@ input[type=number]::-webkit-outer-spin-button {
 	border-radius: 5px;
 	background-color: #E8E8E8;
 	box-shadow: inset 0px 0px 5px 0px rgba(0, 0, 0, 0.44);
+    
+    -webkit-touch-callout: text!important;
+    -webkit-user-select: text!important;
+    -khtml-user-select: text!important;
+    -moz-user-select: text!important;
+    -ms-user-select: text!important;
+    user-select: text!important;
 }
 .questInfo{
 	padding:.5em;
@@ -722,6 +732,10 @@ input[type=number]::-webkit-outer-spin-button {
 	color:#999;
 }
 
+.addSpell{
+    float:right;
+    display:block;
+}
 /*
 .noselect {
     -webkit-touch-callout: none;

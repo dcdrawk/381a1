@@ -122,6 +122,10 @@ app.module = angular
         templateUrl: 'views/character-summary.html',
         controller: 'SummaryCtrl'
       })
+      .when('/dice', {
+        templateUrl: 'views/dice.html',
+        controller: 'DiceCtrl'
+      })
 		.when('/party', {
         templateUrl: 'views/party.html',
         controller: 'PartyCtrl'
@@ -129,37 +133,11 @@ app.module = angular
 		.when('/party/:fileId/', {
         templateUrl: 'views/party.html',
         controller: 'PartyCtrl',
-//		resolve: {
-//          realtimeDocument: app.loadFile
-//        }
       })
-//        .when('/toe', {
-//        templateUrl: 'views/toe.html',
-//        controller: 'PartyCtrl'
-//      
       .otherwise({
         redirectTo: '/'
       });
-	
-//		//adding from the todos example
-//	  .when('/todos/:fileId/:filter', {
-//        templateUrl: 'views/todos.html',
-//        controller: 'MainCtrl',
-//        resolve: {
-//          realtimeDocument: app.loadFile
-//        }
-//      })
-//      .when('/todos/create', {
-//        templateUrl: 'views/loading.html',
-//        controller: 'CreateCtrl'
-//      })
-//      .when('/todos/install', {
-//        templateUrl: 'views/install.html',
-//        controller: 'InstallCtrl'
-//      })
-//      .otherwise({
-//        redirectTo: '/install'
-//      });
+
 
   })
 
@@ -169,7 +147,7 @@ app.module = angular
     $scope.isDisabled = true;
     $scope.googleUrl = 'http://google.com';
   })
-  .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, $location) {
+  .controller('AppCtrl', function($scope, $timeout, $mdSidenav, $log, $location, $rootScope) {
     $scope.toggleLeft = function() {
       $mdSidenav('left').toggle()
       .then(function(){
@@ -194,26 +172,50 @@ app.module = angular
       $location.path( path );
       $mdSidenav('left').close();
     };
-//    var myElement = document.getElementById('doc-content');
-//    var leftNav = document.getElementById('leftNav');
+//    var thePath = $location.path();
+//    console.log(thePath);
 //    
-//    var mc = new Hammer(myElement);
-//    var ln = new Hammer(leftNav);
-//
-//    var pan = new Hammer.Pan({threshold: 200});
-//    var pan2 = new Hammer.Pan({threshold: 200});
-//    mc.add([pan]);
-//    ln.add([pan2]);
-//    
-//    ln.on('panleft', function(ev) {
-//        window.getSelection().removeAllRanges();
-//        $scope.closeLeft();
-//    });
-//    
-//    mc.on('panright', function(ev) {
-//        window.getSelection().removeAllRanges();        
-//        $scope.openLeft();
-//    });
+//    if(thePath == '/party'){
+//        console.log('PARTY : ' + thePath);
+//    } else {
+//        console.log('NO PARTY : ' + thePath);
+//    }
+    var myElement = document.getElementById('doc-content');
+    var leftNav = document.getElementById('leftNav');
+
+    var mc = new Hammer(myElement);
+    var ln = new Hammer(leftNav);
+
+    var pan = new Hammer.Pan({threshold: 250});
+    //var swipe = new Hammer.swipe({threshold: 10});
+    var pan2 = new Hammer.Pan({threshold: 200});
+    mc.add([pan]);
+    ln.add([pan2]);
+    var disableTouch = $rootScope.$on('$locationChangeSuccess', function() {
+        
+        var thePath = $location.path();
+        var pathSplit = thePath.split('/');
+        console.log('patch changed');
+        console.log(pathSplit);   
+    
+        if(pathSplit[1] != 'party'){
+            mc.add([pan]);
+            ln.add([pan2]);
+            ln.on('panleft', function(ev) {
+                    window.getSelection().removeAllRanges();
+                    $scope.closeLeft();
+
+            });
+
+            mc.on('panright', function(ev) {
+                    window.getSelection().removeAllRanges();        
+                    $scope.openLeft();
+            });
+        } else {
+            mc.remove([pan]);
+            ln.remove([pan2]);
+        }
+    });
     
   })
   .controller('LeftCtrl', function($scope, $timeout, $mdSidenav, $log) {

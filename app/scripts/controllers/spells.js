@@ -270,29 +270,29 @@
       };
     };
       
+    //function retrieves the spell info to be added to the list of spells
     $scope.getSpellInfo = function getSpellInfo(spell) {
         console.log(spell);
+        
+        //check to see if the spell exists
         if(!$scope.spellInfo[0][spell]){
             console.log('no such spell exists');
             return;
         } else {
             console.log($scope.spellInfo[0][spell]);
+            
+            //go through the list of known spells to check for duplicates
             for(var item in $scope.mySpells ){
-                //console.log($scope.mySpells[0].name + ' ITEM: ' + item);
                 if ($scope.mySpells[item].name == spell){
                     console.log('You cant add a duplicate spell');
                     return;
                 }
-            }            
-            $scope.mySpells.push($scope.spellInfo[0][spell]);
-            
+            }
+            //add the spell to the list and update the cookieStore
+            $scope.mySpells.push($scope.spellInfo[0][spell]);            
             $cookieStore.put('spellsArray', $scope.mySpells);
             spellsArray = $cookieStore.get('spellsArray');
-            
-            //console.log($scope.mySpells);
         }
-        //console.log(spell);
-        //return $scope.spellInfo[0][spell];
     };
       
     $scope.removeSpell = function removeSpell(spell) {
